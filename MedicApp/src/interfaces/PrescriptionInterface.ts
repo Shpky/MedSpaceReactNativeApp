@@ -1,6 +1,6 @@
 interface PrescriptionInterface {
     title: string,
-    doctor: DoctorInterface,
+    doctor: DoctorInterface | null,
     medicines: MedicineInterface[],
     patient: PatientInterface[]
     notes: string,

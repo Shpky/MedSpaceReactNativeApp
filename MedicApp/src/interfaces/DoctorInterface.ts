@@ -1,4 +1,4 @@
 interface DoctorInterface {
     name: string, 
-    mail: string
+    mail: string | null
 }

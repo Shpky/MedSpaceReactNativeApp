@@ -1,0 +1,19 @@
+{
+    "prescriptions": [],
+    "doctors": [
+        {
+            "name": "Nathan",
+            "mail": null
+        },
+        {
+            "name": "Romain",
+            "mail": null
+        }
+    ],
+    "patients": [
+        {
+            "name": "Vous",
+            "icone": 0
+        }
+    ]
+}
