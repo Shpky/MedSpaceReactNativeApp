@@ -1,7 +1,10 @@
 import { SafeAreaView, Button } from 'react-native';
 import RNSecureStorage, { ACCESSIBLE } from 'rn-secure-storage';
 import Save from './src/models/Save';
-import NewPrescriptionView from './src/views/NewPrescriptionsView'
+import NewPrescriptionView from './src/views/NewPrescriptionsView';
+import TitleComponent from './src/components/TitleComponent';
+
+
 function App(): JSX.Element {
   (function initData(): void {
     RNSecureStorage.exists('save')
@@ -30,7 +33,7 @@ function App(): JSX.Element {
           .set('save', JSON.stringify(Save.default().toJson()),
             { accessible: ACCESSIBLE.WHEN_UNLOCKED })
       }}></Button>
-      <NewPrescriptionView />
+      <TitleComponent title="Sélectionner un traitement" />
     </SafeAreaView>
   );
 }
