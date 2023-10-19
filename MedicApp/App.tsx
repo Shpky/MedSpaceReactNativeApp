@@ -34,6 +34,7 @@ function App(): JSX.Element {
             { accessible: ACCESSIBLE.WHEN_UNLOCKED })
       }}></Button>
       <TitleComponent title="Sélectionner un traitement" />
+      <NewPrescriptionView />
     </SafeAreaView>
   );
 }
