@@ -2,8 +2,12 @@
   "migIndex": 1,
   "data": [
     {
-      "Path": "src/assets/fonts/Jomhuria-Regular.ttf",
+      "path": "src/assets/fonts/Jomhuria-Regular.ttf",
       "sha1": "1e6812ab945305665df7fb85c515dcca60b6e2cf"
+    },
+    {
+      "path": "src/assets/fonts/OFL.txt",
+      "sha1": "671900fe53332d848e38161b1f00fcdc36f03e68"
     }
   ]
 }

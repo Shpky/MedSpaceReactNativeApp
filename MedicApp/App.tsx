@@ -23,18 +23,20 @@ function App(): JSX.Element {
 
   return (
     <SafeAreaView>
-      <Button title="afficher" onPress={() => {
-        console.log("test")
-        console.log(Save.default())
-      }
-      }></Button>
-      <Button title="resetDataBase" onPress={() => {
-        RNSecureStorage
-          .set('save', JSON.stringify(Save.default().toJson()),
-            { accessible: ACCESSIBLE.WHEN_UNLOCKED })
-      }}></Button>
+      {__DEV__ && <>
+        <Button title="afficher" onPress={() => {
+          console.log("test")
+          console.log(Save.default())
+        }
+        }></Button>
+        <Button title="resetDataBase" onPress={() => {
+          RNSecureStorage
+            .set('save', JSON.stringify(Save.default().toJson()),
+              { accessible: ACCESSIBLE.WHEN_UNLOCKED })
+        }}></Button>
+      </>}
       <TitleComponent title="Sélectionner un traitement" />
-      <NewPrescriptionView />
+      <NewPrescriptionView></NewPrescriptionView>
     </SafeAreaView>
   );
 }

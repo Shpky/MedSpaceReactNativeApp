@@ -65,18 +65,18 @@
 # Attempt to set APP_HOME
 
 # Resolve links: $0 may be a link
-app_Path=$0
+app_path=$0
 
 # Need this for daisy-chained symlinks.
 while
-    APP_HOME=${app_Path%"${app_Path##*/}"}  # leaves a trailing /; empty if no leading Path
-    [ -h "$app_Path" ]
+    APP_HOME=${app_path%"${app_path##*/}"}  # leaves a trailing /; empty if no leading path
+    [ -h "$app_path" ]
 do
-    ls=$( ls -ld "$app_Path" )
+    ls=$( ls -ld "$app_path" )
     link=${ls#*' -> '}
     case $link in             #(
-      /*)   app_Path=$link ;; #(
-      *)    app_Path=$APP_HOME$link ;;
+      /*)   app_path=$link ;; #(
+      *)    app_path=$APP_HOME$link ;;
     esac
 done
 
@@ -114,7 +114,7 @@ case "$( uname )" in                #(
   NONSTOP* )        nonstop=true ;;
 esac
 
-CLASSPath=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
+CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
 
 
 # Determine the Java command to use to start the JVM.
@@ -133,7 +133,7 @@ location of your Java installation."
     fi
 else
     JAVACMD=java
-    which java >/dev/null 2>&1 || die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your Path.
+    which java >/dev/null 2>&1 || die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
 
 Please set the JAVA_HOME variable in your environment to match the
 location of your Java installation."
@@ -161,29 +161,29 @@ fi
 # Collect all arguments for the java command, stacking in reverse order:
 #   * args from the command line
 #   * the main class name
-#   * -classPath
+#   * -classpath
 #   * -D...appname settings
-#   * --module-Path (only if needed)
+#   * --module-path (only if needed)
 #   * DEFAULT_JVM_OPTS, JAVA_OPTS, and GRADLE_OPTS environment variables.
 
-# For Cygwin or MSYS, switch Paths to Windows format before running java
+# For Cygwin or MSYS, switch paths to Windows format before running java
 if "$cygwin" || "$msys" ; then
-    APP_HOME=$( cygPath --Path --mixed "$APP_HOME" )
-    CLASSPath=$( cygPath --Path --mixed "$CLASSPath" )
+    APP_HOME=$( cygpath --path --mixed "$APP_HOME" )
+    CLASSPATH=$( cygpath --path --mixed "$CLASSPATH" )
 
-    JAVACMD=$( cygPath --unix "$JAVACMD" )
+    JAVACMD=$( cygpath --unix "$JAVACMD" )
 
     # Now convert the arguments - kludge to limit ourselves to /bin/sh
     for arg do
         if
             case $arg in                                #(
               -*)   false ;;                            # don't mess with options #(
-              /?*)  t=${arg#/} t=/${t%%/*}              # looks like a POSIX filePath
+              /?*)  t=${arg#/} t=/${t%%/*}              # looks like a POSIX filepath
                     [ -e "$t" ] ;;                      #(
               *)    false ;;
             esac
         then
-            arg=$( cygPath --Path --ignore --mixed "$arg" )
+            arg=$( cygpath --path --ignore --mixed "$arg" )
         fi
         # Roll the args list around exactly as many times as the number of
         # args, so each arg winds up back in the position where it started, but
@@ -205,7 +205,7 @@ fi
 
 set -- \
         "-Dorg.gradle.appname=$APP_BASE_NAME" \
-        -classPath "$CLASSPath" \
+        -classpath "$CLASSPATH" \
         org.gradle.wrapper.GradleWrapperMain \
         "$@"
 
