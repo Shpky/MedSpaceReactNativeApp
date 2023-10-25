@@ -3,16 +3,17 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
     container: {
         alignSelf: 'center',
-        backgroundColor: "#ff7f00",
-        borderRadius: 30,
-        width: "90%",
-        paddingLeft: 20,
+        backgroundColor: "#C7D6C5",
+        borderRadius: 10,
+        width: "80%",
+        marginBottom: 20,
     },
     title: {
         fontWeight: "400",
         fontFamily: "Jomhuria-Regular",
-        fontSize: 40,
+        fontSize: 24,
         fontStyle: "normal",
-        color: "#fff"
+        color: "#fff",
+        textAlign: "center",
     }
 });

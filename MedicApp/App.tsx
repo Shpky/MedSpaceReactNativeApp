@@ -1,8 +1,7 @@
 import { SafeAreaView, Button } from 'react-native';
 import RNSecureStorage, { ACCESSIBLE } from 'rn-secure-storage';
 import Save from './src/models/Save';
-import NewPrescriptionView from './src/views/NewPrescriptionsView';
-import TitleComponent from './src/components/TitleComponent';
+import NewPrescriptionView from './src/layouts/NewPrescriptions';
 
 
 function App(): JSX.Element {
@@ -35,7 +34,6 @@ function App(): JSX.Element {
               { accessible: ACCESSIBLE.WHEN_UNLOCKED })
         }}></Button>
       </>}
-      <TitleComponent title="Sélectionner un traitement" />
       <NewPrescriptionView></NewPrescriptionView>
     </SafeAreaView>
   );

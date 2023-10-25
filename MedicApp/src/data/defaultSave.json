@@ -1,5 +1,4 @@
 {
-    "prescriptions": [],
     "doctors": [
         {
             "name": "Nathan",
@@ -13,7 +12,8 @@
     "patients": [
         {
             "name": "Vous",
-            "icone": 0
+            "icone": 0,
+            "prescriptions": []
         }
     ]
 }

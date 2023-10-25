@@ -1,0 +1,18 @@
+{
+    "name": "",
+    "company": "",
+    "dosage": 0,
+    "dosageType": "",
+    "frequency": {
+        "morning": false,
+        "noon": false,
+        "evening": false
+    },
+    "duration": 0,
+    "durationType": "",
+    "administration_route": "",
+    "warning": false,
+    "notes": "",
+    "substitutable": false,
+    "to_renew": ""
+}

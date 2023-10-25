@@ -1,4 +1,5 @@
 interface PatientInterface {
     name: string,
-    icone: string
+    icone: string,
+    prescriptions: PrescriptionInterface[],
 }
