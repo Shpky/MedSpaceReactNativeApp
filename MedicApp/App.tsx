@@ -1,8 +1,7 @@
-import { SafeAreaView, Button } from 'react-native';
+import { ScrollView, Button } from 'react-native';
 import RNSecureStorage, { ACCESSIBLE } from 'rn-secure-storage';
-import Save from './src/models/Save';
-import NewPrescriptionView from './src/layouts/NewPrescriptions';
-
+import Save from "@models/Save";
+import NewPrescriptionView from "@layouts/NewPrescriptions"
 
 function App(): JSX.Element {
   (function initData(): void {
@@ -13,15 +12,13 @@ function App(): JSX.Element {
           RNSecureStorage
             .set('save', JSON.stringify(save.toJson()),
               { accessible: ACCESSIBLE.WHEN_UNLOCKED })
-
         }
       }
       )
   })();
   console.log("inited")
-
   return (
-    <SafeAreaView>
+    <ScrollView>
       {__DEV__ && <>
         <Button title="afficher" onPress={() => {
           console.log("test")
@@ -35,7 +32,7 @@ function App(): JSX.Element {
         }}></Button>
       </>}
       <NewPrescriptionView></NewPrescriptionView>
-    </SafeAreaView>
+    </ScrollView>
   );
 }
 

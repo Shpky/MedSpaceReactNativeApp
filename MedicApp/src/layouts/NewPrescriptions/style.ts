@@ -25,17 +25,5 @@ export default StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
     },
-    textPickercontainer: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-
-    },
-    picker: {
-        alignSelf: "flex-end",
-        width: "60%",
-        textAlign: "right",
-        marginTop: -8,
-    }
 
 });
