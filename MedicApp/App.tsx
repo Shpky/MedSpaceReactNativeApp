@@ -1,35 +1,38 @@
 import { ScrollView, Button } from 'react-native';
 import RNSecureStorage, { ACCESSIBLE } from 'rn-secure-storage';
-import Save from "@models/Save";
+import defaultSave from "@data/defaultSave.json";
 import NewPrescriptionView from "@layouts/NewPrescriptions"
 
 function App(): JSX.Element {
+
+
+
   (function initData(): void {
     RNSecureStorage.exists('save')
       .then((exists) => {
         if (!exists) {
-          const save = Save.default()
-          RNSecureStorage
-            .set('save', JSON.stringify(save.toJson()),
-              { accessible: ACCESSIBLE.WHEN_UNLOCKED })
+          resetDataBase()
         }
       }
       )
   })();
+
+  const resetDataBase = () => {
+    RNSecureStorage
+      .set('save', JSON.stringify(defaultSave),
+        { accessible: ACCESSIBLE.WHEN_UNLOCKED })
+  }
+
   console.log("inited")
   return (
     <ScrollView>
       {__DEV__ && <>
         <Button title="afficher" onPress={() => {
           console.log("test")
-          console.log(Save.default())
+          console.log(defaultSave)
         }
         }></Button>
-        <Button title="resetDataBase" onPress={() => {
-          RNSecureStorage
-            .set('save', JSON.stringify(Save.default().toJson()),
-              { accessible: ACCESSIBLE.WHEN_UNLOCKED })
-        }}></Button>
+        <Button title="resetDataBase" onPress={resetDataBase}></Button>
       </>}
       <NewPrescriptionView></NewPrescriptionView>
     </ScrollView>

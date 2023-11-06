@@ -25,5 +25,15 @@ export default StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
     },
-
+    textPickercontainer: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: "100%",
+    },
+    textInputComment: {
+        textAlignVertical: "center",
+        color: "#000",
+        fontSize: 16,
+    }
 });

@@ -20,14 +20,11 @@ interface RoutineInterface {
 }
 
 interface DailyInterface {
-    startTime: TimeInterface,
-    endTime: TimeInterface,
     count: number,
 }
 
 interface WeeklyInterface {
-    startDay: Date,
-    days: number, /* tous les cb de jours ex-> 1 = tous les jours, 2 = tous les 2 jours, etc */
+    delay: number, /* tous les cb de jours ex-> 1 = tous les jours, 2 = tous les 2 jours, etc */
 }
 
 interface TimeInterface {
