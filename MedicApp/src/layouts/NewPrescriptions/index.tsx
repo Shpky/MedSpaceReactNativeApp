@@ -9,6 +9,7 @@ import Container from '@containers/FormBubble';
 import style from './style';
 import defaultMedicine from '@data/defaultMedicine.json';
 import defaultPrescription from '@data/defaultPrescription.json';
+import ModalImgPicker from '@components/containers/ImgPicker/Modale';
 export default function index() {
     const [image, setImage] = useState<string | null>(null);
     let save: SaveInterface;
@@ -63,7 +64,7 @@ export default function index() {
 
         <Title>Veuillez renseigner les informations de l'ordonnance</Title>
         <ScanButton>Ou scannez votre ordonnance</ScanButton>
-
+        <ModalImgPicker />
         <Container>
             <Text style={style.textInput}>Nom du traitement</Text>
             <TextInput style={[style.input, style.full]} placeholder="Nom du traitement" placeholderTextColor={style.input.color} />
