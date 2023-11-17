@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { launchCamera, launchImageLibrary, CameraOptions, ImageLibraryOptions } from 'react-native-image-picker';
-import { Button, TextInput, Text, View, TextProps } from 'react-native';
+import { Button, TextInput, Text, View } from 'react-native';
 import MedicineComponent from '@layouts/NewPrescriptions/Medicine';
 import RNSecureStorage from 'rn-secure-storage';
 import ScanButton from '@buttons/Scan';
@@ -12,7 +11,6 @@ import defaultPrescription from '@data/defaultPrescription.json';
 import ModalImgPicker from '@layouts/NewPrescriptions/ModalImportImg';
 
 export default function index() {
-    const [image, setImage] = useState<string | null>(null);
     let save: SaveInterface;
     const [prescription, setPrescription] = useState<PrescriptionInterface>(defaultPrescription)
 
@@ -46,7 +44,7 @@ export default function index() {
         <Title>Veuillez renseigner les informations de l'ordonnance</Title>
         <ScanButton>Ou scannez votre ordonnance</ScanButton>
 
-        <ModalImgPicker setprescription={setPrescription}/>
+        <ModalImgPicker setprescription={setPrescription} />
 
         <Container>
             <Text style={style.textInput}>Nom du traitement</Text>
