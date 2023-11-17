@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { launchCamera, launchImageLibrary, CameraOptions, ImageLibraryOptions } from 'react-native-image-picker';
-import { Button, TextInput, Text, View, TextProps } from 'react-native';
+import { Button, TextInput, Text, View } from 'react-native';
 import MedicineComponent from '@layouts/NewPrescriptions/Medicine';
 import RNSecureStorage from 'rn-secure-storage';
 import ScanButton from '@buttons/Scan';
@@ -9,10 +8,10 @@ import Container from '@containers/FormBubble';
 import style from './style';
 import defaultMedicine from '@data/defaultMedicine.json';
 import defaultPrescription from '@data/defaultPrescription.json';
-import ModalImgPicker from '@components/containers/ImgPicker/Modale';
+import ModalImgPicker from '@layouts/NewPrescriptions/ModalImportImg';
+
 
 export default function index() {
-    const [image, setImage] = useState<string | null>(null);
     let save: SaveInterface;
     const [prescription, setPrescription] = useState<PrescriptionInterface>(defaultPrescription)
 
@@ -29,26 +28,6 @@ export default function index() {
         setPrescription((oldP) => ({ ...oldP, medicines: newMedicines }))
     }
 
-    const cameraHandler = () => {
-        const options: CameraOptions = {
-            mediaType: 'photo',
-        }
-        launchCamera(options, (response) => {
-            if (response.assets && response.assets[0] && typeof response.assets[0].uri === "string")
-                setImage(response.assets[0].uri);
-        })
-    };
-
-    const libraryHandler = () => {
-        const options: ImageLibraryOptions = {
-            mediaType: 'photo',
-            selectionLimit: 1,
-        }
-        launchImageLibrary(options, (response) => {
-            if (response.assets && response.assets[0] && typeof response.assets[0].uri === "string")
-                setImage(response.assets[0].uri);
-        })
-    };
 
     const doctorPickerHandler = (itemValue: string, itemIndex: number) => {
         setPrescription((oldP) => ({ ...oldP, doctor: save?.doctors.find((d) => d.name === itemValue) || null }))
@@ -65,7 +44,9 @@ export default function index() {
 
         <Title>Veuillez renseigner les informations de l'ordonnance</Title>
         <ScanButton>Ou scannez votre ordonnance</ScanButton>
-        <ModalImgPicker />
+
+        <ModalImgPicker setprescription={setPrescription} />
+
         <Container>
             <Text style={style.textInput}>Nom du traitement</Text>
             <TextInput style={[style.input, style.full]} placeholder="Nom du traitement" placeholderTextColor={style.input.color} />
