@@ -10,6 +10,7 @@ import style from './style';
 import defaultMedicine from '@data/defaultMedicine.json';
 import defaultPrescription from '@data/defaultPrescription.json';
 import ModalImgPicker from '@components/containers/ImgPicker/Modale';
+
 export default function index() {
     const [image, setImage] = useState<string | null>(null);
     let save: SaveInterface;
