@@ -7,6 +7,10 @@ import Container from '@containers/FormBubble';
 import style from './style';
 import defaultMedicine from '@data/defaultMedicine.json';
 import defaultPrescription from '@data/defaultPrescription.json';
+import ModalImgPicker from './ModalImportImg';
+import AddMedicine from './buttons/AddMedicine';
+import DatePicker from './DateForm';
+
 export default function index() {
     let save: SaveInterface;
     const [prescription, setPrescription] = useState<PrescriptionInterface>(defaultPrescription)
@@ -20,9 +24,9 @@ export default function index() {
                             save = JSON.parse(data);
                     })
         })
-    const setMedicines = (newMedicines: MedicineInterface[]) => 
+    const setMedicines = (newMedicines: MedicineInterface[]) =>
         setPrescription((oldP) => ({ ...oldP, medicines: newMedicines }))
-    }
+
 
 
     const doctorPickerHandler = (itemValue: string, itemIndex: number) => {
@@ -36,8 +40,8 @@ export default function index() {
 
     return <>
         {
-            __DEV__ && 
-            <Button title={"Print"} onPress={() => 
+            __DEV__ &&
+            <Button title={"Print"} onPress={() =>
                 console.log("presc\n", prescription, "\nmedicines\n", prescription.medicines)} />
         }
 
