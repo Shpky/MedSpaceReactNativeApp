@@ -8,11 +8,10 @@
         "noon": false,
         "evening": false
     },
-    "duration": 0,
-    "durationType": "",
+    "duration": null,
     "administration_route": "",
     "warning": false,
     "notes": "",
     "substitutable": false,
-    "to_renew": ""
+    "to_renew": 0
 }

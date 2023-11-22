@@ -1,18 +1,13 @@
 import { useState } from 'react';
-import { launchCamera, launchImageLibrary, CameraOptions, ImageLibraryOptions }
-    from 'react-native-image-picker';
-import { Button, TextInput, Text, View, TextProps } from 'react-native';
-import MedicineComponent from './Medicine';
+import { Button, TextInput, Text, View, Pressable } from 'react-native';
+import MedicineComponent from '@layouts/NewPrescriptions/Medicine/Medicine';
 import RNSecureStorage from 'rn-secure-storage';
-import ScanButton from '@buttons/Scan';
 import Title from '@components/TitleBubble';
 import Container from '@containers/FormBubble';
 import style from './style';
 import defaultMedicine from '@data/defaultMedicine.json';
 import defaultPrescription from '@data/defaultPrescription.json';
-
 export default function index() {
-    const [image, setImage] = useState<string | null>(null);
     let save: SaveInterface;
     const [prescription, setPrescription] = useState<PrescriptionInterface>(defaultPrescription)
 
@@ -27,28 +22,8 @@ export default function index() {
         })
     const setMedicines = (newMedicines: MedicineInterface[]) => 
         setPrescription((oldP) => ({ ...oldP, medicines: newMedicines }))
-    
+    }
 
-    const cameraHandler = () => {
-        const options: CameraOptions = {
-            mediaType: 'photo',
-        }
-        launchCamera(options, (response) => {
-            if (response.assets && response.assets[0] && typeof response.assets[0].uri === "string")
-                setImage(response.assets[0].uri);
-        })
-    };
-
-    const libraryHandler = () => {
-        const options: ImageLibraryOptions = {
-            mediaType: 'photo',
-            selectionLimit: 1,
-        }
-        launchImageLibrary(options, (response) => {
-            if (response.assets && response.assets[0] && typeof response.assets[0].uri === "string")
-                setImage(response.assets[0].uri);
-        })
-    };
 
     const doctorPickerHandler = (itemValue: string, itemIndex: number) => {
         setPrescription((oldP) =>
@@ -67,12 +42,14 @@ export default function index() {
         }
 
         <Title>Veuillez renseigner les informations de l'ordonnance</Title>
-        <ScanButton>Ou scannez votre ordonnance</ScanButton>
+        <ModalImgPicker setprescription={setPrescription} />
 
         <Container>
             <Text style={style.textInput}>Nom du traitement</Text>
             <TextInput style={[style.input, style.full]}
-                placeholder="Nom du traitement" placeholderTextColor={style.input.color} />
+                placeholder="Nom du traitement" placeholderTextColor={style.input.color}
+                onChange={(e) => setPrescription((oldP) => ({ ...oldP, name: e.nativeEvent.text }))}
+            >{prescription.title}</TextInput>
             <Text style={style.textInput}>Nom et coordonnées du médecin</Text>
             <View style={style.halfContainer}>
                 <TextInput style={[style.input, style.half]}
@@ -89,12 +66,27 @@ export default function index() {
                     newMedicines[i] = newMedicine;
                     setMedicines(newMedicines)
                 }
-                return <MedicineComponent key={i} medicine={p} onChange={modifyMedicine} />
+                const dropMedicine = () => {
+                    if (prescription.medicines.length === 1) {
+                        setMedicines([defaultMedicine])
+                        return
+                    }
+                    const newMedicines = [...prescription.medicines];
+                    newMedicines.splice(i, 1);
+                    setMedicines(newMedicines)
+                }
+                return <MedicineComponent key={i} medicineProp={p}
+                    onChange={modifyMedicine} drop={dropMedicine} />
             }
             )
         }
-
-        <Button title="Ajouter médicament" onPress={addMedicineHandler} />
+        <Container>
+            <Text style={style.textInput}>Notes de l'ordonnance</Text>
+            <TextInput style={[style.input, style.full]} placeholder="Notes" placeholderTextColor={style.input.color} />
+            <DatePicker date={prescription.date} text={"Date de l'ordonnance"}
+                setDate={(newDate) => setPrescription(oldP => ({ ...oldP, date: newDate }))} />
+        </Container>
+        <AddMedicine onClick={addMedicineHandler} />
     </>
 
 } 

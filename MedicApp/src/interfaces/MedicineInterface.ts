@@ -4,13 +4,12 @@ interface MedicineInterface {
     dosage: number,
     dosageType: string,
     frequency: RoutineInterface | DailyInterface | WeeklyInterface,
-    duration: number,
-    durationType: string,
+    duration: Date | null,
     administration_route: string,
     warning: boolean,
     notes?: string,
     substitutable?: boolean,
-    to_renew?: string,
+    to_renew?: number,
 }
 
 interface RoutineInterface {
