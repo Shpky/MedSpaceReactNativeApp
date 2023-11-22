@@ -10,6 +10,7 @@ import defaultMedicine from '@data/defaultMedicine.json';
 import defaultPrescription from '@data/defaultPrescription.json';
 import ModalImgPicker from '@layouts/NewPrescriptions/ModalImportImg';
 
+
 export default function index() {
     let save: SaveInterface;
     const [prescription, setPrescription] = useState<PrescriptionInterface>(defaultPrescription)
