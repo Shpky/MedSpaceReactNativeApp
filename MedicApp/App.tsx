@@ -4,9 +4,6 @@ import defaultSave from "@data/defaultSave.json";
 import NewPrescriptionView from "@layouts/NewPrescriptions"
 
 function App(): JSX.Element {
-
-
-
   (function initData(): void {
     RNSecureStorage.exists('save')
       .then((exists) => {

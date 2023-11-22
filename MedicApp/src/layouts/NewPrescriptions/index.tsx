@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { launchCamera, launchImageLibrary, CameraOptions, ImageLibraryOptions } from 'react-native-image-picker';
+import { launchCamera, launchImageLibrary, CameraOptions, ImageLibraryOptions }
+    from 'react-native-image-picker';
 import { Button, TextInput, Text, View, TextProps } from 'react-native';
-import MedicineComponent from '@layouts/NewPrescriptions/Medicine';
+import MedicineComponent from './Medicine';
 import RNSecureStorage from 'rn-secure-storage';
 import ScanButton from '@buttons/Scan';
 import Title from '@components/TitleBubble';
@@ -9,6 +10,7 @@ import Container from '@containers/FormBubble';
 import style from './style';
 import defaultMedicine from '@data/defaultMedicine.json';
 import defaultPrescription from '@data/defaultPrescription.json';
+
 export default function index() {
     const [image, setImage] = useState<string | null>(null);
     let save: SaveInterface;
@@ -23,9 +25,9 @@ export default function index() {
                             save = JSON.parse(data);
                     })
         })
-    const setMedicines = (newMedicines: MedicineInterface[]) => {
+    const setMedicines = (newMedicines: MedicineInterface[]) => 
         setPrescription((oldP) => ({ ...oldP, medicines: newMedicines }))
-    }
+    
 
     const cameraHandler = () => {
         const options: CameraOptions = {
@@ -49,7 +51,8 @@ export default function index() {
     };
 
     const doctorPickerHandler = (itemValue: string, itemIndex: number) => {
-        setPrescription((oldP) => ({ ...oldP, doctor: save?.doctors.find((d) => d.name === itemValue) || null }))
+        setPrescription((oldP) =>
+            ({ ...oldP, doctor: save?.doctors.find((d) => d.name === itemValue) || null }))
     }
 
     const addMedicineHandler = () => {
@@ -58,7 +61,9 @@ export default function index() {
 
     return <>
         {
-            __DEV__ && <Button title={"Print"} onPress={() => console.log("prescription\n", prescription, "\nmedicines\n", prescription.medicines)} />
+            __DEV__ && 
+            <Button title={"Print"} onPress={() => 
+                console.log("presc\n", prescription, "\nmedicines\n", prescription.medicines)} />
         }
 
         <Title>Veuillez renseigner les informations de l'ordonnance</Title>
@@ -66,11 +71,14 @@ export default function index() {
 
         <Container>
             <Text style={style.textInput}>Nom du traitement</Text>
-            <TextInput style={[style.input, style.full]} placeholder="Nom du traitement" placeholderTextColor={style.input.color} />
+            <TextInput style={[style.input, style.full]}
+                placeholder="Nom du traitement" placeholderTextColor={style.input.color} />
             <Text style={style.textInput}>Nom et coordonnées du médecin</Text>
             <View style={style.halfContainer}>
-                <TextInput style={[style.input, style.half]} placeholder="Nom" placeholderTextColor={style.input.color} />
-                <TextInput style={[style.input, style.half]} placeholder="Mail" placeholderTextColor={style.input.color} />
+                <TextInput style={[style.input, style.half]}
+                    placeholder="Nom" placeholderTextColor={style.input.color} />
+                <TextInput style={[style.input, style.half]}
+                    placeholder="Mail" placeholderTextColor={style.input.color} />
             </View>
         </Container>
         {
