@@ -10,19 +10,23 @@
     "test": "jest"
   },
   "dependencies": {
-<<<<<<< HEAD
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-brands-svg-icons": "^6.4.2",
+    "@fortawesome/free-regular-svg-icons": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/react-native-fontawesome": "^0.3.0",
     "@react-native-community/datetimepicker": "^7.6.1",
-=======
     "@react-native-ml-kit/text-recognition": "^1.5.1",
->>>>>>> cf65886096608bc92506d8212f2adb019062c872
     "@react-native-picker/picker": "^2.5.1",
     "@rneui/themed": "^4.0.0-rc.8",
     "fs": "^0.0.1-security",
     "react": "18.2.0",
     "react-native": "^0.72.6",
     "react-native-date-picker": "^4.3.3",
+    "react-native-fs": "^2.20.0",
     "react-native-image-picker": "^7.0.1",
     "react-native-svg": "^13.14.0",
+    "react-native-vector-icons": "^10.0.2",
     "rn-secure-storage": "^2.0.8",
     "string-similarity": "^4.0.4"
   },
