@@ -10,11 +10,8 @@
     "test": "jest"
   },
   "dependencies": {
-<<<<<<< HEAD
     "@react-native-community/datetimepicker": "^7.6.1",
-=======
     "@react-native-ml-kit/text-recognition": "^1.5.1",
->>>>>>> cf65886096608bc92506d8212f2adb019062c872
     "@react-native-picker/picker": "^2.5.1",
     "@rneui/themed": "^4.0.0-rc.8",
     "fs": "^0.0.1-security",

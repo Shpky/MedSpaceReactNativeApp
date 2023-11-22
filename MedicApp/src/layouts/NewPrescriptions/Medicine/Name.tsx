@@ -10,6 +10,6 @@ export default function Name({ onChange, name }:
         <Text style={style.textInput}>Nom du médicament</Text>
         <TextInput style={[style.input, style.full]} placeholder="Nom du médicament"
             placeholderTextColor={style.input.color}
-            onChange={onChange} value={name} />
+            onChange={onChange} >{name}</TextInput>
     </>
 }

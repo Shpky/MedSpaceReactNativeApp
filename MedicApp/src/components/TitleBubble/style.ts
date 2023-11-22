@@ -6,7 +6,6 @@ export default StyleSheet.create({
         backgroundColor: "#ff7f00",
         borderRadius: 30,
         width: "90%",
-        marginBottom: 15,
 
     },
     title: {

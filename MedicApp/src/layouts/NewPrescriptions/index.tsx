@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import { Button, TextInput, Text, View } from 'react-native';
-import MedicineComponent from '@layouts/NewPrescriptions/Medicine';
+import { Button, TextInput, Text, View, Pressable } from 'react-native';
+import MedicineComponent from '@layouts/NewPrescriptions/Medicine/Medicine';
 import RNSecureStorage from 'rn-secure-storage';
-import ScanButton from '@buttons/Scan';
 import Title from '@components/TitleBubble';
 import Container from '@containers/FormBubble';
 import style from './style';
 import defaultMedicine from '@data/defaultMedicine.json';
 import defaultPrescription from '@data/defaultPrescription.json';
 import ModalImgPicker from '@layouts/NewPrescriptions/ModalImportImg';
-
+import DatePicker from './DateForm';
+import AddMedicine from './buttons/AddMedicine';
 
 export default function index() {
     let save: SaveInterface;
@@ -43,17 +43,20 @@ export default function index() {
         }
 
         <Title>Veuillez renseigner les informations de l'ordonnance</Title>
-        <ScanButton>Ou scannez votre ordonnance</ScanButton>
-
         <ModalImgPicker setprescription={setPrescription} />
 
         <Container>
             <Text style={style.textInput}>Nom du traitement</Text>
-            <TextInput style={[style.input, style.full]} placeholder="Nom du traitement" placeholderTextColor={style.input.color} />
+            <TextInput style={[style.input, style.full]}
+                placeholder="Nom du traitement" placeholderTextColor={style.input.color}
+                onChange={(e) => setPrescription((oldP) => ({ ...oldP, name: e.nativeEvent.text }))}
+            >{prescription.title}</TextInput>
             <Text style={style.textInput}>Nom et coordonnées du médecin</Text>
             <View style={style.halfContainer}>
-                <TextInput style={[style.input, style.half]} placeholder="Nom" placeholderTextColor={style.input.color} />
-                <TextInput style={[style.input, style.half]} placeholder="Mail" placeholderTextColor={style.input.color} />
+                <TextInput style={[style.input, style.half]}
+                    placeholder="Nom" placeholderTextColor={style.input.color} />
+                <TextInput style={[style.input, style.half]}
+                    placeholder="Mail" placeholderTextColor={style.input.color} />
             </View>
         </Container>
         {
@@ -64,12 +67,27 @@ export default function index() {
                     newMedicines[i] = newMedicine;
                     setMedicines(newMedicines)
                 }
-                return <MedicineComponent key={i} medicine={p} onChange={modifyMedicine} />
+                const dropMedicine = () => {
+                    if (prescription.medicines.length === 1) {
+                        setMedicines([defaultMedicine])
+                        return
+                    }
+                    const newMedicines = [...prescription.medicines];
+                    newMedicines.splice(i, 1);
+                    setMedicines(newMedicines)
+                }
+                return <MedicineComponent key={i} medicineProp={p}
+                    onChange={modifyMedicine} drop={dropMedicine} />
             }
             )
         }
-
-        <Button title="Ajouter médicament" onPress={addMedicineHandler} />
+        <Container>
+            <Text style={style.textInput}>Notes de l'ordonnance</Text>
+            <TextInput style={[style.input, style.full]} placeholder="Notes" placeholderTextColor={style.input.color} />
+            <DatePicker date={prescription.date} text={"Date de l'ordonnance"}
+                setDate={(newDate) => setPrescription(oldP => ({ ...oldP, date: newDate }))} />
+        </Container>
+        <AddMedicine onClick={addMedicineHandler} />
     </>
 
 } 

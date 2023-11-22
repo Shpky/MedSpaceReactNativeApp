@@ -9,7 +9,7 @@ interface MedicineInterface {
     warning: boolean,
     notes?: string,
     substitutable?: boolean,
-    to_renew?: string,
+    to_renew?: number,
 }
 
 interface RoutineInterface {

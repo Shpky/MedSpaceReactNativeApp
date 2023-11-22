@@ -13,6 +13,8 @@ export default StyleSheet.create({
         backgroundColor: "#fff",
         paddingLeft: 9,
         color: "#000",
+        minHeight: 50,
+        textAlignVertical: "center",
     },
     full: {
         width: "100%",
@@ -35,5 +37,39 @@ export default StyleSheet.create({
         textAlignVertical: "center",
         color: "#000",
         fontSize: 16,
-    }
+    },
+    inputInline: {
+        textDecorationLine: "underline",
+        color: "#000",
+
+    },
+    addMedicineButtonContainer: {
+        alignSelf: 'center',
+        backgroundColor: "#BFD0BC",
+        borderRadius: 10,
+        width: "90%",
+    },
+    addMedicineButtonText: {
+        fontWeight: "400",
+        fontFamily: "Jomhuria-Regular",
+        fontSize: 40,
+        fontStyle: "normal",
+        color: "#fff",
+        textAlign: "center",
+    },
+    deleteMedicineButtonContainer: {
+        marginTop: 10,
+        alignSelf: 'center',
+        backgroundColor: "#B7C9B4",
+        borderRadius: 10,
+        width: "90%",
+    },
+    deleteMedicineButtonText: {
+        fontWeight: "300",
+        fontFamily: "Jomhuria-Regular",
+        fontSize: 30,
+        fontStyle: "normal",
+        color: "#fff",
+        textAlign: "center",
+    },
 });
