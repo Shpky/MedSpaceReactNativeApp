@@ -5,9 +5,6 @@ import NewPrescriptionView from "@layouts/NewPrescriptions"
 import HommeIndex from "@layouts/Home"
 import TreatmentContainer from "@layouts/Treatment"
 function App(): JSX.Element {
-
-
-
   (function initData(): void {
     RNSecureStorage.exists('save')
       .then((exists) => {

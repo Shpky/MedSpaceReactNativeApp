@@ -12,27 +12,28 @@ export default function Frequency({ frequency, setFrequency }:
     const [frequencyMode, setFrequencyMode] = useState<"routine" | "daily" | "weekly">(
         "morning" in frequency ? "routine" : "count" in frequency ? "daily" : "weekly");
 
-    return <><View style={style.textPickercontainer}>
-        <Text style={style.textInput}>Fréquence</Text>
-        <Picker items={[{ label: "Repas", value: "routine" }, { label: "Quotidien", value: "daily" }, { label: "Hebdomadaire", value: "weekly" }]}
-            default_value='routine'
-            onChange={(e) => {
-                setFrequencyMode(e);
-                switch (e) {
-                    case "routine":
-                        setFrequency({ "morning": false, "noon": false, "evening": false })
-                        break;
-                    case "daily":
-                        setFrequency({ "count": 0 })
-                        break;
-                    case "weekly":
-                        setFrequency({ "delay": 0 })
-                        break;
-                }
-            }}
-        />
+    return <>
+        <View style={style.textPickercontainer}>
+            <Text style={style.textInput}>Fréquence</Text>
+            <Picker items={[{ label: "Repas", value: "routine" }, { label: "Quotidien", value: "daily" }, { label: "Hebdomadaire", value: "weekly" }]}
+                default_value='routine'
+                onChange={(e) => {
+                    setFrequencyMode(e);
+                    switch (e) {
+                        case "routine":
+                            setFrequency({ "morning": false, "noon": false, "evening": false })
+                            break;
+                        case "daily":
+                            setFrequency({ "count": 0 })
+                            break;
+                        case "weekly":
+                            setFrequency({ "delay": 0 })
+                            break;
+                    }
+                }}
+            />
 
-    </View>
+        </View>
         {
             frequencyMode === "routine" &&
             <>
@@ -44,8 +45,8 @@ export default function Frequency({ frequency, setFrequency }:
                     }
                     }
                     containerStyle={[style.input as StyleProp<TextStyle>,
-                        "morning" in frequency && frequency.morning
-                        && {
+                    "morning" in frequency && frequency.morning
+                    && {
                         shadowColor: 'red',
                         shadowOffset: { width: 0, height: 0 },
                         shadowOpacity: 1,
@@ -77,12 +78,13 @@ export default function Frequency({ frequency, setFrequency }:
                     title={"Soir"}
                 />
             </>
-        } {
+        }
+        {
             frequencyMode === "daily" &&
             <View style={[{ flex: 1, flexDirection: "row" }, style.input, style.full]}>
-                <TextInput keyboardType='numeric' maxLength={1} onChange={(e) =>
+                <TextInput style={style.inputInline} keyboardType='numeric' maxLength={1} onChange={(e) =>
                     setFrequency({ ...frequency, count: parseInt(e.nativeEvent.text) })
-                }>0</TextInput>
+                } placeholder=" " placeholderTextColor={"#000"}>{("count" in frequency && frequency.count) || ""}</TextInput>
                 <Text style={[style.textInputComment, { marginLeft: -12, }]}>/ jour</Text>
             </View>
         }
@@ -90,9 +92,9 @@ export default function Frequency({ frequency, setFrequency }:
             frequencyMode === "weekly" &&
             <View style={[{ flex: 1, flexDirection: "row" }, style.input, style.full]}>
                 <Text style={style.textInputComment}>1 fois tous les </Text>
-                <TextInput keyboardType='numeric' maxLength={1} onChange={(e) =>
-                    setFrequency({ ...frequency, delay: parseInt(e.nativeEvent.text) })
-                }>0</TextInput>
+                <TextInput style={style.inputInline} keyboardType='numeric' maxLength={1} onChange={(e) =>
+                    setFrequency({ ...frequency, delay: parseInt(e.nativeEvent.text) })}
+                    placeholder=" " placeholderTextColor={"#000"}>{("delay" in frequency && frequency.delay) || ""}</TextInput>
                 <Text style={[style.textInputComment, { marginLeft: -12, }]}>jours</Text>
             </View>
         }

@@ -101,7 +101,7 @@ const ModalImgPicker = ({ setprescription }: { setprescription: Dispatch<SetStat
             <Pressable
                 style={[styles.button, styles.buttonOpen]}
                 onPress={() => setModalVisible(true)}>
-                <Text style={styles.textStyle}>Voulez vous scannez votre ordonnace ?</Text>
+                <Text style={styles.textStyle}>Ou scanner une ordonnance physique</Text>
             </Pressable>
         </View>
     );
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 22,
+        marginTop: 15,
     },
     modalView: {
         margin: 20,
@@ -152,6 +152,7 @@ const styles = StyleSheet.create({
     },
     buttonOpen: {
         backgroundColor: '#F194FF',
+        marginBottom: 30,
     },
     buttonClose: {
         backgroundColor: '#FF0000',
