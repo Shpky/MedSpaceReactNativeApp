@@ -121,22 +121,23 @@ const TreatmentContainer = () => {
 
     return (
 
-        <View>
+        <View style={styles.Body}>
+            <View>
+
+                <FlatList
+                    ListHeaderComponent={() => <View style={styles.HeaderInfoTraitment}><Text style={styles.fontJomhuriaRegular}>Sélectionez un traitement</Text></View>}
+                    data={monDictionnaire}
+                    renderItem={({ item }) => <RenderItem item={item} />}
 
 
-            <FlatList
-                ListHeaderComponent={() => <View style={styles.HeaderInfoTraitment}><Text style={styles.fontJomhuriaRegular}>Sélectionez un traitement</Text></View>}
-                data={monDictionnaire}
-                renderItem={({ item }) => <RenderItem item={item} />}
+                />
+                <View style={styles.container}>
+                    <View style={styles.NewTreatment}>
 
-
-            />
-            <View style={styles.container}>
-                <View style={styles.NewTreatment}>
-
-                    <Pressable style={styles.buttonNewtreatment} onPress={navigateToNewPrescription}>
-                        <FontAwesomeIcon icon={faPlus} color="white" size={50} />
-                    </Pressable>
+                        <Pressable style={styles.buttonNewtreatment} onPress={navigateToNewPrescription}>
+                            <FontAwesomeIcon icon={faPlus} color="white" size={50} />
+                        </Pressable>
+                    </View>
                 </View>
             </View>
 
@@ -146,15 +147,22 @@ const TreatmentContainer = () => {
 }
 
 let styles = StyleSheet.create({
+    Body: {
+        flex: 1,
+
+        marginLeft: 20,
+        marginRight: 20,
+        backgroundColor: 'white',
+    },
     container: {
         flex: 1,
-        position: 'relative', // Ajout de cette ligne
+        position: 'relative',
     },
 
     NewTreatment: {
         position: 'absolute',
-        bottom: 20, // ou toute autre valeur que vous préférez
-        right: 20, // ou toute autre valeur que vous préférez
+        bottom: 20,
+        right: 20,
         backgroundColor: '#2aa32a',
         height: 80,
         width: 80,
@@ -209,7 +217,7 @@ let styles = StyleSheet.create({
     Treatment: {
         height: 200,
         borderRadius: 30,
-        paddingBottom: 30,  // Correction ici
+        paddingBottom: 30,
         backgroundColor: 'red',
         marginBottom: 20,
         shadowColor: '#000',
