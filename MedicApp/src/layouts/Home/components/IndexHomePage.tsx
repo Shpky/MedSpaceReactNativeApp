@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Pressable } from "react-native";
+import { Text, View, StyleSheet, Pressable, ScrollView } from "react-native";
 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
@@ -6,12 +6,19 @@ import { faFile } from '@fortawesome/free-solid-svg-icons/faFile'
 import { faPills } from '@fortawesome/free-solid-svg-icons/faPills'
 import { faCalendar } from '@fortawesome/free-solid-svg-icons/faCalendar'
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons/faCircleInfo'
-const BodyContainer = () => {
+import { useNavigation } from '@react-navigation/native';
+const HomePageBody = () => {
     const iconSize = 80;
+    const navigation = useNavigation();
+    const navigateToDetails = () => {
+        //@ts-ignore
+        navigation.navigate('Treatment');
+    };
     return (
-        <View style={styles.body}>
 
-            <Pressable style={styles.container}>
+        <ScrollView style={[styles.body, { backgroundColor: 'white' }]}>
+
+            <Pressable style={styles.container} onPress={navigateToDetails} >
                 <View style={styles.topLeft}>
                     <Text style={styles.fontJomhuria}>Traitements</Text>
                 </View>
@@ -44,7 +51,7 @@ const BodyContainer = () => {
                 </View>
             </Pressable>
 
-        </View >
+        </ScrollView >
     )
 }
 
@@ -53,17 +60,20 @@ const styles = StyleSheet.create({
 
         backgroundColor: 'red',
         height: 200,
-        weight: 178,
+
         borderRadius: 30,
         borderBlockColor: 'black',
         borderWidth: 0,
         marginBottom: 10,
 
+
     },
     body: {
+        flex: 1,
 
         marginLeft: 20,
         marginRight: 20,
+        backgroundColor: 'white',
 
     },
     fontJomhuria: {
@@ -100,4 +110,4 @@ const styles = StyleSheet.create({
 
 
 })
-export default BodyContainer;
+export default HomePageBody;
