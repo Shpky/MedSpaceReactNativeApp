@@ -152,7 +152,7 @@ let styles = StyleSheet.create({
 
         marginLeft: 20,
         marginRight: 20,
-        backgroundColor: 'white',
+
     },
     container: {
         flex: 1,
@@ -183,7 +183,7 @@ let styles = StyleSheet.create({
         height: 62,
 
         backgroundColor: 'orange',
-        color: 'white',
+
         borderRadius: 30,
         flexDirection: 'row',
         alignContent: 'center',
