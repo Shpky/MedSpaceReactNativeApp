@@ -1,8 +1,14 @@
+import { Text, View, StyleSheet, Pressable, FlatList } from "react-native";
+import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
-import { Text, View, StyleSheet, Pressable, FlatList, ScrollView, SafeAreaView, Image } from "react-native";
-
+import { useNavigation } from '@react-navigation/native';
 const TreatmentContainer = () => {
-
+    const navigation = useNavigation();
+    const navigateToNewPrescription = () => {
+        //@ts-ignore
+        navigation.navigate('NewPrescription');
+    };
 
     type MedicationInfo = {
         medicalName: string;
@@ -85,7 +91,7 @@ const TreatmentContainer = () => {
 
 
 
-
+    //Pour chaque éllements on le transforme en un élément JSX
     const RenderItem = ({ item }: { item: Treatment }) => {
         return (
             <View style={styles.Treatment}>
@@ -115,27 +121,57 @@ const TreatmentContainer = () => {
 
     return (
 
+        <View>
 
-        <ScrollView style={{ backgroundColor: 'white' }}>
-            <View style={styles.NewTraitment}>
-                <Text style={styles.fontJomhuriaRegular}>Nouveau Traitement</Text>
-            </View>
+
             <FlatList
+                ListHeaderComponent={() => <View style={styles.HeaderInfoTraitment}><Text style={styles.fontJomhuriaRegular}>Sélectionez un traitement</Text></View>}
                 data={monDictionnaire}
                 renderItem={({ item }) => <RenderItem item={item} />}
 
 
             />
+            <View style={styles.container}>
+                <View style={styles.NewTreatment}>
 
-        </ScrollView>
+                    <Pressable style={styles.buttonNewtreatment} onPress={navigateToNewPrescription}>
+                        <FontAwesomeIcon icon={faPlus} color="white" size={50} />
+                    </Pressable>
+                </View>
+            </View>
 
-
+        </View >
     )
 
 }
 
 let styles = StyleSheet.create({
-    NewTraitment: {
+    container: {
+        flex: 1,
+        position: 'relative', // Ajout de cette ligne
+    },
+
+    NewTreatment: {
+        position: 'absolute',
+        bottom: 20, // ou toute autre valeur que vous préférez
+        right: 20, // ou toute autre valeur que vous préférez
+        backgroundColor: '#2aa32a',
+        height: 80,
+        width: 80,
+        borderRadius: 40,
+    },
+
+    buttonNewtreatment: {
+
+        backgroundColor: '#2aa32a',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 80,
+        width: 80,
+        borderRadius: 40,
+
+    },
+    HeaderInfoTraitment: {
         height: 62,
 
         backgroundColor: 'orange',

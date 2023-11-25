@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, TextInput, Text, View, Pressable } from 'react-native';
+import { Button, TextInput, Text, View, Pressable, ScrollView } from 'react-native';
 import MedicineComponent from '@layouts/NewPrescriptions/Medicine/Medicine';
 import RNSecureStorage from 'rn-secure-storage';
 import Title from '@components/TitleBubble';
@@ -11,7 +11,7 @@ import ModalImgPicker from './ModalImportImg';
 import AddMedicine from './buttons/AddMedicine';
 import DatePicker from './DateForm';
 
-export default function index() {
+const IndexPageNewPrescription = () => {
     let save: SaveInterface;
     const [prescription, setPrescription] = useState<PrescriptionInterface>(defaultPrescription)
 
@@ -38,7 +38,7 @@ export default function index() {
         setPrescription((oldP) => ({ ...oldP, medicines: [...oldP.medicines, defaultMedicine] }))
     }
 
-    return <>
+    return <ScrollView>
         {
             __DEV__ &&
             <Button title={"Print"} onPress={() =>
@@ -91,6 +91,8 @@ export default function index() {
                 setDate={(newDate) => setPrescription(oldP => ({ ...oldP, date: newDate }))} />
         </Container>
         <AddMedicine onClick={addMedicineHandler} />
-    </>
+    </ScrollView>
 
-} 
+}
+
+export default IndexPageNewPrescription;

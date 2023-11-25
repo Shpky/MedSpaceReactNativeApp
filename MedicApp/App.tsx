@@ -3,8 +3,9 @@ import { View, Text } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HeaderContainer from "@layouts/Home/components/headerContainer";
-import TreatmentContainer from '@layouts/Treatment';
+import TreatmentContainer from '@layouts/Treatment/TreatmentIndexPage';
 import HomePageBody from '@layouts/Home/components/IndexHomePage';
+import IndexPageNewPrescription from '@layouts/NewPrescriptions/IndexPageNewPrescription';
 function HomeScreen() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -34,6 +35,7 @@ function App() {
       >
         <Stack.Screen name="Home" component={HomePageBody} />
         <Stack.Screen name="Treatment" component={TreatmentContainer} />
+        <Stack.Screen name="NewPrescription" component={IndexPageNewPrescription} />
 
       </Stack.Navigator>
     </NavigationContainer>

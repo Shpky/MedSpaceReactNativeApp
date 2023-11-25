@@ -6,6 +6,7 @@ import { faFile } from '@fortawesome/free-solid-svg-icons/faFile'
 import { faPills } from '@fortawesome/free-solid-svg-icons/faPills'
 import { faCalendar } from '@fortawesome/free-solid-svg-icons/faCalendar'
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons/faCircleInfo'
+
 import { useNavigation } from '@react-navigation/native';
 const HomePageBody = () => {
     const iconSize = 80;
@@ -94,15 +95,15 @@ const styles = StyleSheet.create({
     },
     topLeft: {
         flex: 1,
-        justifyContent: 'flex-start', // Align at the top
-        alignItems: 'flex-start', // Align on the left
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start', 
 
 
     },
     bottomRight: {
         flex: 1,
-        justifyContent: 'flex-end', // Align at the bottom
-        alignItems: 'flex-end', // Align on the right
+        justifyContent: 'flex-end', 
+        alignItems: 'flex-end', 
 
         paddingRight: 15,
         paddingBottom: 10,
