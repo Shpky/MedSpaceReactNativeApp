@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Button, TextInput, Text, View, Pressable } from 'react-native';
-import MedicineComponent from '@layouts/NewPrescriptions/Medicine/Medicine';
-import RNSecureStorage from 'rn-secure-storage';
+import MedicineComponent from '@layouts/NewPrescription/Medicine/Medicine';
 import Title from '@components/TitleBubble';
 import Container from '@containers/FormBubble';
 import style from './style';
@@ -10,23 +9,17 @@ import defaultPrescription from '@data/defaultPrescription.json';
 import ModalImgPicker from './ModalImportImg';
 import AddMedicine from './buttons/AddMedicine';
 import DatePicker from './DateForm';
+import Debug from '@components/Debug';
+import getSave from 'src/utils/getSave';
 
 export default function index() {
-    let save: SaveInterface;
+
+    const save = getSave()
     const [prescription, setPrescription] = useState<PrescriptionInterface>(defaultPrescription)
 
-    RNSecureStorage.exists('save')
-        .then((exists) => {
-            if (exists)
-                RNSecureStorage.get('save')
-                    .then((data) => {
-                        if (typeof data === "string")
-                            save = JSON.parse(data);
-                    })
-        })
+
     const setMedicines = (newMedicines: MedicineInterface[]) =>
         setPrescription((oldP) => ({ ...oldP, medicines: newMedicines }))
-
 
 
     const doctorPickerHandler = (itemValue: string, itemIndex: number) => {
@@ -39,13 +32,13 @@ export default function index() {
     }
 
     return <>
-        {
-            __DEV__ &&
+        <Debug>
             <Button title={"Print"} onPress={() =>
                 console.log("presc\n", prescription, "\nmedicines\n", prescription.medicines)} />
-        }
+        </Debug>
 
         <Title>Veuillez renseigner les informations de l'ordonnance</Title>
+
         <ModalImgPicker setprescription={setPrescription} />
 
         <Container>
