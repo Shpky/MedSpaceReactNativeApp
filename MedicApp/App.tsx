@@ -4,8 +4,12 @@ import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HeaderContainer from "@layouts/Home/components/headerContainer";
 import TreatmentContainer from '@layouts/Treatment/TreatmentIndexPage';
+import defaultSaveForTest from "@data/defaultSaveForTest.json";
 import HomePageBody from '@layouts/Home/components/IndexHomePage';
 import IndexPageNewPrescription from '@layouts/NewPrescriptions/IndexPageNewPrescription';
+import { useEffect } from 'react';
+import DataManager from './src/services/dataManager';
+
 function HomeScreen() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -20,10 +24,25 @@ const MedicAppWhiteTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    background: 'white', // Changez la couleur de fond selon vos besoins
+    background: 'white',
   },
 };
-function App() {
+function App(): JSX.Element {
+
+
+
+
+  useEffect(() => {
+
+    const dataManager = new DataManager();
+    dataManager.init()
+    //@ts-ignore
+    dataManager.setSaveData(defaultSaveForTest as SaveInterface)
+  })
+
+
+  console.log("inited")
+  //
   return (
     <NavigationContainer theme={MedicAppWhiteTheme}>
       <Stack.Navigator

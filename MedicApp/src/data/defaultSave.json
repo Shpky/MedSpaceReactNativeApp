@@ -11,9 +11,16 @@
     ],
     "patients": [
         {
+            "name": "Invité",
+            "icone": 0,
+            "prescriptions": [],
+            "actualuser": true
+        },
+        {
             "name": "Vous",
             "icone": 0,
-            "prescriptions": []
+            "prescriptions": [],
+            "actualuser": false
         }
     ]
 }

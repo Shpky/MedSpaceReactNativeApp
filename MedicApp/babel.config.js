@@ -25,6 +25,8 @@ module.exports = {
           "@layouts":
             "./src/layouts/"
           ,
+          "@services":
+            "./src/services/"
         }
       }
     ],
