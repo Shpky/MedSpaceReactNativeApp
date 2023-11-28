@@ -1,60 +1,60 @@
-import { ScrollView, Button } from 'react-native';
-import RNSecureStorage, { ACCESSIBLE } from 'rn-secure-storage';
-import defaultSave from "@data/defaultSave.json";
-import NewPrescriptionView from "@layouts/NewPrescription"
-import HomeIndex from "@layouts/Home"
-import { NavigationContainer } from '@react-navigation/native';
+import * as React from 'react';
+import { View, Text, Button } from 'react-native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Prescriptions from '@layouts/Prescriptions';
+import HeaderContainer from "@layouts/Home/components/headerContainer";
+import TreatmentContainer from '@layouts/Treatment/TreatmentIndexPage';
+import HomePageBody from '@layouts/Home/components/IndexHomePage';
+import NewPrescription from '@layouts/NewPrescription/NewPrescription';
 import Debug from '@components/Debug';
+import resetSave from '@data/resetSave'
+import getSave from '@data/getSave';
 
-function App(): JSX.Element {
-  (function initData(): void {
-    RNSecureStorage.exists('save')
-      .then((exists) => {
-        if (!exists) {
-          resetDataBase()
-        }
-      }
-      )
-  })();
-
-  const resetDataBase = () => {
-    RNSecureStorage
-      .set('save', JSON.stringify(defaultSave),
-        { accessible: ACCESSIBLE.WHEN_UNLOCKED })
-  }
-
-  type RootStackParamList = {
-    Home: undefined;
-    NewPrescription: undefined;
-    Prescriptions: undefined;
-    // Profile: { userId: string };
-    // Feed: { sort: 'latest' | 'top' } | undefined;
-  };
-  const Stack = createNativeStackNavigator<RootStackParamList>();
-  console.log("inited")
-
+function HomeScreen() {
   return (
-    <ScrollView>
-      <Debug>
-        <Button title="afficher" onPress={() => {
-          console.log("test")
-          console.log(defaultSave)
-        }
-        }></Button>
-        <Button title="resetDataBase" onPress={resetDataBase}></Button>
-      </Debug>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Prescriptions">
-          <Stack.Screen name="Home" component={HomeIndex} />
-          <Stack.Screen name="Prescriptions" component={Prescriptions} />
-          <Stack.Screen name="NewPrescription" component={NewPrescriptionView} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </ScrollView>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Home Screen</Text>
+    </View>
   );
 }
 
+const Stack = createNativeStackNavigator();
+// Personnalisez le thème ici
+const MedicAppWhiteTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: 'white', // Changez la couleur de fond selon vos besoins
+  },
+};
+function App() {
+
+  return (
+    <>
+      <Debug>
+        <Button title="afficher" onPress={() => {
+          console.log("test")
+          console.log(getSave())
+        }
+        }></Button>
+        <Button title="resetDataBase" onPress={resetSave}></Button>
+      </Debug>
+      <NavigationContainer theme={MedicAppWhiteTheme}>
+        <Stack.Navigator
+          screenOptions={{
+            header: () => <HeaderContainer />,
+            animation: 'slide_from_right',
+
+          }}
+        >
+          <Stack.Screen name="Home" component={HomePageBody} />
+          <Stack.Screen name="Treatment" component={TreatmentContainer} />
+          <Stack.Screen name="NewPrescription" component={NewPrescription} />
+
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
+  );
+}
 
 export default App;

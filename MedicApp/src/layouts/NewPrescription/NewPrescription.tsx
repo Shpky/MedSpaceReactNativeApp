@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button, TextInput, Text, View, Pressable } from 'react-native';
-import MedicineComponent from '@layouts/NewPrescription/Medicine/Medicine';
+import MedicineComponent from '@layouts/NewPrescription/Medicine/MedicineIndex';
 import Title from '@components/TitleBubble';
 import Container from '@containers/FormBubble';
 import style from './style';
@@ -10,7 +10,7 @@ import ModalImgPicker from './ModalImportImg';
 import AddMedicine from './buttons/AddMedicine';
 import DatePicker from './DateForm';
 import Debug from '@components/Debug';
-import getSave from 'src/utils/getSave';
+import getSave from '@data/getSave';
 
 export default function index() {
 

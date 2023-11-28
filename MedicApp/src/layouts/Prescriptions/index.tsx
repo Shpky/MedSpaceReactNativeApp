@@ -1,5 +1,5 @@
 import Title from '@components/TitleBubble';
-import getSave from 'src/utils/getSave';
+import getSave from '@data/getSave';
 import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 
 type RootStackParamList = {

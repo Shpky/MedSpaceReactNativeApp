@@ -16,6 +16,7 @@ export default function Medicine({ medicineProp, onChange, drop }: {
 }) {
 
     const [medicine, setMedicine] = useState(medicineProp);
+    
     useEffect(() => {
         onChange && onChange(medicine)
     }, [medicine])
