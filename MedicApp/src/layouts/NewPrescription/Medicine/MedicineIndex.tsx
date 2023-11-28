@@ -1,4 +1,3 @@
-import Picker from '@components/Picker';
 import { useState, useEffect } from 'react';
 import Container from '@containers/FormBubble';
 import Name from './Name';
@@ -10,40 +9,42 @@ import Renew from './Renew';
 import Notes from './Notes';
 import DeleteButton from '../buttons/DeleteMedicine';
 
-export default function Medicine({ medicineProp, onChange, drop }: {
-    medicineProp: MedicineInterface, onChange?: (newMedicine: MedicineInterface) => void
+type MedicineProps = {
+    medicine: MedicineInterface, onChange?: (newMedicine: MedicineInterface) => void
     drop: () => void
-}) {
+}
 
-    const [medicine, setMedicine] = useState(medicineProp);
-    
+export default function Medicine({ medicine, onChange, drop }: MedicineProps) {
+
+    const [medicineState, setMedicine] = useState(medicine);
+
     useEffect(() => {
-        onChange && onChange(medicine)
-    }, [medicine])
+        onChange?.(medicineState)
+    }, [medicineState])
 
 
     return <Container>
-        <Name name={medicine.name}
-            onChange={(e) => setMedicine({ ...medicine, name: e.nativeEvent.text })} />
+        <Name name={medicineState.name}
+            onChange={(e) => setMedicine({ ...medicineState, name: e.nativeEvent.text })} />
 
-        <Company company={medicine.company}
-            onChange={(e) => setMedicine({ ...medicine, company: e.nativeEvent.text })} />
+        <Company company={medicineState.company}
+            onChange={(e) => setMedicine({ ...medicineState, company: e.nativeEvent.text })} />
 
-        <Dosage dosage={{ quantity: medicine.dosage, unit: medicine.dosageType }}
-            onChangeDosage={(e) => setMedicine({ ...medicine, dosage: parseInt(e.nativeEvent.text) })}
-            onChangeUnit={(e) => setMedicine({ ...medicine, dosageType: e.nativeEvent.text })} />
+        <Dosage dosage={{ quantity: medicineState.dosage, unit: medicineState.dosageType }}
+            onChangeDosage={(e) => setMedicine({ ...medicineState, dosage: parseInt(e.nativeEvent.text) })}
+            onChangeUnit={(e) => setMedicine({ ...medicineState, dosageType: e.nativeEvent.text })} />
 
-        <Frequency frequency={medicine.frequency} key={medicine.frequency?.toString()}
-            setFrequency={(newFrequency) => setMedicine({ ...medicine, frequency: newFrequency })} />
+        <Frequency frequency={medicineState.frequency} key={medicineState.frequency?.toString()}
+            setFrequency={(newFrequency) => setMedicine({ ...medicineState, frequency: newFrequency })} />
 
-        <Duration date={medicine.duration} key={medicine.duration?.toString()} text="Fin du traitement"
-            setDate={(newDuration) => setMedicine({ ...medicine, duration: newDuration })} />
+        <Duration date={medicineState.duration} key={medicineState.duration?.toString()} text="Fin du traitement"
+            setDate={(newDuration) => setMedicine({ ...medicineState, duration: newDuration })} />
 
-        <Renew renew={medicine.to_renew}
-            onChange={(e) => setMedicine({ ...medicine, to_renew: parseInt(e.nativeEvent.text) })} />
+        <Renew renew={medicineState.to_renew}
+            onChange={(e) => setMedicine({ ...medicineState, to_renew: parseInt(e.nativeEvent.text) })} />
 
-        <Notes notes={medicine.notes}
-            onChange={(e) => setMedicine({ ...medicine, notes: e.nativeEvent.text })} />
+        <Notes notes={medicineState.notes}
+            onChange={(e) => setMedicine({ ...medicineState, notes: e.nativeEvent.text })} />
         <DeleteButton onClick={drop} />
     </Container >
 }

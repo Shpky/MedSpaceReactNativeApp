@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, TextInput, Text, View, Pressable } from 'react-native';
 import MedicineComponent from '@layouts/NewPrescription/Medicine/MedicineIndex';
 import Title from '@components/TitleBubble';
@@ -10,11 +10,15 @@ import ModalImgPicker from './ModalImportImg';
 import AddMedicine from './buttons/AddMedicine';
 import DatePicker from './DateForm';
 import Debug from '@components/Debug';
-import getSave from '@data/getSave';
+import dataManager from '@services/dataManager';
 
 export default function index() {
+    let save: SaveInterface | undefined;
 
-    const save = getSave()
+    useEffect(() => {
+        dataManager.getSaveData().then((s) => save = s)
+    }, [])
+
     const [prescription, setPrescription] = useState<PrescriptionInterface>(defaultPrescription)
 
 
@@ -25,11 +29,11 @@ export default function index() {
     const doctorPickerHandler = (itemValue: string, itemIndex: number) => {
         setPrescription((oldP) =>
             ({ ...oldP, doctor: save?.doctors.find((d) => d.name === itemValue) || null }))
-    }
+    };
 
     const addMedicineHandler = () => {
         setPrescription((oldP) => ({ ...oldP, medicines: [...oldP.medicines, defaultMedicine] }))
-    }
+    };
 
     return <>
         <Debug>
@@ -72,7 +76,7 @@ export default function index() {
                     newMedicines.splice(i, 1);
                     setMedicines(newMedicines)
                 }
-                return <MedicineComponent key={i} medicineProp={p}
+                return <MedicineComponent key={i} medicine={p}
                     onChange={modifyMedicine} drop={dropMedicine} />
             }
             )

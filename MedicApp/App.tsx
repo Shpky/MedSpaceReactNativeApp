@@ -9,7 +9,7 @@ import HomePageBody from '@layouts/Home/components/IndexHomePage';
 import NewPrescription from '@layouts/NewPrescription/NewPrescription';
 import Debug from '@components/Debug';
 import { useEffect } from 'react';
-import DataManager from './src/services/dataManager';
+import dataManager from './src/services/dataManager';
 
 function HomeScreen() {
   return (
@@ -31,9 +31,9 @@ const MedicAppWhiteTheme = {
 
 function App(): JSX.Element {
   useEffect(() => {
-    DataManager.init()
+    dataManager.init()
     //@ts-ignore
-    DataManager.setSaveData(defaultSaveForTest as SaveInterface)
+    dataManager.setSaveData(defaultSaveForTest as SaveInterface)
   })
 
 
@@ -44,10 +44,10 @@ function App(): JSX.Element {
       <Debug>
         <Button title="afficher" onPress={() => {
           console.log("test")
-          console.log(DataManager.getSaveData())
+          console.log(dataManager.getSaveData())
         }
         }></Button>
-        <Button title="resetDataBase" onPress={DataManager.deleteSaveData}></Button>
+        <Button title="resetDataBase" onPress={dataManager.deleteSaveData}></Button>
       </Debug>
       <NavigationContainer theme={MedicAppWhiteTheme}>
         <Stack.Navigator
