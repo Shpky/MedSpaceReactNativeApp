@@ -4,11 +4,12 @@ import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HeaderContainer from "@layouts/Home/components/headerContainer";
 import TreatmentContainer from '@layouts/Treatment/TreatmentIndexPage';
+import defaultSaveForTest from "@data/defaultSaveForTest.json";
 import HomePageBody from '@layouts/Home/components/IndexHomePage';
 import NewPrescription from '@layouts/NewPrescription/NewPrescription';
 import Debug from '@components/Debug';
-import resetSave from '@data/resetSave'
-import getSave from '@data/getSave';
+import { useEffect } from 'react';
+import DataManager from './src/services/dataManager';
 
 function HomeScreen() {
   return (
@@ -24,20 +25,29 @@ const MedicAppWhiteTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    background: 'white', // Changez la couleur de fond selon vos besoins
+    background: 'white',
   },
 };
-function App() {
+
+function App(): JSX.Element {
+  useEffect(() => {
+    DataManager.init()
+    //@ts-ignore
+    DataManager.setSaveData(defaultSaveForTest as SaveInterface)
+  })
+
+
+  console.log("inited")
 
   return (
     <>
       <Debug>
         <Button title="afficher" onPress={() => {
           console.log("test")
-          console.log(getSave())
+          console.log(DataManager.getSaveData())
         }
         }></Button>
-        <Button title="resetDataBase" onPress={resetSave}></Button>
+        <Button title="resetDataBase" onPress={DataManager.deleteSaveData}></Button>
       </Debug>
       <NavigationContainer theme={MedicAppWhiteTheme}>
         <Stack.Navigator
@@ -49,7 +59,7 @@ function App() {
         >
           <Stack.Screen name="Home" component={HomePageBody} />
           <Stack.Screen name="Treatment" component={TreatmentContainer} />
-          <Stack.Screen name="NewPrescription" component={NewPrescription} />
+          <Stack.Screen name="NewPrescription" component={NewPrescription}/>
 
         </Stack.Navigator>
       </NavigationContainer>

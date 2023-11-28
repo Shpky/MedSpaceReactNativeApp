@@ -1,114 +1,57 @@
-import { Text, View, StyleSheet, Pressable, FlatList } from "react-native";
+import * as React from 'react';
+import { useState, useEffect } from 'react';
+import { Text, View, StyleSheet, Pressable, FlatList, ScrollView } from "react-native";
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-
+import defaultMedicine from '@data/defaultMedicine.json';
+import defaultPrescription from '@data/defaultPrescription.json';
 import { useNavigation } from '@react-navigation/native';
+import RNSecureStorage from 'rn-secure-storage';
+import DataManager from '../../services/dataManager';
+
 const TreatmentContainer = () => {
+    const [patient, setPatient] = useState<PatientInterface | undefined>();
     const navigation = useNavigation();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const dataManager = new DataManager();
+            await dataManager.init();
+
+            const save = await dataManager.getSaveData();
+            const actualUserPatient = save.patients.find(patient => patient.actualuser === true);
+
+            if (actualUserPatient) {
+                setPatient(actualUserPatient);
+            }
+
+        };
+
+        fetchData();
+    }, []);
+
     const navigateToNewPrescription = () => {
         //@ts-ignore
         navigation.navigate('NewPrescription');
     };
 
-    type MedicationInfo = {
-        medicalName: string;
-        infosup: {
-            dose: string;
-            frequency: string;
-            duration: string;
-        };
-    };
-
-    type Treatment = {
-        treatmentName: string;
-        medecines: MedicationInfo[];
-    };
-
-
-    const monDictionnaire
-        = [{
-            treatmentName: "TraitmentName1",
-            medecines: [
-                { medicalName: "Dolipranne", infosup: { dose: 'valeur1', frequency: 'valeur1', duration: 'valeur1' } },
-                { medicalName: "Panadol", infosup: { dose: 'valeur1', frequency: 'valeur1', duration: 'valeur1' } },
-                { medicalName: "Aspirin", infosup: { dose: 'valeur1', frequency: 'valeur1', duration: 'valeur1' } },
-                { medicalName: "Aspirin", infosup: { dose: 'valeur1', frequency: 'valeur1', duration: 'valeur1' } },
-            ]
-        },
-        {
-            treatmentName: "TraitmentName2",
-            medecines: [
-                { medicalName: "Dolipranne", infosup: { dose: 'valeur1', frequency: 'valeur1', duration: 'valeur1' } },
-                { medicalName: "Panadol", infosup: { dose: 'valeur1', frequency: 'valeur1', duration: 'valeur1' } },
-                { medicalName: "Aspirin", infosup: { dose: 'valeur1', frequency: 'valeur1', duration: 'valeur1' } },
-            ]
-        },
-        {
-            treatmentName: "TraitmentName3",
-            medecines: [
-                { medicalName: "Dolipranne", infosup: { dose: 'valeur1', frequency: 'valeur1', duration: 'valeur1' } },
-                { medicalName: "Panadol", infosup: { dose: 'valeur1', frequency: 'valeur1', duration: 'valeur1' } },
-                { medicalName: "Aspirin", infosup: { dose: 'valeur1', frequency: 'valeur1', duration: 'valeur1' } },
-            ]
-        },
-        {
-            treatmentName: "TraitmentName4",
-            medecines: [
-                { medicalName: "Dolipranne", infosup: { dose: 'valeur1', frequency: 'valeur1', duration: 'valeur1' } },
-                { medicalName: "Panadol", infosup: { dose: 'valeur1', frequency: 'valeur1', duration: 'valeur1' } },
-                { medicalName: "Aspirin", infosup: { dose: 'valeur1', frequency: 'valeur1', duration: 'valeur1' } },
-            ]
-        },
-        {
-            treatmentName: "TraitmentName5",
-            medecines: [
-                { medicalName: "Dolipranne", infosup: { dose: 'valeur1', frequency: 'valeur1', duration: 'valeur1' } },
-                { medicalName: "Panadol", infosup: { dose: 'valeur1', frequency: 'valeur1', duration: 'valeur1' } },
-                { medicalName: "Aspirin", infosup: { dose: 'valeur1', frequency: 'valeur1', duration: 'valeur1' } },
-                { medicalName: "Aspirin", infosup: { dose: 'valeur1', frequency: 'valeur1', duration: 'valeur1' } },
-            ]
-        },
-        {
-            treatmentName: "TraitmentName6",
-            medecines: [
-                { medicalName: "Dolipranne", infosup: { dose: 'valeur1', frequency: 'valeur1', duration: 'valeur1' } },
-                { medicalName: "Panadol", infosup: { dose: 'valeur1', frequency: 'valeur1', duration: 'valeur1' } },
-                { medicalName: "Aspirin", infosup: { dose: 'valeur1', frequency: 'valeur1', duration: 'valeur1' } },
-            ]
-        },
-        {
-            treatmentName: "TraitmentName7",
-            medecines: [
-                { medicalName: "Dolipranne", infosup: { dose: 'valeur1', frequency: 'valeur1', duration: 'valeur1' } },
-                { medicalName: "Panadol", infosup: { dose: 'valeur1', frequency: 'valeur1', duration: 'valeur1' } },
-                { medicalName: "Aspirin", infosup: { dose: 'valeur1', frequency: 'valeur1', duration: 'valeur1' } },
-            ]
-        },
-
-        ];
-
-
-
-
-
-    //Pour chaque éllements on le transforme en un élément JSX
-    const RenderItem = ({ item }: { item: Treatment }) => {
+    const RenderItem = ({ item }: { item: PrescriptionInterface }) => {
         return (
             <View style={styles.Treatment}>
                 <View>
-                    <Text style={styles.fontJomhuriaRegular}>{item.treatmentName}</Text>
+                    <Text style={styles.fontJomhuriaRegular}>{item.title}</Text>
                 </View>
                 <View>
-                    {item.medecines.length <= 3 ? (
-                        item.medecines.map((medicine, index) => (
-                            <Text style={styles.smallfontJomhuriaRegular} key={index}>{medicine.medicalName}</Text>
+                    {item.medicines.length <= 3 ? (
+                        item.medicines.map((medicine, index) => (
+                            <Text style={styles.smallfontJomhuriaRegular} key={index}>{medicine.name}</Text>
                         ))
                     ) : (
                         <View >
-                            {item.medecines.slice(0, 2).map((medicine, index) => (
-                                <Text style={styles.smallfontJomhuriaRegular} key={index}>{medicine.medicalName}</Text>
+                            {item.medicines.slice(0, 2).map((medicine, index) => (
+                                <Text style={styles.smallfontJomhuriaRegular} key={index}>{medicine.name}</Text>
                             ))}
-                            <Text style={styles.smallfontJomhuriaRegular} >Et {item.medecines.length - 2} autre médicament(s)</Text>
+                            <Text style={styles.smallfontJomhuriaRegular} >Et {item.medicines.length - 2} autre médicament(s)</Text>
                         </View>
                     )}
                 </View>
@@ -116,45 +59,60 @@ const TreatmentContainer = () => {
         );
     };
 
-
-
-
     return (
 
-        <View>
+        <View style={styles.Body}>
+            <View>
+
+                <FlatList
+                    ListHeaderComponent={() => <View style={styles.HeaderInfoTraitment}><Text style={styles.fontJomhuriaRegular}>Sélectionez un traitement</Text></View>}
+                    data={patient?.prescriptions}
+                    renderItem={({ item }) => <RenderItem item={item} />}
 
 
-            <FlatList
-                ListHeaderComponent={() => <View style={styles.HeaderInfoTraitment}><Text style={styles.fontJomhuriaRegular}>Sélectionez un traitement</Text></View>}
-                data={monDictionnaire}
-                renderItem={({ item }) => <RenderItem item={item} />}
+                />
+                <View style={styles.container}>
+                    <View style={styles.NewTreatment}>
 
-
-            />
-            <View style={styles.container}>
-                <View style={styles.NewTreatment}>
-
-                    <Pressable style={styles.buttonNewtreatment} onPress={navigateToNewPrescription}>
-                        <FontAwesomeIcon icon={faPlus} color="white" size={50} />
-                    </Pressable>
+                        <Pressable style={styles.buttonNewtreatment} onPress={navigateToNewPrescription}>
+                            <FontAwesomeIcon icon={faPlus} color="white" size={50} />
+                        </Pressable>
+                    </View>
                 </View>
             </View>
 
         </View >
     )
 
+
 }
 
+
+
+
+
+
+
+
+
+
 let styles = StyleSheet.create({
+    Body: {
+        flex: 1,
+
+        marginLeft: 20,
+        marginRight: 20,
+
+    },
     container: {
         flex: 1,
-        position: 'relative', // Ajout de cette ligne
+        position: 'relative',
     },
 
     NewTreatment: {
         position: 'absolute',
-        bottom: 20, // ou toute autre valeur que vous préférez
-        right: 20, // ou toute autre valeur que vous préférez
+        bottom: 20,
+        right: 20,
         backgroundColor: '#2aa32a',
         height: 80,
         width: 80,
@@ -175,7 +133,7 @@ let styles = StyleSheet.create({
         height: 62,
 
         backgroundColor: 'orange',
-        color: 'white',
+
         borderRadius: 30,
         flexDirection: 'row',
         alignContent: 'center',
@@ -209,7 +167,7 @@ let styles = StyleSheet.create({
     Treatment: {
         height: 200,
         borderRadius: 30,
-        paddingBottom: 30,  // Correction ici
+        paddingBottom: 30,
         backgroundColor: 'red',
         marginBottom: 20,
         shadowColor: '#000',

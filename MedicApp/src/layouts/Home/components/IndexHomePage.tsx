@@ -17,7 +17,7 @@ const HomePageBody = () => {
     };
     return (
 
-        <ScrollView style={[styles.body, { backgroundColor: 'white' }]}>
+        <ScrollView style={styles.body}>
 
             <Pressable style={styles.container} onPress={navigateToDetails} >
                 <View style={styles.topLeft}>
@@ -53,19 +53,22 @@ const HomePageBody = () => {
             </Pressable>
 
         </ScrollView >
+
     )
 }
 
 const styles = StyleSheet.create({
+
     container: {
 
         backgroundColor: 'red',
         height: 200,
 
+
         borderRadius: 30,
-        borderBlockColor: 'black',
-        borderWidth: 0,
-        marginBottom: 10,
+
+
+        marginTop: 20,
 
 
     },
@@ -74,7 +77,7 @@ const styles = StyleSheet.create({
 
         marginLeft: 20,
         marginRight: 20,
-        backgroundColor: 'white',
+
 
     },
     fontJomhuria: {
@@ -96,14 +99,14 @@ const styles = StyleSheet.create({
     topLeft: {
         flex: 1,
         justifyContent: 'flex-start',
-        alignItems: 'flex-start', 
+        alignItems: 'flex-start',
 
 
     },
     bottomRight: {
         flex: 1,
-        justifyContent: 'flex-end', 
-        alignItems: 'flex-end', 
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end',
 
         paddingRight: 15,
         paddingBottom: 10,

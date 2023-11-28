@@ -1,0 +1,122 @@
+{
+    "doctors": [
+        {
+            "name": "Nathan",
+            "mail": null
+        },
+        {
+            "name": "Romain",
+            "mail": null
+        }
+    ],
+    "patients": [
+        {
+            "name": "Invité",
+            "icone": 0,
+            "prescriptions": [
+                {
+                    "title": "Première prescription",
+                    "doctor": null,
+                    "medicines": [
+                        {
+                            "name": "Ventoline",
+                            "company": "",
+                            "dosage": 0,
+                            "dosageType": "",
+                            "frequency": {
+                                "morning": false,
+                                "noon": false,
+                                "evening": false
+                            },
+                            "duration": null,
+                            "administration_route": "",
+                            "warning": false,
+                            "notes": "",
+                            "substitutable": false,
+                            "to_renew": 0
+                        },
+                        {
+                            "name": "Ventoline",
+                            "company": "",
+                            "dosage": 0,
+                            "dosageType": "",
+                            "frequency": {
+                                "morning": false,
+                                "noon": false,
+                                "evening": false
+                            },
+                            "duration": null,
+                            "administration_route": "",
+                            "warning": false,
+                            "notes": "",
+                            "substitutable": false,
+                            "to_renew": 0
+                        },
+                        {
+                            "name": "Airomir",
+                            "company": "",
+                            "dosage": 0,
+                            "dosageType": "",
+                            "frequency": {
+                                "morning": false,
+                                "noon": false,
+                                "evening": false
+                            },
+                            "duration": null,
+                            "administration_route": "",
+                            "warning": false,
+                            "notes": "",
+                            "substitutable": false,
+                            "to_renew": 0
+                        },
+                        {
+                            "name": "Airomir",
+                            "company": "",
+                            "dosage": 0,
+                            "dosageType": "",
+                            "frequency": {
+                                "morning": false,
+                                "noon": false,
+                                "evening": false
+                            },
+                            "duration": null,
+                            "administration_route": "",
+                            "warning": false,
+                            "notes": "",
+                            "substitutable": false,
+                            "to_renew": 0
+                        }
+                    ],
+                    "notes": "",
+                    "date": null
+                },
+                {
+                    "title": "Deuxième prescription",
+                    "doctor": null,
+                    "medicines": [
+                        {
+                            "name": "Ventoline",
+                            "company": "",
+                            "dosage": 0,
+                            "dosageType": "",
+                            "frequency": {
+                                "morning": false,
+                                "noon": false,
+                                "evening": false
+                            },
+                            "duration": null,
+                            "administration_route": "",
+                            "warning": false,
+                            "notes": "",
+                            "substitutable": false,
+                            "to_renew": 0
+                        }
+                    ],
+                    "notes": "",
+                    "date": null
+                }
+            ],
+            "actualuser": true
+        }
+    ]
+}
