@@ -1,7 +1,6 @@
-import { useState } from 'react';
-import { Button, TextInput, Text, View, Pressable, ScrollView } from 'react-native';
-import MedicineComponent from '@layouts/NewPrescriptions/Medicine/Medicine';
-import RNSecureStorage from 'rn-secure-storage';
+import { useEffect, useState } from 'react';
+import { Button, TextInput, Text, View, Pressable } from 'react-native';
+import MedicineComponent from '@layouts/NewPrescription/Medicine/MedicineIndex';
 import Title from '@components/TitleBubble';
 import Container from '@containers/FormBubble';
 import style from './style';
@@ -10,42 +9,40 @@ import defaultPrescription from '@data/defaultPrescription.json';
 import ModalImgPicker from './ModalImportImg';
 import AddMedicine from './buttons/AddMedicine';
 import DatePicker from './DateForm';
+import Debug from '@components/Debug';
+import dataManager from '@services/dataManager';
 
-const IndexPageNewPrescription = () => {
-    let save: SaveInterface;
+export default function index() {
+    let save: SaveInterface | undefined;
+
+    useEffect(() => {
+        dataManager.getSaveData().then((s) => save = s)
+    }, [])
+
     const [prescription, setPrescription] = useState<PrescriptionInterface>(defaultPrescription)
 
-    RNSecureStorage.exists('save')
-        .then((exists) => {
-            if (exists)
-                RNSecureStorage.get('save')
-                    .then((data) => {
-                        if (typeof data === "string")
-                            save = JSON.parse(data);
-                    })
-        })
+
     const setMedicines = (newMedicines: MedicineInterface[]) =>
         setPrescription((oldP) => ({ ...oldP, medicines: newMedicines }))
-
 
 
     const doctorPickerHandler = (itemValue: string, itemIndex: number) => {
         setPrescription((oldP) =>
             ({ ...oldP, doctor: save?.doctors.find((d) => d.name === itemValue) || null }))
-    }
+    };
 
     const addMedicineHandler = () => {
         setPrescription((oldP) => ({ ...oldP, medicines: [...oldP.medicines, defaultMedicine] }))
-    }
+    };
 
-    return <ScrollView>
-        {
-            __DEV__ &&
+    return <>
+        <Debug>
             <Button title={"Print"} onPress={() =>
                 console.log("presc\n", prescription, "\nmedicines\n", prescription.medicines)} />
-        }
+        </Debug>
 
         <Title>Veuillez renseigner les informations de l'ordonnance</Title>
+
         <ModalImgPicker setprescription={setPrescription} />
 
         <Container>
@@ -79,7 +76,7 @@ const IndexPageNewPrescription = () => {
                     newMedicines.splice(i, 1);
                     setMedicines(newMedicines)
                 }
-                return <MedicineComponent key={i} medicineProp={p}
+                return <MedicineComponent key={i} medicine={p}
                     onChange={modifyMedicine} drop={dropMedicine} />
             }
             )
@@ -91,8 +88,6 @@ const IndexPageNewPrescription = () => {
                 setDate={(newDate) => setPrescription(oldP => ({ ...oldP, date: newDate }))} />
         </Container>
         <AddMedicine onClick={addMedicineHandler} />
-    </ScrollView>
+    </>
 
-}
-
-export default IndexPageNewPrescription;
+} 

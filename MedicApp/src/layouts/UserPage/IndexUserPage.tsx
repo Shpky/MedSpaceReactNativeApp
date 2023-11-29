@@ -23,7 +23,7 @@ const UserPageIndex = () => {
             const tempo = await dataManager.getSaveData();
             setSave(tempo);
 
-            const actualUserPatient = tempo.patients.find(patient => patient.actualuser === true);
+            const actualUserPatient = save.patients.filter((patient) => patient.actualuser == false)[0];
 
             if (actualUserPatient) {
                 setActualuser(actualUserPatient);
