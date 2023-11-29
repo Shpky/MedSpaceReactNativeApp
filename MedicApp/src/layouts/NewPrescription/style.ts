@@ -48,6 +48,7 @@ export default StyleSheet.create({
         backgroundColor: "#BFD0BC",
         borderRadius: 10,
         width: "90%",
+        marginBottom: 20,
     },
     addMedicineButtonText: {
         fontWeight: "400",
@@ -56,6 +57,7 @@ export default StyleSheet.create({
         fontStyle: "normal",
         color: "#fff",
         textAlign: "center",
+
     },
     deleteMedicineButtonContainer: {
         marginTop: 10,

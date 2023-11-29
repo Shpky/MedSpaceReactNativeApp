@@ -7,15 +7,15 @@ import defaultMedicine from '@data/defaultMedicine.json';
 import defaultPrescription from '@data/defaultPrescription.json';
 import { useNavigation } from '@react-navigation/native';
 import RNSecureStorage from 'rn-secure-storage';
-import DataManager from '../../services/dataManager';
+import dataManager from '@features/dataManager';
 
+import useSave from "@hooks/useSave";
 const TreatmentContainer = () => {
     const [patient, setPatient] = useState<PatientInterface | undefined>();
     const navigation = useNavigation();
 
     useEffect(() => {
         const fetchData = async () => {
-            const dataManager = new DataManager();
             await dataManager.init();
 
             const save = await dataManager.getSaveData();

@@ -1,6 +1,7 @@
 
 import RNSecureStorage, { ACCESSIBLE } from 'rn-secure-storage';
 import defaultSave from "@data/defaultSave.json";
+import defaultSaveForTest from "@data/defaultSaveForTest.json";
 
 export default {
     async init() {
@@ -12,7 +13,7 @@ export default {
             }
             )
     },
-    async setSaveData(data: SaveInterface){
+    async setSaveData(data: SaveInterface) {
         try {
             RNSecureStorage
                 .set('save', JSON.stringify(data),
@@ -24,7 +25,7 @@ export default {
     async deleteSaveData() {
 
         RNSecureStorage
-            .set('save', JSON.stringify(defaultSave),
+            .set('save', JSON.stringify(defaultSaveForTest),
                 { accessible: ACCESSIBLE.WHEN_UNLOCKED })
 
 

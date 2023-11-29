@@ -2,7 +2,7 @@ import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { Alert, Modal, StyleSheet, Text, Pressable, View, Image, Button } from 'react-native';
 import { launchCamera, launchImageLibrary, CameraOptions, ImageLibraryOptions } from 'react-native-image-picker';
 import TextRecognition, { TextRecognitionResult } from '@react-native-ml-kit/text-recognition';
-import DetectMedicineinsentence from '@layouts/NewPrescriptions/ImportImg/MedicineRecognitionWE';
+import DetectMedicineinsentence from '@layouts/NewPrescription/ImportImg/MedicineRecognitionWE';
 
 const ModalImgPicker = ({ setprescription }: { setprescription: Dispatch<SetStateAction<PrescriptionInterface>> }) => {
     const [image, setImage] = useState<string | null>(null);

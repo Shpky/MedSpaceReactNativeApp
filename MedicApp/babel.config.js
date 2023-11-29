@@ -25,8 +25,10 @@ module.exports = {
           "@layouts":
             "./src/layouts/"
           ,
-          "@services":
-            "./src/services/"
+          "@features":
+            "./src/features/",
+          "@hooks":
+            "./src/hooks/"
         }
       }
     ],
