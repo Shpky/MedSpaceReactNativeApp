@@ -37,11 +37,11 @@ function App(): JSX.Element {
           }}
         >
           <Stack.Screen name="Home" component={HomePageBody} />
-          <Stack.Screen name="Treatment" component={TreatmentContainer} />
-          <Stack.Screen name="NewPrescription" component={NewPrescription} />
+      <Stack.Screen name="Treatment" component={TreatmentContainer} />
+      <Stack.Screen name="NewPrescription" component={NewPrescription}  />
 
-        </Stack.Navigator>
-      </NavigationContainer>
+    </Stack.Navigator >
+      </NavigationContainer >
     </>
   );
 }

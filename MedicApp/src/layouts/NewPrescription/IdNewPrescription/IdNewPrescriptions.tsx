@@ -9,7 +9,9 @@ type IdNewPrescriptionProps = {
 }
 export default function IdNewPrescriptions({ prescription, onChange }: IdNewPrescriptionProps) {
     const [prescriptionState, setPrescription] = useState(prescription);
-
+    useEffect(() => {
+        onChange?.(prescriptionState)
+    }, [prescriptionState])
 
     return <Container>
         <Text style={style.textInput}>Nom du traitement</Text>

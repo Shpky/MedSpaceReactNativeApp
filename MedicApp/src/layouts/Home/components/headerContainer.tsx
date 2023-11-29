@@ -12,16 +12,20 @@ const HeaderContainer = () => {
         //@ts-ignore
         navigation.navigate("Home");
     };
+    const navigateToUserPage = () => {
+        //@ts-ignore
+        navigation.navigate("UserPage");
+    };
 
     return (
         <View style={styles.container}>
-            <Pressable>
+            <Pressable onPress={navigateToHome}>
                 <Image style={styles.logo} source={require('./img/logo.png')} />
             </Pressable>
             <Pressable onPress={navigateToHome}>
                 <Text style={styles.titleFont}>MEDSPACE</Text>
             </Pressable>
-            <Pressable>
+            <Pressable onPress={navigateToUserPage}>
                 <View style={styles.circle}>
                     <FontAwesomeIcon icon={faUser} color='white' />
                 </View>
