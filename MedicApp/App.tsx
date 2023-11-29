@@ -9,7 +9,7 @@ import HomePageBody from '@layouts/Home/components/IndexHomePage';
 import IndexPageNewPrescription from '@layouts/NewPrescriptions/IndexPageNewPrescription';
 import { useEffect } from 'react';
 import DataManager from './src/services/dataManager';
-
+import UserPageIndex from '@layouts/UserPage/IndexUserPage';
 function HomeScreen() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -55,7 +55,7 @@ function App(): JSX.Element {
         <Stack.Screen name="Home" component={HomePageBody} />
         <Stack.Screen name="Treatment" component={TreatmentContainer} />
         <Stack.Screen name="NewPrescription" component={IndexPageNewPrescription} />
-
+        <Stack.Screen name="UserPage" component={UserPageIndex} />
       </Stack.Navigator>
     </NavigationContainer>
   );
