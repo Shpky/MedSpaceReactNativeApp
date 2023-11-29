@@ -9,13 +9,8 @@ import HomePageBody from '@layouts/Home/components/IndexHomePage';
 import NewPrescription from '@layouts/NewPrescription/NewPrescription';
 import Debug from '@components/Debug';
 import { useEffect } from 'react';
-<<<<<<< HEAD
-import DataManager from './src/services/dataManager';
-import UserPageIndex from '@layouts/UserPage/IndexUserPage';
-=======
 import dataManager from './src/services/dataManager';
 
->>>>>>> b10ce4ebd04dc3eed5d8e62e5ca1ec70c34b9c69
 function HomeScreen() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -60,26 +55,15 @@ function App(): JSX.Element {
             header: () => <HeaderContainer />,
             animation: 'slide_from_right',
 
-<<<<<<< HEAD
-        }}
-      >
-        <Stack.Screen name="Home" component={HomePageBody} />
-        <Stack.Screen name="Treatment" component={TreatmentContainer} />
-        <Stack.Screen name="NewPrescription" component={IndexPageNewPrescription} />
-        <Stack.Screen name="UserPage" component={UserPageIndex} />
-      </Stack.Navigator>
-    </NavigationContainer>
-=======
           }}
         >
           <Stack.Screen name="Home" component={HomePageBody} />
-          <Stack.Screen name="Treatment" component={TreatmentContainer} />
-          <Stack.Screen name="NewPrescription" component={NewPrescription}/>
+      <Stack.Screen name="Treatment" component={TreatmentContainer} />
+      <Stack.Screen name="NewPrescription" component={NewPrescription} />
 
-        </Stack.Navigator>
-      </NavigationContainer>
+    </Stack.Navigator >
+      </NavigationContainer >
     </>
->>>>>>> b10ce4ebd04dc3eed5d8e62e5ca1ec70c34b9c69
   );
 }
 

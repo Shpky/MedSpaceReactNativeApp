@@ -2,7 +2,7 @@
 import RNSecureStorage, { ACCESSIBLE } from 'rn-secure-storage';
 import defaultSave from "@data/defaultSave.json";
 
-class DataManager {
+export default {
     async init() {
         RNSecureStorage.exists('save')
             .then((exists) => {
@@ -11,9 +11,8 @@ class DataManager {
                 }
             }
             )
-
-    }
-    async setSaveData(data: SaveInterface): Promise<void> {
+    },
+    async setSaveData(data: SaveInterface) {
         try {
             RNSecureStorage
                 .set('save', JSON.stringify(data),
@@ -21,15 +20,15 @@ class DataManager {
         } catch (error) {
             console.error("Erreur lors de la sauvegarde des données :", error);
         }
-    }
-    async deleteSaveData(): Promise<void> {
+    },
+    async deleteSaveData() {
 
         RNSecureStorage
             .set('save', JSON.stringify(defaultSave),
                 { accessible: ACCESSIBLE.WHEN_UNLOCKED })
 
 
-    }
+    },
     async getSaveData(): Promise<SaveInterface> {
         try {
             const exists = await RNSecureStorage.exists('save');
@@ -54,6 +53,3 @@ class DataManager {
         return defaultSave as SaveInterface;
     }
 }
-
-
-export default DataManager;

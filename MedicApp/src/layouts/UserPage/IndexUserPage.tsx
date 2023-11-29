@@ -4,13 +4,13 @@ import { useFocusEffect } from '@react-navigation/native';
 import RNPickerSelect from 'react-native-picker-select';
 import defaultSaveForTest from '@data/defaultSaveForTest.json';
 import defaultPatient from '@data/defaultPatient.json';
-import DataManager from '../../services/dataManager';
+import dataManager from '../../services/dataManager';
 import { Text, View, StyleSheet, TextInput, Button, Image } from "react-native";
 
 import { useNavigation } from '@react-navigation/native';
 
 const UserPageIndex = () => {
-    const dataManager = new DataManager();
+
     const [save, setSave] = useState<SaveInterface>(defaultSaveForTest);
     const [actualuser, setActualuser] = useState<PatientInterface>(save.patients[0]);
 
