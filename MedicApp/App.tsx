@@ -10,7 +10,8 @@ import NewPrescription from '@layouts/NewPrescription/NewPrescription';
 import Debug from '@components/Debug';
 import { useEffect } from 'react';
 import dataManager from './src/services/dataManager';
-
+import UserPageIndex from '@layouts/UserPage/IndexUserPage';
+import IndexPageNewPrescription from '@layouts/NewPrescription/NewPrescription';
 function HomeScreen() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -40,30 +41,21 @@ function App(): JSX.Element {
   console.log("inited")
 
   return (
-    <>
-      <Debug>
-        <Button title="afficher" onPress={() => {
-          console.log("test")
-          console.log(dataManager.getSaveData())
-        }
-        }></Button>
-        <Button title="resetDataBase" onPress={dataManager.deleteSaveData}></Button>
-      </Debug>
-      <NavigationContainer theme={MedicAppWhiteTheme}>
-        <Stack.Navigator
-          screenOptions={{
-            header: () => <HeaderContainer />,
-            animation: 'slide_from_right',
 
-          }}
-        >
-          <Stack.Screen name="Home" component={HomePageBody} />
-      <Stack.Screen name="Treatment" component={TreatmentContainer} />
-      <Stack.Screen name="NewPrescription" component={NewPrescription} />
+    <NavigationContainer theme={MedicAppWhiteTheme}>
+      <Stack.Navigator
+        screenOptions={{
+          header: () => <HeaderContainer />,
+          animation: 'slide_from_right',
 
-    </Stack.Navigator >
-      </NavigationContainer >
-    </>
+        }}
+      >
+        <Stack.Screen name="Home" component={HomePageBody} />
+        <Stack.Screen name="Treatment" component={TreatmentContainer} />
+        <Stack.Screen name="NewPrescription" component={IndexPageNewPrescription} />
+        <Stack.Screen name="UserPage" component={UserPageIndex} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

@@ -23,7 +23,7 @@ const UserPageIndex = () => {
             const tempo = await dataManager.getSaveData();
             setSave(tempo);
 
-            const actualUserPatient = save.patients.filter((patient) => patient.actualuser == false)[0];
+            const actualUserPatient = save.patients.find(patient => patient.actualuser == true)
 
             if (actualUserPatient) {
                 setActualuser(actualUserPatient);
@@ -50,7 +50,7 @@ const UserPageIndex = () => {
                     ? (patient.actualuser = true)
                     : (actualuser.name === patient.name ? (patient.actualuser = false) : null);
             });
-            setActualuser(save.patients.find(patient => patient.actualuser === true) as PatientInterface)
+            setActualuser(save.patients.find(patient => patient.actualuser == true) as PatientInterface)
             dataManager.setSaveData(save);
             console.log("changement de profile", actualuser.name)
 
@@ -62,8 +62,10 @@ const UserPageIndex = () => {
 
 
     const ProfilePicker = () => {
-
-
+        const test = save.patients.filter((patient) => patient.actualuser == false)[0]
+        console.log(test.name)
+        const test2 = save.patients.find(patient => patient.actualuser == true)
+        console.log(test2?.name)
         return (
             <RNPickerSelect
                 onValueChange={(value) => {

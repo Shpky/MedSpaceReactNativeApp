@@ -12,7 +12,7 @@ import DatePicker from './DateForm';
 import Debug from '@components/Debug';
 import dataManager from '@services/dataManager';
 
-export default function index() {
+export default function Index() {
     let save: SaveInterface | undefined;
 
     useEffect(() => {
