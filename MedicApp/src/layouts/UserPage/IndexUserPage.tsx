@@ -4,8 +4,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import defaultSaveForTest from '@data/defaultSaveForTest.json';
 import dataManager from '@features/dataManager';
 import { View, Text, TextInput, Button, Image, StyleSheet, Pressable } from "react-native";
-import style from '@layouts/NewPrescription/style';
-import { width } from '@fortawesome/free-solid-svg-icons/faUser';
+import defaultIcon from '@data/defaultIcon.json';
 
 
 
@@ -19,6 +18,7 @@ const UserPageIndex = () => {
     const fetchData = async () => {
         try {
             await dataManager.init();
+
             setSave(await dataManager.getSaveData());
         } catch (error) {
             console.error("Erreur lors de la récupération des données :", error);
@@ -100,7 +100,15 @@ const UserPageIndex = () => {
 
     }
 
+    function convertPngToBase64(pngImage: string): string {
 
+        const base64String = pngImage.replace(/^data:image\/png;base64,/, '');
+
+
+        const encodedBase64 = btoa(base64String);
+
+        return encodedBase64;
+    }
 
     const handleChangeText = (inputText: string) => {
 
@@ -108,12 +116,35 @@ const UserPageIndex = () => {
     const handlePressButton = () => {
 
     };
+    const NewUser = (name: string, icon: string, actualUser: boolean = false) => {
+
+
+        save.patients.push({ name: name, icone: icon, actualuser: actualUser, prescriptions: [] })
+        dataManager.setSaveData(save);
+        setReload(!reload);
+
+    }
+    const handlePressButtonDEL = () => {
+        let actualUser = save.patients.find(patient => patient.actualuser == true);
+        save.patients.length > 1 ?
+            (save.patients.forEach(patient => {
+                patient.actualuser == false && actualUser?.name != patient.name ? (patient.actualuser = true) : patient.actualuser = false;
+            }), save.patients.splice(save.patients.indexOf(actualUser as PatientInterface), 1), dataManager.setSaveData(save))
+            : (save.patients = save.patients.filter((patient) => patient.actualuser == false),
+                NewUser("Nouveau patient", defaultIcon.icon, true))
+
+
+
+        setReload(!reload);
+
+
+    }
 
     const ControleButton = () => {
 
         return (<View style={{ flexDirection: 'row', marginTop: 20 }}>
             <Pressable style={styles.buttonGREEN} onPress={handlePressButton}><Text style={styles.smallfontJomhuriaRegularnopading}>VALIDER</Text></Pressable>
-            <Pressable style={styles.buttonRED} onPress={handlePressButton}><Text style={styles.smallfontJomhuriaRegularnopading}>SUPPRIMER</Text></Pressable>
+            <Pressable style={styles.buttonRED} onPress={handlePressButtonDEL}><Text style={styles.smallfontJomhuriaRegularnopading}>SUPPRIMER</Text></Pressable>
         </View>)
 
     }
