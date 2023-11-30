@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, TextInput, Text, View, Pressable } from 'react-native';
+import { Button, TextInput, Text, View, ScrollView } from 'react-native';
 import MedicineComponent from '@layouts/NewPrescription/Medicine/MedicineIndex';
 import Title from '@components/TitleBubble';
 import Container from '@containers/FormBubble';
@@ -10,17 +10,12 @@ import ModalImgPicker from './ModalImportImg';
 import AddMedicine from './buttons/AddMedicine';
 import DatePicker from './DateForm';
 import Debug from '@components/Debug';
-import dataManager from '@services/dataManager';
+import useSave from "@hooks/useSave";
 
-export default function Index() {
-    let save: SaveInterface | undefined;
+export default function NewPrescription() {
 
-    useEffect(() => {
-        dataManager.getSaveData().then((s) => save = s)
-    }, [])
-
+    const [save, setSave] = useSave()
     const [prescription, setPrescription] = useState<PrescriptionInterface>(defaultPrescription)
-
 
     const setMedicines = (newMedicines: MedicineInterface[]) =>
         setPrescription((oldP) => ({ ...oldP, medicines: newMedicines }))
@@ -35,7 +30,7 @@ export default function Index() {
         setPrescription((oldP) => ({ ...oldP, medicines: [...oldP.medicines, defaultMedicine] }))
     };
 
-    return <>
+    return <ScrollView>
         <Debug>
             <Button title={"Print"} onPress={() =>
                 console.log("presc\n", prescription, "\nmedicines\n", prescription.medicines)} />
@@ -45,20 +40,7 @@ export default function Index() {
 
         <ModalImgPicker setprescription={setPrescription} />
 
-        <Container>
-            <Text style={style.textInput}>Nom du traitement</Text>
-            <TextInput style={[style.input, style.full]}
-                placeholder="Nom du traitement" placeholderTextColor={style.input.color}
-                onChange={(e) => setPrescription((oldP) => ({ ...oldP, name: e.nativeEvent.text }))}
-            >{prescription.title}</TextInput>
-            <Text style={style.textInput}>Nom et coordonnées du médecin</Text>
-            <View style={style.halfContainer}>
-                <TextInput style={[style.input, style.half]}
-                    placeholder="Nom" placeholderTextColor={style.input.color} />
-                <TextInput style={[style.input, style.half]}
-                    placeholder="Mail" placeholderTextColor={style.input.color} />
-            </View>
-        </Container>
+        
         {
             prescription.medicines.map((p, i) => {
 
@@ -81,13 +63,12 @@ export default function Index() {
             }
             )
         }
+        <AddMedicine onClick={addMedicineHandler} />
         <Container>
             <Text style={style.textInput}>Notes de l'ordonnance</Text>
             <TextInput style={[style.input, style.full]} placeholder="Notes" placeholderTextColor={style.input.color} />
-            <DatePicker date={prescription.date} text={"Date de l'ordonnance"}
-                setDate={(newDate) => setPrescription(oldP => ({ ...oldP, date: newDate }))} />
         </Container>
-        <AddMedicine onClick={addMedicineHandler} />
-    </>
+
+    </ScrollView>
 
 } 

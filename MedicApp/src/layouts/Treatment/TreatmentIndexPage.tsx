@@ -1,21 +1,16 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Pressable, FlatList, ScrollView } from "react-native";
+import { Text, View, StyleSheet, Pressable, FlatList,  } from "react-native";
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import defaultMedicine from '@data/defaultMedicine.json';
-import defaultPrescription from '@data/defaultPrescription.json';
 import { useNavigation } from '@react-navigation/native';
-import RNSecureStorage from 'rn-secure-storage';
-import dataManager from '../../services/dataManager';
-
+import dataManager from '@features/dataManager';
 const TreatmentContainer = () => {
     const [patient, setPatient] = useState<PatientInterface | undefined>();
     const navigation = useNavigation();
 
     useEffect(() => {
         const fetchData = async () => {
-
             await dataManager.init();
 
             const save = await dataManager.getSaveData();

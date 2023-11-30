@@ -6,10 +6,8 @@ import HeaderContainer from "@layouts/Home/components/headerContainer";
 import TreatmentContainer from '@layouts/Treatment/TreatmentIndexPage';
 import defaultSaveForTest from "@data/defaultSaveForTest.json";
 import HomePageBody from '@layouts/Home/components/IndexHomePage';
-import NewPrescription from '@layouts/NewPrescription/NewPrescription';
-import Debug from '@components/Debug';
-import { useEffect } from 'react';
-import dataManager from './src/services/dataManager';
+
+import dataManager from '@features/dataManager';
 import UserPageIndex from '@layouts/UserPage/IndexUserPage';
 import IndexPageNewPrescription from '@layouts/NewPrescription/NewPrescription';
 function HomeScreen() {
@@ -31,15 +29,6 @@ const MedicAppWhiteTheme = {
 };
 
 function App(): JSX.Element {
-  useEffect(() => {
-    dataManager.init()
-    //@ts-ignore
-    dataManager.setSaveData(defaultSaveForTest as SaveInterface)
-  })
-
-
-  console.log("inited")
-
   return (
 
     <NavigationContainer theme={MedicAppWhiteTheme}>
