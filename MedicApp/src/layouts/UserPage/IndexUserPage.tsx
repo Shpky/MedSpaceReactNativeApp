@@ -5,8 +5,8 @@ import defaultSaveForTest from '@data/defaultSaveForTest.json';
 import dataManager from '@features/dataManager';
 import { View, Text, TextInput, Button, Image, StyleSheet, Pressable } from "react-native";
 import defaultIcon from '@data/defaultIcon.json';
-
-
+import { launchCamera, launchImageLibrary, CameraOptions, ImageLibraryOptions } from 'react-native-image-picker';
+import RNFS from 'react-native-fs';
 
 const UserPageIndex = () => {
 
@@ -19,8 +19,9 @@ const UserPageIndex = () => {
     const fetchData = async () => {
         try {
             await dataManager.init();
-
+            dataManager.setSaveData(defaultSaveForTest);
             setSave(await dataManager.getSaveData());
+
         } catch (error) {
             console.error("Erreur lors de la récupération des données :", error);
         }
@@ -101,33 +102,32 @@ const UserPageIndex = () => {
 
     }
 
-    function convertPngToBase64(pngImage: string): string {
+    async function convertPngToBase64(pngImage: string): Promise<string | null> {
+        const binaryString = await RNFS.readFile(pngImage, 'base64');
 
-        const base64String = pngImage.replace(/^data:image\/png;base64,/, '');
-
-
-        const encodedBase64 = btoa(base64String);
-
-        return encodedBase64;
+        return binaryString;
     }
+
 
     const handleChangeText = (inputText: string) => {
         let actualUser = save.patients.find(patient => patient.actualuser == true) as PatientInterface;
-        console.log("test", inputText.length == 0)
+
         inputText.length == 0 ? inputText = "Nouveau patient" : null;
-        console.log("test", inputText.length == 0)
+
         actualUser.name != inputText ?
             (save.patients.splice(save.patients.indexOf(actualUser as PatientInterface), 1), actualUser.name = inputText, save.patients.push(actualUser), dataManager.setSaveData(save), setReload(!reload))
             : inputText.length == 0 ?
-                (console.log("username", inputText), save.patients.splice(save.patients.indexOf(actualUser as PatientInterface), 1), actualUser.name = "Nouveau patient", save.patients.push(actualUser), dataManager.setSaveData(save), setReload(!reload)) : null
+                (save.patients.splice(save.patients.indexOf(actualUser as PatientInterface), 1), actualUser.name = "Nouveau patient", save.patients.push(actualUser), dataManager.setSaveData(save), setReload(!reload)) : null
         setReload(!reload)
 
     };
 
-    const NewUser = (name: string, icon: string, actualUser: boolean = false) => {
+    const NewUser = (name: string, icon: string = "", actualUser: boolean = false) => {
 
 
-        save.patients.push({ name: name, icone: icon, actualuser: actualUser, prescriptions: [] })
+        save.patients.push({ name: name, icone: icon, actualuser: actualUser, prescriptions: [] } as PatientInterface)
+
+
         dataManager.setSaveData(save);
         setReload(!reload);
 
@@ -140,21 +140,53 @@ const UserPageIndex = () => {
             }), save.patients.splice(save.patients.indexOf(actualUser as PatientInterface), 1), dataManager.setSaveData(save))
             : (save.patients = save.patients.filter((patient) => patient.actualuser == false),
                 NewUser("Nouveau patient", defaultIcon.icon, true))
-
-
-
         setReload(!reload);
-
-
     }
 
+    const Changepp = async (uri: string) => {
+        let actualUser = save.patients.find(patient => patient.actualuser) as PatientInterface;
+
+        if (actualUser) {
+            save.patients = save.patients.filter(patient => patient.actualuser !== true);
+
+            try {
+                const base64Icon = await convertPngToBase64(uri);
+
+                if (base64Icon !== null) {
+                    actualUser.icone = "data:image/png;base64," + base64Icon;
+                    save.patients.push(actualUser);
+                    dataManager.setSaveData(save);
+                    setReload(!reload)
+                } else {
+                    console.error('Failed to convert image to base64');
+                }
+            } catch (error) {
+                console.error('Error converting image to base64:', error);
+            }
+        } else {
+            console.error('Actual user not found');
+        }
+    };
+
+
+
+    const libraryHandler = async () => {
+        const options: ImageLibraryOptions = {
+            mediaType: 'photo',
+            selectionLimit: 1,
+        };
+        launchImageLibrary(options, async (response) => {
+            if (response.assets && response.assets[0] && typeof response.assets[0].uri === "string") {
+                Changepp(response.assets[0].uri);
+            }
+        });
+    }
     const ControleButton = () => {
 
         return (<View style={{ flexDirection: 'row', marginTop: 20 }}>
-
+            <Pressable style={styles.buttonGREEN} onPress={libraryHandler}><Text style={styles.smallfontJomhuriaRegularnopading} >IMPORTER UNE PHOTO</Text></Pressable>
             <Pressable style={styles.buttonRED} onPress={handlePressButtonDEL}><Text style={styles.smallfontJomhuriaRegularnopading}>SUPPRIMER</Text></Pressable>
         </View>)
-
     }
 
     const Userinfo = () => {
@@ -188,11 +220,21 @@ const UserPageIndex = () => {
                 ) : (
                     <Text>Chargement...</Text>
                 )}
-
             </View>
-
         )
     }
+
+    const CreateNewUser = () => {
+
+        return (
+            <View style={{ flexDirection: 'row', marginTop: 20 }}>
+
+                <Pressable style={styles.buttonGREEN} onPress={() => { NewUser("Nouvel utilisateur", defaultIcon.icon, false) }}><Text style={styles.smallfontJomhuriaRegularnopading}>NOUVEAU</Text></Pressable>
+
+            </View>
+        )
+    }
+
     return (
 
         <View style={styles.body}>
@@ -207,6 +249,7 @@ const UserPageIndex = () => {
                     <ControleButton />
 
                 </View>
+                <CreateNewUser />
             </View>
         </View >
     );
