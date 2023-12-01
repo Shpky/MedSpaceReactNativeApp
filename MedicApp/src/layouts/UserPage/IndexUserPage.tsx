@@ -19,7 +19,7 @@ const UserPageIndex = () => {
     const fetchData = async () => {
         try {
             await dataManager.init();
-            dataManager.setSaveData(defaultSaveForTest);
+
             setSave(await dataManager.getSaveData());
 
         } catch (error) {
@@ -145,27 +145,15 @@ const UserPageIndex = () => {
 
     const Changepp = async (uri: string) => {
         let actualUser = save.patients.find(patient => patient.actualuser) as PatientInterface;
+        save.patients = save.patients.slice(save.patients.indexOf(actualUser), 1);
 
-        if (actualUser) {
-            save.patients = save.patients.filter(patient => patient.actualuser !== true);
 
-            try {
-                const base64Icon = await convertPngToBase64(uri);
 
-                if (base64Icon !== null) {
-                    actualUser.icone = "data:image/png;base64," + base64Icon;
-                    save.patients.push(actualUser);
-                    dataManager.setSaveData(save);
-                    setReload(!reload)
-                } else {
-                    console.error('Failed to convert image to base64');
-                }
-            } catch (error) {
-                console.error('Error converting image to base64:', error);
-            }
-        } else {
-            console.error('Actual user not found');
-        }
+        const base64Icon = await convertPngToBase64(uri);
+        actualUser.icone = "data:image/png;base64," + base64Icon;
+        save.patients.push(actualUser);
+        dataManager.setSaveData(save);
+        setReload(!reload)
     };
 
 
