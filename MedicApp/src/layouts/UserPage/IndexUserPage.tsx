@@ -12,7 +12,8 @@ const UserPageIndex = () => {
 
     const [save, setSave] = useState<SaveInterface>(defaultSaveForTest);
     const [reload, setReload] = useState<boolean>(false);
-    const nb = 0
+    let actualUser = save.patients.find(patient => patient.actualuser == true)
+
 
 
     const fetchData = async () => {
@@ -111,11 +112,18 @@ const UserPageIndex = () => {
     }
 
     const handleChangeText = (inputText: string) => {
+        let actualUser = save.patients.find(patient => patient.actualuser == true) as PatientInterface;
+        console.log("test", inputText.length == 0)
+        inputText.length == 0 ? inputText = "Nouveau patient" : null;
+        console.log("test", inputText.length == 0)
+        actualUser.name != inputText ?
+            (save.patients.splice(save.patients.indexOf(actualUser as PatientInterface), 1), actualUser.name = inputText, save.patients.push(actualUser), dataManager.setSaveData(save), setReload(!reload))
+            : inputText.length == 0 ?
+                (console.log("username", inputText), save.patients.splice(save.patients.indexOf(actualUser as PatientInterface), 1), actualUser.name = "Nouveau patient", save.patients.push(actualUser), dataManager.setSaveData(save), setReload(!reload)) : null
+        setReload(!reload)
 
     };
-    const handlePressButton = () => {
 
-    };
     const NewUser = (name: string, icon: string, actualUser: boolean = false) => {
 
 
@@ -143,20 +151,20 @@ const UserPageIndex = () => {
     const ControleButton = () => {
 
         return (<View style={{ flexDirection: 'row', marginTop: 20 }}>
-            <Pressable style={styles.buttonGREEN} onPress={handlePressButton}><Text style={styles.smallfontJomhuriaRegularnopading}>VALIDER</Text></Pressable>
+
             <Pressable style={styles.buttonRED} onPress={handlePressButtonDEL}><Text style={styles.smallfontJomhuriaRegularnopading}>SUPPRIMER</Text></Pressable>
         </View>)
 
     }
-    let actualUser = save.patients.find(patient => patient.actualuser == true)
-    const Userinfo = () => {
 
+    const Userinfo = () => {
+        let actualUser = save.patients.find(patient => patient.actualuser == true)
         return (<View style={styles.nameContainer}>
             <Text style={styles.smallfontJomhuriaRegular}>Le nom de l'utilisateur actuelle est:</Text>
             <TextInput
                 style={[{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, padding: 5 }, styles.textInput]}
                 defaultValue={actualUser?.name}
-                onChangeText={handleChangeText}
+                onEndEditing={(event) => handleChangeText(event.nativeEvent.text)}
                 textAlignVertical="center"
                 textAlign="center"
             />
