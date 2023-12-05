@@ -7,16 +7,16 @@ import {
     View,
     Text,
     TextInput,
-    Button,
     Image,
     StyleSheet,
     Pressable,
+    ScrollView
 } from 'react-native';
 import defaultIcon from '@data/defaultIcon.json';
 import {
-    launchCamera,
+
     launchImageLibrary,
-    CameraOptions,
+
     ImageLibraryOptions,
 } from 'react-native-image-picker';
 import RNFS from 'react-native-fs';
@@ -122,7 +122,28 @@ const UserPageIndex = () => {
             setReload(!reload);
         }
     };
+    const handleChangeearliesttime = (inputText: string) => {
+        inputText.length == 0 ? (inputText = '8') : null;
 
+        save.patients = save.patients.map((patient) =>
+            patient === actualUser
+                ? { ...patient, earliesttime: inputText }
+                : patient
+        );
+        dataManager.setSaveData(save);
+        setReload(!reload);
+    };
+    const handleChangelatesttime = (inputText: string) => {
+        inputText.length == 0 ? (inputText = '22') : null;
+        save.patients = save.patients.map((patient) =>
+            patient === actualUser
+                ? { ...patient, latesttime: inputText }
+                : patient
+        );
+        dataManager.setSaveData(save);
+        setReload(!reload);
+
+    };
     const NewUser = (name: string, icon: string = '', actualUser: boolean = false) => {
         let nb = 0;
         while (save.patients.map((patient) => patient.name == name).includes(true)) {
@@ -138,6 +159,8 @@ const UserPageIndex = () => {
             icone: icon,
             actualUser: actualUser,
             prescriptions: [],
+            earliesttime: "8h",
+            latesttime: "22h",
         } as PatientInterface);
 
         dataManager.setSaveData(save);
@@ -182,7 +205,7 @@ const UserPageIndex = () => {
 
     const ControleButton = () => {
         return (
-            <View style={{ flexDirection: 'row', marginTop: 20 }}>
+            <View style={{ flexDirection: 'row', marginTop: 5 }}>
                 <Pressable style={styles.buttonGREEN} onPress={libraryHandler}>
                     <Text style={styles.smallfontJomhuriaRegularnopading}>
                         CHANGER DE PHOTO
@@ -233,13 +256,32 @@ const UserPageIndex = () => {
                 ) : (
                     <Text>Chargement...</Text>
                 )}
+                <Text style={[styles.realysmallfontJomhuriaRegular, { marginBottom: -15, marginTop: -15 }]}>Heure de prise minimal d'un médicament </Text>
+                <TextInput
+                    style={[styles.textInput]}
+                    defaultValue={actualUser?.earliesttime}
+                    onEndEditing={(event) => handleChangeearliesttime(event.nativeEvent.text)}
+                    textAlignVertical="center"
+                    textAlign="center"
+                    keyboardType="numeric">
+
+                </TextInput>
+                <Text style={[styles.realysmallfontJomhuriaRegular, { marginBottom: -15, marginTop: -15 }]}>Heure de prise maximal d'un médicament </Text>
+                <TextInput
+                    style={[styles.textInput]}
+                    defaultValue={actualUser?.latesttime}
+                    onEndEditing={(event) => handleChangelatesttime(event.nativeEvent.text)}
+                    textAlignVertical="center"
+                    textAlign="center">
+
+                </TextInput>
             </View>
         );
     };
 
     const CreateNewUser = () => {
         return (
-            <View style={[styles.shadow]} >
+            <View style={[styles.shadow, { marginTop: 10, padding: 10 }]} >
                 <Pressable
                     style={[styles.buttonGREEN, { borderRadius: 30, }, styles.shadow]}
                     onPress={() => {
@@ -252,18 +294,20 @@ const UserPageIndex = () => {
     };
 
     return (
-        <View style={styles.body}>
+        <ScrollView style={styles.body}>
             <View style={{ width: '100%' }}>
-                <ProfilePicker  />
+                <ProfilePicker />
+                <CreateNewUser />
                 <View style={styles.userInfoContainer}>
+
                     <ProfileImage />
                     {Userinfo()}
                     {Statistique()}
                     {ControleButton()}
                 </View>
-                <CreateNewUser />
+
             </View>
-        </View>
+        </ScrollView>
     );
 };
 
@@ -372,7 +416,7 @@ const styles = StyleSheet.create({
     },
     userInfoContainer: {
         width: '100%',
-        marginTop: 20,
+
         backgroundColor: 'orange',
         borderRadius: 30,
         justifyContent: 'space-between',

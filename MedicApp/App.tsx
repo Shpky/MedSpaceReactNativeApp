@@ -32,9 +32,7 @@ function App(): JSX.Element {
       <Stack.Navigator
         screenOptions={{
           header: () => <>
-            <Debug>
-              <Button title='reset' onPress={() => dataManager.resetSaveData()} />
-            </Debug>
+
             <HeaderContainer /></>,
           animation: 'slide_from_right',
         }}
