@@ -11,20 +11,14 @@ import AddMedicine from './buttons/AddMedicine';
 import Debug from '@components/Debug';
 import useSave from "@hooks/useSave";
 import Id from './IdNewPrescription/IdNewPrescriptionsIndex';
+import useNewPrescription from '@hooks/useNewPrescription';
 
 export default function NewPrescription() {
 
-    const [save, setSave] = useSave()
-    const [prescription, setPrescription] = useState<PrescriptionInterface>(defaultPrescription)
+    const [prescription, setPrescription, apply] = useNewPrescription();
 
     const setMedicines = (newMedicines: MedicineInterface[]) =>
         setPrescription((oldP) => ({ ...oldP, medicines: newMedicines }))
-
-
-    const doctorPickerHandler = (itemValue: string, itemIndex: number) => {
-        setPrescription((oldP) =>
-            ({ ...oldP, doctor: save?.doctors.find((d) => d.name === itemValue) || null }))
-    };
 
     const addMedicineHandler = () => {
         setPrescription((oldP) => ({ ...oldP, medicines: [...oldP.medicines, defaultMedicine] }))

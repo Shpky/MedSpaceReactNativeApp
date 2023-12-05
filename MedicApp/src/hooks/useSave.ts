@@ -6,7 +6,7 @@ import dataManager from "@features/dataManager"
  * 
  * @returns la sauvegarde et une fonction pour la modifier
  */
-export default function useSave(): [SaveInterface | undefined, (data: SaveInterface) => void] {
+export default function useSave(): [SaveInterface | undefined, React.Dispatch<React.SetStateAction<SaveInterface | undefined>>] {
     const [save, setSave] = useState<SaveInterface | undefined>(undefined)
     useEffect(() => {
         dataManager.getSaveData().then(s => setSave(s))
