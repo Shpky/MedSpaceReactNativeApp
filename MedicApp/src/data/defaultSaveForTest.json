@@ -116,7 +116,7 @@
                     "date": null
                 }
             ],
-            "actualuser": true
+            "actualUser": true
         },
         {
             "name": "SecondUser",
@@ -224,7 +224,7 @@
                     "date": null
                 }
             ],
-            "actualuser": false
+            "actualUser": false
         }
     ]
 }

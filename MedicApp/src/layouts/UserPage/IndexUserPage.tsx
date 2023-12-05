@@ -4,7 +4,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import RNPickerSelect from 'react-native-picker-select';
 import defaultSaveForTest from '@data/defaultSaveForTest.json';
 import defaultPatient from '@data/defaultPatient.json';
-import dataManager from '../../services/dataManager';
+import dataManager from '@features/dataManager';
 import { Text, View, StyleSheet, TextInput, Button, Image } from "react-native";
 
 import { useNavigation } from '@react-navigation/native';
@@ -19,11 +19,10 @@ const UserPageIndex = () => {
 
     const fetchData = async () => {
         try {
-            await dataManager.init();
             const tempo = await dataManager.getSaveData();
             setSave(tempo);
 
-            const actualUserPatient = save.patients.filter((patient) => patient.actualuser == false)[0];
+            const actualUserPatient = save.patients.filter((patient) => patient.actualUser == false)[0];
 
             if (actualUserPatient) {
                 setActualuser(actualUserPatient);
@@ -47,10 +46,10 @@ const UserPageIndex = () => {
             console.log(value, actualuser.name)
             save.patients.forEach(patient => {
                 patient.name === value
-                    ? (patient.actualuser = true)
-                    : (actualuser.name === patient.name ? (patient.actualuser = false) : null);
+                    ? (patient.actualUser = true)
+                    : (actualuser.name === patient.name ? (patient.actualUser = false) : null);
             });
-            setActualuser(save.patients.find(patient => patient.actualuser === true) as PatientInterface)
+            setActualuser(save.patients.find(patient => patient.actualUser === true) as PatientInterface)
             dataManager.setSaveData(save);
             console.log("changement de profile", actualuser.name)
 
@@ -70,7 +69,7 @@ const UserPageIndex = () => {
                     changeProfile(value);
                 }}
 
-                items={(save.patients.filter((patient) => patient.actualuser === false)).map((patient) => ({
+                items={(save.patients.filter((patient) => patient.actualUser === false)).map((patient) => ({
                     label: patient.name,
                     value: patient.name,
                 }))}

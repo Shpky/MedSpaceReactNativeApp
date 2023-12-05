@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View, Text, StyleProp, TextStyle, TextInput } from "react-native";
 import style from "../style";
-import Picker from "@components/Picker";
+import Picker from "@components/form/Picker/PickerIndex";
 import { CheckBox } from '@rneui/themed';
 
 
@@ -16,7 +16,7 @@ export default function Frequency({ frequency, setFrequency }:
         <View style={style.textPickercontainer}>
             <Text style={style.textInput}>Fréquence</Text>
             <Picker items={[{ label: "Repas", value: "routine" }, { label: "Quotidien", value: "daily" }, { label: "Hebdomadaire", value: "weekly" }]}
-                default_value='routine'
+                defaultValue='routine'
                 onChange={(e) => {
                     setFrequencyMode(e);
                     switch (e) {

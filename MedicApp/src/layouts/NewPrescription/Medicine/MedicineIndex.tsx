@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import Container from '@containers/FormBubble';
+import Container from '@components/form/Container/ContainerIndex';
 import Name from './Name';
 import Company from './Company';
 import Dosage from './Dosage';
 import Frequency from './Frequency';
-import Duration from '../DateForm';
+import Duration from '../IdNewPrescription/SelectDate';
 import Renew from './Renew';
 import Notes from './Notes';
 import DeleteButton from '../buttons/DeleteMedicine';
@@ -14,6 +14,13 @@ type MedicineProps = {
     drop: () => void
 }
 
+/**
+ * Affiche une bulle de formulaire pour compléter un médicament (et ses informations associées)
+ * 
+ * @param medicine la base du médicament à afficher
+ * @param onChange callback appelé à chaque modification du médecin
+ * @param drop method appelé lors du clique sur le bouton "Supprimer"
+ */
 export default function Medicine({ medicine, onChange, drop }: MedicineProps) {
 
     const [medicineState, setMedicine] = useState(medicine);
@@ -37,7 +44,7 @@ export default function Medicine({ medicine, onChange, drop }: MedicineProps) {
         <Frequency frequency={medicineState.frequency} key={medicineState.frequency?.toString()}
             setFrequency={(newFrequency) => setMedicine({ ...medicineState, frequency: newFrequency })} />
 
-        <Duration date={medicineState.duration} key={medicineState.duration?.toString()} text="Fin du traitement"
+        <Duration date={medicineState.duration} key={medicineState.duration?.toString()} customText="Fin du traitement"
             setDate={(newDuration) => setMedicine({ ...medicineState, duration: newDuration })} />
 
         <Renew renew={medicineState.to_renew}

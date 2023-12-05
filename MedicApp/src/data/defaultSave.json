@@ -14,13 +14,13 @@
             "name": "Invité",
             "icone": 0,
             "prescriptions": [],
-            "actualuser": true
+            "actualUser": true
         },
         {
             "name": "Vous",
             "icone": 0,
             "prescriptions": [],
-            "actualuser": false
+            "actualUser": false
         }
     ]
 }

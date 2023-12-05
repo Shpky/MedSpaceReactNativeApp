@@ -16,15 +16,12 @@ const TreatmentContainer = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            await dataManager.init();
 
             const save = await dataManager.getSaveData();
-            const actualUserPatient = save.patients.find(patient => patient.actualuser === true);
-
+            const actualUserPatient = save.patients.find(patient => patient.actualUser === true);
             if (actualUserPatient) {
                 setPatient(actualUserPatient);
             }
-
         };
 
         fetchData();

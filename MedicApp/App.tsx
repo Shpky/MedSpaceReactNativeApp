@@ -4,9 +4,8 @@ import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HeaderContainer from "@layouts/Home/components/headerContainer";
 import TreatmentContainer from '@layouts/Treatment/TreatmentIndexPage';
-import defaultSaveForTest from "@data/defaultSaveForTest.json";
 import HomePageBody from '@layouts/Home/components/IndexHomePage';
-import NewPrescription from '@layouts/NewPrescription/NewPrescription';
+import NewPrescription from '@layouts/NewPrescription/NewPrescriptionIndex';
 
 function HomeScreen() {
   return (
@@ -27,8 +26,7 @@ const MedicAppWhiteTheme = {
 };
 
 function App(): JSX.Element {
-  return (
-    <>
+  return <>
       <NavigationContainer theme={MedicAppWhiteTheme}>
         <Stack.Navigator
           screenOptions={{
@@ -37,13 +35,12 @@ function App(): JSX.Element {
           }}
         >
           <Stack.Screen name="Home" component={HomePageBody} />
-      <Stack.Screen name="Treatment" component={TreatmentContainer} />
-      <Stack.Screen name="NewPrescription" component={NewPrescription}  />
+          <Stack.Screen name="Treatment" component={TreatmentContainer} />
+          <Stack.Screen name="NewPrescription" component={NewPrescription} />
 
-    </Stack.Navigator >
+        </Stack.Navigator >
       </NavigationContainer >
     </>
-  );
 }
 
 export default App;

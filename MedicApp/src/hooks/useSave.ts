@@ -1,11 +1,20 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import dataManager from "@features/dataManager"
 
+/**
+ * Custom hook qui permet de récupérer la sauvegarde
+ * 
+ * @returns la sauvegarde et une fonction pour la modifier
+ */
 export default function useSave(): [SaveInterface | undefined, (data: SaveInterface) => void] {
-    let save: SaveInterface | undefined
+    const [save, setSave] = useState<SaveInterface | undefined>(undefined)
     useEffect(() => {
-        dataManager.init()
-        dataManager.getSaveData().then(s => save = s)
+        dataManager.getSaveData().then(s => setSave(s))
     }, [])
-    return [save, dataManager.setSaveData]
+
+    useEffect(() => {
+        save && dataManager.setSaveData(save)
+    }, [save])
+
+    return [save, setSave]
 }

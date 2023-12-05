@@ -2,15 +2,15 @@ import { useEffect, useState } from 'react';
 import { Button, TextInput, Text, View, ScrollView } from 'react-native';
 import MedicineComponent from '@layouts/NewPrescription/Medicine/MedicineIndex';
 import Title from '@components/TitleBubble';
-import Container from '@containers/FormBubble';
+import Container from '@components/form/Container/ContainerIndex';
 import style from './style';
 import defaultMedicine from '@data/defaultMedicine.json';
 import defaultPrescription from '@data/defaultPrescription.json';
-import ModalImgPicker from './ModalImportImg';
+import ModalImgPicker from './ImportImg/ModalImportImg';
 import AddMedicine from './buttons/AddMedicine';
-import DatePicker from './DateForm';
 import Debug from '@components/Debug';
 import useSave from "@hooks/useSave";
+import Id from './IdNewPrescription/IdNewPrescriptionsIndex';
 
 export default function NewPrescription() {
 
@@ -39,8 +39,8 @@ export default function NewPrescription() {
         <Title>Veuillez renseigner les informations de l'ordonnance</Title>
 
         <ModalImgPicker setprescription={setPrescription} />
+        <Id prescription={prescription} onChange={setPrescription} />
 
-        
         {
             prescription.medicines.map((p, i) => {
 

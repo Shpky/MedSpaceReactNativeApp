@@ -4,53 +4,36 @@ import defaultSave from "@data/defaultSave.json";
 import defaultSaveForTest from "@data/defaultSaveForTest.json";
 
 export default {
-    async init() {
-        RNSecureStorage.exists('save')
-            .then((exists) => {
-                if (!exists) {
-                    this.deleteSaveData()
-                }
-            }
-            )
-    },
-    async setSaveData(data: SaveInterface) {
+    async setSaveData(newSave: SaveInterface | ((oldSave: SaveInterface) => SaveInterface)) {
         try {
-            RNSecureStorage
-                .set('save', JSON.stringify(data),
+            if (newSave instanceof Function) {
+                const oldSave = await this.getSaveData();
+                newSave = newSave(oldSave);
+                RNSecureStorage.set('save', JSON.stringify(newSave),
                     { accessible: ACCESSIBLE.WHEN_UNLOCKED })
+            } else {
+                RNSecureStorage.set('save', JSON.stringify(newSave),
+                    { accessible: ACCESSIBLE.WHEN_UNLOCKED })
+            }
         } catch (error) {
             console.error("Erreur lors de la sauvegarde des données :", error);
         }
     },
-    async deleteSaveData() {
 
+    async resetSaveData() {
         RNSecureStorage
-            .set('save', JSON.stringify(defaultSaveForTest),
+            .set('save', JSON.stringify(__DEV__ ? defaultSaveForTest : defaultSave),
                 { accessible: ACCESSIBLE.WHEN_UNLOCKED })
-
-
     },
+
     async getSaveData(): Promise<SaveInterface> {
-        try {
-            const exists = await RNSecureStorage.exists('save');
 
-            if (exists) {
-                const data = await RNSecureStorage.get('save');
+        const exists = await RNSecureStorage.exists('save');
+        if (!exists) await this.resetSaveData()
 
-                if (typeof data === "string") {
-                    const parsedData = JSON.parse(data);
+        const data = await RNSecureStorage.get('save');
 
-
-                    return parsedData as SaveInterface;
-
-                }
-            }
-        } catch (error) {
-            console.error("Erreur lors de la récupération des données sauvegardées :", error);
-        }
-
-        // Retourne undefined s'il y a une erreur, si les données n'existent pas ou ne sont pas valide
-        //@ts-ignore
-        return defaultSave as SaveInterface;
+        const parsedData = JSON.parse(data as string);
+        return parsedData as SaveInterface;
     }
 }
