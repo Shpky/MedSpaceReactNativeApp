@@ -54,7 +54,7 @@ const UserPageIndex = () => {
 
     const ProfilePicker = () => {
         return (
-            <View style={styles.container}>
+            <View style={[styles.container, styles.shadow]}>
                 <Text style={styles.smallfontJomhuriaRegular}>
                     Sélectionnez un profil
                 </Text>
@@ -239,13 +239,13 @@ const UserPageIndex = () => {
 
     const CreateNewUser = () => {
         return (
-            <View >
+            <View style={[styles.shadow]} >
                 <Pressable
-                    style={[styles.buttonGREEN, { borderRadius: 30, }]}
+                    style={[styles.buttonGREEN, { borderRadius: 30, }, styles.shadow]}
                     onPress={() => {
                         NewUser('Nouvel utilisateur', defaultIcon.icon, false);
                     }}>
-                    <Text style={styles.smallfontJomhuriaRegularnopading}>AJOUTER UN NOUVEL UTILISATEUR</Text>
+                    <Text style={[styles.smallfontJomhuriaRegularnopading]}>AJOUTER UN NOUVEL UTILISATEUR</Text>
                 </Pressable>
             </View>
         );
@@ -254,14 +254,14 @@ const UserPageIndex = () => {
     return (
         <View style={styles.body}>
             <View style={{ width: '100%' }}>
-                <ProfilePicker />
+                <ProfilePicker  />
                 <View style={styles.userInfoContainer}>
                     <ProfileImage />
                     {Userinfo()}
                     {Statistique()}
                     {ControleButton()}
                 </View>
-                {CreateNewUser()}
+                <CreateNewUser />
             </View>
         </View>
     );
@@ -277,13 +277,29 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
 
     },
-
+    shadow: {
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
     container: {
         alignContent: 'center',
         justifyContent: 'center',
         width: '100%',
         backgroundColor: 'red',
         borderRadius: 30,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
     },
 
     smallfontJomhuriaRegular: {
@@ -362,6 +378,13 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         marginBottom: 20,
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
 
     },
 
