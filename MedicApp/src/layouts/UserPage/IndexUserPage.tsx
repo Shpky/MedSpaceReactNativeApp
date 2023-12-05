@@ -59,7 +59,13 @@ const UserPageIndex = () => {
                     Sélectionnez un profil
                 </Text>
                 <RNPickerSelect
+                    style={{
+                        placeholder: {
+                            color: 'white',
+                            marginLeft: 5,
+                        },
 
+                    }}
                     onValueChange={handleChangeProfile}
                     items={getPickerItems()}
                     placeholder={getPickerPlaceholder()}
@@ -118,12 +124,22 @@ const UserPageIndex = () => {
     };
 
     const NewUser = (name: string, icon: string = '', actualUser: boolean = false) => {
+        let nb = 0;
+        while (save.patients.map((patient) => patient.name == name).includes(true)) {
+            name = name + nb;
+            nb++;
+
+        }
+
+
+
         save.patients.push({
             name: name,
             icone: icon,
             actualUser: actualUser,
             prescriptions: [],
         } as PatientInterface);
+
         dataManager.setSaveData(save);
         setReload(!reload);
     };
@@ -223,13 +239,13 @@ const UserPageIndex = () => {
 
     const CreateNewUser = () => {
         return (
-            <View style={{ flexDirection: 'row', marginTop: 20 }}>
+            <View >
                 <Pressable
-                    style={styles.buttonGREEN}
+                    style={[styles.buttonGREEN, { borderRadius: 30, }]}
                     onPress={() => {
                         NewUser('Nouvel utilisateur', defaultIcon.icon, false);
                     }}>
-                    <Text style={styles.smallfontJomhuriaRegularnopading}>NOUVEAU</Text>
+                    <Text style={styles.smallfontJomhuriaRegularnopading}>AJOUTER UN NOUVEL UTILISATEUR</Text>
                 </Pressable>
             </View>
         );
@@ -284,6 +300,9 @@ const styles = StyleSheet.create({
         paddingLeft: 25,
         marginBottom: 15,
         marginRight: 10,
+        textAlign: 'center',
+        alignItems: 'center',
+
     },
     buttonRED: {
         backgroundColor: 'red',

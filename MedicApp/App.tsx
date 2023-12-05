@@ -18,7 +18,6 @@ function HomeScreen() {
 }
 
 const Stack = createNativeStackNavigator();
-// Personnalisez le thème ici
 const MedicAppWhiteTheme = {
   ...DefaultTheme,
   colors: {
