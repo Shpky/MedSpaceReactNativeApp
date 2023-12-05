@@ -2,163 +2,155 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import RNPickerSelect from 'react-native-picker-select';
 import defaultSaveForTest from '@data/defaultSaveForTest.json';
-import defaultPatient from '@data/defaultPatient.json';
 import dataManager from '@features/dataManager';
-
-import { useNavigation } from '@react-navigation/native';
-import { View, Text, TextInput, Button, Image, StyleSheet, Pressable } from "react-native";
+import {
+    View,
+    Text,
+    TextInput,
+    Button,
+    Image,
+    StyleSheet,
+    Pressable,
+} from 'react-native';
 import defaultIcon from '@data/defaultIcon.json';
-import { launchCamera, launchImageLibrary, CameraOptions, ImageLibraryOptions } from 'react-native-image-picker';
+import {
+    launchCamera,
+    launchImageLibrary,
+    CameraOptions,
+    ImageLibraryOptions,
+} from 'react-native-image-picker';
 import RNFS from 'react-native-fs';
 
 const UserPageIndex = () => {
-
     const [save, setSave] = useState<SaveInterface>(defaultSaveForTest);
     const [reload, setReload] = useState<boolean>(false);
-    let actualUser = save.patients.find(patient => patient.actualUser == true)
-
-
+    const actualUser = save.patients.find((patient) => patient.actualUser == true);
 
     const fetchData = async () => {
         try {
             setSave(await dataManager.getSaveData());
-
-
         } catch (error) {
-            console.error("Erreur lors de la récupération des données :", error);
+            console.error('Erreur lors de la récupération des données :', error);
         }
     };
 
     useEffect(() => {
         fetchData();
-
     }, []);
 
-    const changeProfile = (value: string) => {
-        let actualUser = save.patients.find(patient => patient.actualUser == true)
-
+    const handleChangeProfile = (value: string) => {
         if (value !== actualUser?.name) {
-            save.patients.forEach(patient => {
+            save.patients.forEach((patient) => {
                 patient.name == value
                     ? (patient.actualUser = true)
-                    : (actualUser?.name === patient.name ? (patient.actualUser = false) : null);
+                    : actualUser?.name === patient.name
+                        ? (patient.actualUser = false)
+                        : null;
             });
             dataManager.setSaveData(save);
         }
-
         setReload(!reload);
     };
 
     const ProfilePicker = () => {
-
-        let actualUser = save.patients.find(patient => patient.actualUser == true)
         return (
-
-            <View style={styles.containter}>
-                <Text style={styles.smallfontJomhuriaRegular}>Sélectionnez un profile</Text>
+            <View style={styles.container}>
+                <Text style={styles.smallfontJomhuriaRegular}>
+                    Sélectionnez un profil
+                </Text>
                 <RNPickerSelect
-                    style={{
-                        placeholder: {
-                            color: 'white',
-                        },
-                        inputIOS: {
-                            color: 'white',
-                            marginLeft: 5,
-                        },
-                        inputAndroid: {
-                            marginLeft: 5,
-                            color: 'white',
-                        },
 
-
-                    }}
-                    onValueChange={(value) => {
-                        changeProfile(value);
-                    }}
-
-                    items={(save.patients.filter((patient) => patient.actualUser == false)).map((patient) => ({
-                        label: patient.name,
-                        value: patient.name,
-                    }))}
-                    placeholder={{
-                        label: actualUser?.name,
-                        value: actualUser?.name,
-
-
-                    }}
-
+                    onValueChange={handleChangeProfile}
+                    items={getPickerItems()}
+                    placeholder={getPickerPlaceholder()}
                 />
             </View>
-        )
+        );
+    };
 
-    }
+    const getPickerItems = () => {
+        return save.patients
+            .filter((patient) => !patient.actualUser)
+            .map((patient) => ({
+                label: patient.name,
+                value: patient.name,
+            }));
+    };
+
+    const getPickerPlaceholder = () => {
+        return {
+            label: actualUser?.name,
+            value: actualUser?.name,
+        };
+    };
 
     const ProfileImage = () => {
-        let actualUser = save.patients.find(patient => patient.actualUser == true)
         return (
             <Image
-                style={{ width: 150, height: 150, marginTop: 20, borderRadius: 100 }}
+                style={{
+                    width: 150,
+                    height: 150,
+                    marginTop: 20,
+                    borderRadius: 100,
+                }}
                 source={{ uri: actualUser?.icone }}
             />
-        )
-
-    }
+        );
+    };
 
     async function convertPngToBase64(pngImage: string): Promise<string | null> {
         const binaryString = await RNFS.readFile(pngImage, 'base64');
-
         return binaryString;
     }
 
-
     const handleChangeText = (inputText: string) => {
-        let actualUser = save.patients.find(patient => patient.actualUser == true) as PatientInterface;
+        inputText.length == 0 ? (inputText = 'Nouveau patient') : null;
 
-        inputText.length == 0 ? inputText = "Nouveau patient" : null;
-
-        actualUser.name != inputText ?
-            (save.patients.splice(save.patients.indexOf(actualUser as PatientInterface), 1), actualUser.name = inputText, save.patients.push(actualUser), dataManager.setSaveData(save), setReload(!reload))
-            : inputText.length == 0 ?
-                (save.patients.splice(save.patients.indexOf(actualUser as PatientInterface), 1), actualUser.name = "Nouveau patient", save.patients.push(actualUser), dataManager.setSaveData(save), setReload(!reload)) : null
-        setReload(!reload)
-
+        if (actualUser?.name !== inputText) {
+            save.patients = save.patients.map((patient) =>
+                patient === actualUser
+                    ? { ...patient, name: inputText }
+                    : patient
+            );
+            dataManager.setSaveData(save);
+            setReload(!reload);
+        }
     };
 
-    const NewUser = (name: string, icon: string = "", actualUser: boolean = false) => {
-
-
-        save.patients.push({ name: name, icone: icon, actualUser: actualUser, prescriptions: [] } as PatientInterface)
-
-
+    const NewUser = (name: string, icon: string = '', actualUser: boolean = false) => {
+        save.patients.push({
+            name: name,
+            icone: icon,
+            actualUser: actualUser,
+            prescriptions: [],
+        } as PatientInterface);
         dataManager.setSaveData(save);
         setReload(!reload);
+    };
 
-    }
     const handlePressButtonDEL = () => {
-        let actualUser = save.patients.find(patient => patient.actualUser == true);
-        save.patients.length > 1 ?
-            (save.patients.forEach(patient => {
-                patient.actualUser == false && actualUser?.name != patient.name ? (patient.actualUser = true) : patient.actualUser = false;
-            }), save.patients.splice(save.patients.indexOf(actualUser as PatientInterface), 1), dataManager.setSaveData(save))
-            : (save.patients = save.patients.filter((patient) => patient.actualUser == false),
-                NewUser("Nouveau patient", defaultIcon.icon, true))
+        if (save.patients.length > 1) {
+            save.patients = save.patients.filter((patient) => patient !== actualUser);
+            save.patients[0].actualUser = true;
+            dataManager.setSaveData(save);
+        } else {
+            save.patients = [];
+            NewUser('Nouveau patient', defaultIcon.icon, true);
+            dataManager.setSaveData(save);
+        }
         setReload(!reload);
-    }
+    };
 
     const Changepp = async (uri: string) => {
-        let actualUser = save.patients.find(patient => patient.actualUser) as PatientInterface;
-        save.patients = save.patients.slice(save.patients.indexOf(actualUser), 1);
-
-
-
         const base64Icon = await convertPngToBase64(uri);
-        actualUser.icone = "data:image/png;base64," + base64Icon;
-        save.patients.push(actualUser);
+        save.patients = save.patients.map((patient) =>
+            patient === actualUser
+                ? { ...patient, icone: `data:image/png;base64,${base64Icon}` }
+                : patient
+        );
         dataManager.setSaveData(save);
-        setReload(!reload)
+        setReload(!reload);
     };
-
-
 
     const libraryHandler = async () => {
         const options: ImageLibraryOptions = {
@@ -166,38 +158,53 @@ const UserPageIndex = () => {
             selectionLimit: 1,
         };
         launchImageLibrary(options, async (response) => {
-            if (response.assets && response.assets[0] && typeof response.assets[0].uri === "string") {
+            if (response.assets && response.assets[0] && typeof response.assets[0].uri === 'string') {
                 Changepp(response.assets[0].uri);
             }
         });
-    }
-    const ControleButton = () => {
+    };
 
-        return (<View style={{ flexDirection: 'row', marginTop: 20 }}>
-            <Pressable style={styles.buttonGREEN} onPress={libraryHandler}><Text style={styles.smallfontJomhuriaRegularnopading} >IMPORTER UNE PHOTO</Text></Pressable>
-            <Pressable style={styles.buttonRED} onPress={handlePressButtonDEL}><Text style={styles.smallfontJomhuriaRegularnopading}>SUPPRIMER</Text></Pressable>
-        </View>)
-    }
+    const ControleButton = () => {
+        return (
+            <View style={{ flexDirection: 'row', marginTop: 20 }}>
+                <Pressable style={styles.buttonGREEN} onPress={libraryHandler}>
+                    <Text style={styles.smallfontJomhuriaRegularnopading}>
+                        CHANGER DE PHOTO
+                    </Text>
+                </Pressable>
+                <Pressable style={styles.buttonRED} onPress={handlePressButtonDEL}>
+                    <Text style={styles.smallfontJomhuriaRegularnopading}>SUPPRIMER</Text>
+                </Pressable>
+            </View>
+        );
+    };
 
     const Userinfo = () => {
-        let actualUser = save.patients.find(patient => patient.actualUser == true)
-        return (<View style={styles.nameContainer}>
-            <Text style={styles.smallfontJomhuriaRegular}>Le nom de l'utilisateur actuelle est:</Text>
-            <TextInput
-                style={[{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, padding: 5 }, styles.textInput]}
-                defaultValue={actualUser?.name}
-                onEndEditing={(event) => handleChangeText(event.nativeEvent.text)}
-                textAlignVertical="center"
-                textAlign="center"
-            />
-        </View>)
+        return (
+            <View style={styles.nameContainer}>
+                <Text style={styles.smallfontJomhuriaRegular}>
+                    Le nom de l'utilisateur actuelle est:
+                </Text>
+                <TextInput
+                    style={[styles.textInput]}
+                    defaultValue={actualUser?.name}
+                    onEndEditing={(event) => handleChangeText(event.nativeEvent.text)}
+                    textAlignVertical="center"
+                    textAlign="center"
+                />
+            </View>
+        );
+    };
 
-    }
     const Statistique = () => {
         return (
             <View>
-                <Text style={[styles.smallfontJomhuriaRegular, { marginLeft: 5 }]}>Statistique de l'utilisateur</Text>
-                <Text style={[styles.realysmallfontJomhuriaRegular, { marginBottom: -15 }]}>Nombre de traitement : {actualUser?.prescriptions.length}</Text>
+                <Text style={[styles.smallfontJomhuriaRegular, { marginLeft: 5 }]}>
+                    Statistique de l'utilisateur
+                </Text>
+                <Text style={[styles.realysmallfontJomhuriaRegular, { marginBottom: -15 }]}>
+                    Nombre de traitement : {actualUser?.prescriptions.length}
+                </Text>
                 {actualUser && actualUser.prescriptions ? (
                     <Text style={styles.realysmallfontJomhuriaRegular}>
                         Nombre moyen de médicaments par traitement :{' '}
@@ -211,40 +218,41 @@ const UserPageIndex = () => {
                     <Text>Chargement...</Text>
                 )}
             </View>
-        )
-    }
+        );
+    };
 
     const CreateNewUser = () => {
-
         return (
             <View style={{ flexDirection: 'row', marginTop: 20 }}>
-
-                <Pressable style={styles.buttonGREEN} onPress={() => { NewUser("Nouvel utilisateur", defaultIcon.icon, false) }}><Text style={styles.smallfontJomhuriaRegularnopading}>NOUVEAU</Text></Pressable>
-
+                <Pressable
+                    style={styles.buttonGREEN}
+                    onPress={() => {
+                        NewUser('Nouvel utilisateur', defaultIcon.icon, false);
+                    }}>
+                    <Text style={styles.smallfontJomhuriaRegularnopading}>NOUVEAU</Text>
+                </Pressable>
             </View>
-        )
-    }
+        );
+    };
 
     return (
-
         <View style={styles.body}>
             <View style={{ width: '100%' }}>
-
                 <ProfilePicker />
                 <View style={styles.userInfoContainer}>
                     <ProfileImage />
-
-                    <Userinfo />
-                    <Statistique />
-                    <ControleButton />
-
+                    {Userinfo()}
+                    {Statistique()}
+                    {ControleButton()}
                 </View>
-                <CreateNewUser />
+                {CreateNewUser()}
             </View>
-        </View >
+        </View>
     );
+};
 
-}
+
+
 
 const styles = StyleSheet.create({
     nameContainer: {
@@ -252,6 +260,22 @@ const styles = StyleSheet.create({
 
         justifyContent: 'center',
 
+    },
+
+    container: {
+        alignContent: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        backgroundColor: 'red',
+        borderRadius: 30,
+    },
+
+    smallfontJomhuriaRegular: {
+        marginLeft: 20,
+        fontFamily: 'Jomhuria-Regular',
+        fontSize: 30,
+        color: 'white',
+        marginBottom: -20,
     },
     buttonGREEN: {
         backgroundColor: '#36b436',
@@ -279,15 +303,7 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
     },
-    smallfontJomhuriaRegular: {
-        marginLeft: 20,
-        fontFamily: 'Jomhuria-Regular',
-        fontSize: 30,
-        color: 'white',
-        marginBottom: -20,
 
-
-    },
     realysmallfontJomhuriaRegular: {
         marginLeft: 20,
         fontFamily: 'Jomhuria-Regular',
