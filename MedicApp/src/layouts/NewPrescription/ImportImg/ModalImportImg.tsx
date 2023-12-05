@@ -13,7 +13,7 @@ const ModalImgPicker = ({ setprescription }: { setprescription: Dispatch<SetStat
         console.log('Recognized text:', result.text);
         console.log(typeof (result.text));
 
-        
+
 
         /*for (let block of result.blocks) {
             console.log('Block text:', block.text);
@@ -27,7 +27,7 @@ const ModalImgPicker = ({ setprescription }: { setprescription: Dispatch<SetStat
         }*/
     }
 
-    const DetectMedicineContainer = async (input:TextRecognitionResult ) => {
+    const DetectMedicineContainer = async (input: TextRecognitionResult) => {
         let Medecines = DetectMedicineinsentence(input)
     }
 
