@@ -10,7 +10,8 @@ import {
     Image,
     StyleSheet,
     Pressable,
-    ScrollView
+    ScrollView,
+    ImageBackground
 } from 'react-native';
 import defaultIcon from '@data/defaultIcon.json';
 import {
@@ -54,7 +55,7 @@ const UserPageIndex = () => {
 
     const ProfilePicker = () => {
         return (
-            <View style={[styles.container, styles.shadow]}>
+            <View style={[styles.container]}>
                 <Text style={styles.smallfontJomhuriaRegular}>
                     Sélectionnez un profil
                 </Text>
@@ -206,7 +207,7 @@ const UserPageIndex = () => {
     const ControleButton = () => {
         return (
             <View style={{ flexDirection: 'row', marginTop: 5 }}>
-                <Pressable style={styles.buttonGREEN} onPress={libraryHandler}>
+                <Pressable style={[styles.buttonGREEN, { backgroundColor: "green", alignItems: "center", justifyContent: "center" }]} onPress={libraryHandler}>
                     <Text style={styles.smallfontJomhuriaRegularnopading}>
                         CHANGER DE PHOTO
                     </Text>
@@ -281,9 +282,9 @@ const UserPageIndex = () => {
 
     const CreateNewUser = () => {
         return (
-            <View style={[styles.shadow, { marginTop: 10, padding: 10 }]} >
+            <View style={[{ marginTop: 10, padding: 10 }]} >
                 <Pressable
-                    style={[styles.buttonGREEN, { borderRadius: 30, }, styles.shadow]}
+                    style={[styles.buttonGREEN, { borderRadius: 30, },]}
                     onPress={() => {
                         NewUser('Nouvel utilisateur', defaultIcon.icon, false);
                     }}>
@@ -296,14 +297,31 @@ const UserPageIndex = () => {
     return (
         <ScrollView style={styles.body}>
             <View style={{ width: '100%' }}>
-                <ProfilePicker />
-                <CreateNewUser />
+                <ImageBackground
+                    source={require('./img/picker.png')}  // Remplacez 'Test.jpg' par le chemin de votre image
+                    style={[styles.backgroundImage, { marginTop: 20, }, styles.shadow]}
+                >
+                    <ProfilePicker />
+                </ImageBackground>
+                <ImageBackground
+                    source={require('./img/newuser.png')}  // Remplacez 'Test.jpg' par le chemin de votre image
+                    style={[styles.backgroundImage, { marginTop: 20, marginBottom: 20 }]}
+                >
+                    <CreateNewUser />
+                </ImageBackground>
                 <View style={styles.userInfoContainer}>
+                    <ImageBackground
+                        source={require('./img/userinfo.png')}  // Remplacez 'Test.jpg' par le chemin de votre image
+                        style={styles.backgroundImage}
+                    ><View style={styles.userInfoContainer}>
+                            <ProfileImage />
+                            {Userinfo()}
+                            {Statistique()}
+                            {ControleButton()}
 
-                    <ProfileImage />
-                    {Userinfo()}
-                    {Statistique()}
-                    {ControleButton()}
+                        </View>
+
+                    </ImageBackground>
                 </View>
 
             </View>
@@ -321,6 +339,21 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
 
     },
+    backgroundImage: {
+        flex: 1,
+        width: '100%',
+        height: '100%',
+        resizeMode: 'cover',
+        borderRadius: 30, // Ajustez la valeur selon vos besoins
+        overflow: 'hidden',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
     shadow: {
         shadowOffset: {
             width: 0,
@@ -334,16 +367,9 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         justifyContent: 'center',
         width: '100%',
-        backgroundColor: 'red',
+
         borderRadius: 30,
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
+
     },
 
     smallfontJomhuriaRegular: {
@@ -354,8 +380,8 @@ const styles = StyleSheet.create({
         marginBottom: -20,
     },
     buttonGREEN: {
-        backgroundColor: '#36b436',
-        padding: 15,
+
+
         paddingRight: 25,
         paddingLeft: 25,
         marginBottom: 15,
@@ -417,18 +443,12 @@ const styles = StyleSheet.create({
     userInfoContainer: {
         width: '100%',
 
-        backgroundColor: 'orange',
+
         borderRadius: 30,
         justifyContent: 'space-between',
         alignItems: 'center',
         marginBottom: 20,
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
+
 
     },
 

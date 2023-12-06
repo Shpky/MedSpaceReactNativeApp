@@ -9,6 +9,8 @@ import NewPrescription from '@layouts/NewPrescription/NewPrescriptionIndex';
 import UserPageIndex from '@layouts/UserPage/IndexUserPage';
 import dataManager from '@features/dataManager';
 import Debug from '@components/Debug';
+import defaultSaveForTest from '@data/defaultSaveForTest.json';
+import IndexReport from '@layouts/Report/testforCSV';
 function HomeScreen() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -16,7 +18,7 @@ function HomeScreen() {
     </View>
   );
 }
-
+dataManager.setSaveData(defaultSaveForTest)
 const Stack = createNativeStackNavigator();
 const MedicAppWhiteTheme = {
   ...DefaultTheme,
@@ -41,6 +43,7 @@ function App(): JSX.Element {
         <Stack.Screen name="Treatment" component={TreatmentContainer} />
         <Stack.Screen name="NewPrescription" component={NewPrescription} />
         <Stack.Screen name="UserPage" component={UserPageIndex} />
+        <Stack.Screen name="RepportPage" component={IndexReport} />
 
       </Stack.Navigator >
     </NavigationContainer >
