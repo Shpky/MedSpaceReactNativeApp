@@ -7,11 +7,12 @@ import dataManager from "@features/dataManager"
  *
  * @return une nouvelle prescription, une fonction pour la modifier et une fonction pour l'appliquer au patient
  */
-export default function useNewPrescription(): [PrescriptionInterface, React.Dispatch<React.SetStateAction<PrescriptionInterface>>, () => void] {
+export default function useNewPrescription():
+    [PrescriptionInterface, React.Dispatch<React.SetStateAction<PrescriptionInterface>>, () => Promise<void>] {
     const [prescription, setPrescription] = useState<PrescriptionInterface>(defaultPrescription)
 
-    const apply = () => {  // Ajoute la prescription à la liste des prescriptions du patient
-        dataManager.setSaveData((oldSave) => ({
+    const apply = async () => {  // Ajoute la prescription à la liste des prescriptions du patient
+        await dataManager.setSaveData((oldSave) => ({
             ...oldSave,
             patients: oldSave.patients.map(p => p.actualUser ? {
                 ...p,

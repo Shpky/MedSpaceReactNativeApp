@@ -1,26 +1,33 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Pressable, FlatList, } from "react-native";
+import { Text, View, StyleSheet, Button, Pressable, FlatList, } from "react-native";
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { useNavigation } from '@react-navigation/native';
 import dataManager from '@features/dataManager';
+import useSave from '@hooks/useSave';
+import useActualPatient from '@hooks/useActualPatient';
+import Debug from '@components/Debug';
+
 const TreatmentContainer = () => {
-    const [patient, setPatient] = useState<PatientInterface | undefined>();
+    // const [patient, setPatient] = useState<PatientInterface | undefined>();
     const navigation = useNavigation();
+    const [patient, setPatient] = useActualPatient()
 
-    useEffect(() => {
-        const fetchData = async () => {
+    
 
-            const save = await dataManager.getSaveData();
-            const actualUserPatient = save.patients.find(patient => patient.actualUser === true);
-            if (actualUserPatient) {
-                setPatient(actualUserPatient);
-            }
-        };
-
-        fetchData();
-    }, []);
+    // const [save] = useSave();
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         console.log("on fetch")
+    //         // const save = await dataManager.getSaveData();
+    //         const actualUserPatient = save?.patients.find(patient => patient.actualUser === true);
+    //         if (actualUserPatient) {
+    //             setPatient(actualUserPatient);
+    //         }
+    //     };
+    //     fetchData();
+    // }, []);
 
     const navigateToNewPrescription = () => {
         //@ts-ignore
@@ -29,6 +36,7 @@ const TreatmentContainer = () => {
 
     const RenderItem = ({ item }: { item: PrescriptionInterface }) => {
         return (
+
             <View style={styles.Treatment}>
                 <View>
                     <Text style={styles.fontJomhuriaRegular}>{item.title}</Text>
@@ -50,10 +58,12 @@ const TreatmentContainer = () => {
             </View>
         );
     };
-
     return (
 
         <View style={styles.Body}>
+            <Debug>
+                <Button title={"navigation stack"} onPress={() => console.log(navigation.getState())} />
+            </Debug>
             <View>
 
                 <FlatList

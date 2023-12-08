@@ -34,6 +34,9 @@ function App(): JSX.Element {
         screenOptions={{
           header: () => <>
             <Debug>
+              <Button title="print datas" onPress={() => dataManager.getSaveData().then((e) => console.log(
+                e.patients.map((e) => { return e.prescriptions })
+              ))} />
               <Button title='reset' onPress={() => dataManager.resetSaveData()} />
             </Debug>
             <HeaderContainer /></>,

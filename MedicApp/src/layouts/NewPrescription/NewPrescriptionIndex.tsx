@@ -12,10 +12,12 @@ import Debug from '@components/Debug';
 import useSave from "@hooks/useSave";
 import Id from './IdNewPrescription/IdNewPrescriptionsIndex';
 import useNewPrescription from '@hooks/useNewPrescription';
+import { useNavigation } from '@react-navigation/native';
 
 export default function NewPrescription() {
 
-    const [prescription, setPrescription, apply] = useNewPrescription();
+    const [prescription, setPrescription, applyNewPrescription] = useNewPrescription();
+    const navigation = useNavigation();
 
     const setMedicines = (newMedicines: MedicineInterface[]) =>
         setPrescription((oldP) => ({ ...oldP, medicines: newMedicines }))
@@ -24,10 +26,22 @@ export default function NewPrescription() {
         setPrescription((oldP) => ({ ...oldP, medicines: [...oldP.medicines, defaultMedicine] }))
     };
 
+    const backToTreatment = () => {
+        //@ts-ignore
+
+        navigation.reset({ index: 1, routes: [{ name: "Home" }, { name: "Treatment" }] })
+        //@ts-ignore
+        navigation.navigate("Treatment");
+    }
+
+    const handleResetStack = () => {
+        navigation.reset({ index: 1, routes: [{ name: "Home" as never }, { name: "Treatment" as never }] })
+    }
     return <ScrollView>
         <Debug>
             <Button title={"Print"} onPress={() =>
                 console.log("presc\n", prescription, "\nmedicines\n", prescription.medicines)} />
+            <Button title={"navigation stack"} onPress={() => console.log(navigation.getState())} />
         </Debug>
 
         <Title>Veuillez renseigner les informations de l'ordonnance</Title>
@@ -62,7 +76,9 @@ export default function NewPrescription() {
             <Text style={style.textInput}>Notes de l'ordonnance</Text>
             <TextInput style={[style.input, style.full]} placeholder="Notes" placeholderTextColor={style.input.color} />
         </Container>
-
+        <Button title="Sauvegarder" onPress={() => {
+            applyNewPrescription().then(handleResetStack)
+        }} />
     </ScrollView>
 
 } 
