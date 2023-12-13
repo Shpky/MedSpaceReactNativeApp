@@ -1,13 +1,18 @@
-import { View, Text } from 'react-native';
+import { View, Text, ImageBackground } from 'react-native';
 import style from './style';
-import StackedWaveOrange from '../../assets/svg/StackedWaveOrange';
 
-export default function index({ children }: { children: string }) {
+
+export default function index({ children }: { children?: string | JSX.Element }) {
     return (
         <View style={style.container}>
-            {/* <StackedWaveOrange style={style.container}> */}
-                <Text style={style.title}>{children}</Text>
-                {/* </StackedWaveOrange> */}
+            <ImageBackground
+                source={require('./title.png')}  // Remplacez 'Test.jpg' par le chemin de votre image
+                style={style.background}
+            >
+                {typeof children === 'string'
+                    ? <Text style={style.title}>{children}</Text>
+                    : children}
+            </ImageBackground>
         </View>
     );
 };

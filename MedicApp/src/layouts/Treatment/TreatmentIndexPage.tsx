@@ -8,26 +8,11 @@ import dataManager from '@features/dataManager';
 import useSave from '@hooks/useSave';
 import useActualPatient from '@hooks/useActualPatient';
 import Debug from '@components/Debug';
+import Title from '@components/TitleBubble'
 
 const TreatmentContainer = () => {
-    // const [patient, setPatient] = useState<PatientInterface | undefined>();
     const navigation = useNavigation();
-    const [patient, setPatient] = useActualPatient()
-
-    
-
-    // const [save] = useSave();
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         console.log("on fetch")
-    //         // const save = await dataManager.getSaveData();
-    //         const actualUserPatient = save?.patients.find(patient => patient.actualUser === true);
-    //         if (actualUserPatient) {
-    //             setPatient(actualUserPatient);
-    //         }
-    //     };
-    //     fetchData();
-    // }, []);
+    const [patient] = useActualPatient()
 
     const navigateToNewPrescription = () => {
         //@ts-ignore
@@ -35,9 +20,13 @@ const TreatmentContainer = () => {
     };
 
     const RenderItem = ({ item }: { item: PrescriptionInterface }) => {
+        const navigateHandler = () => {
+            //@ts-ignore
+            navigation.navigate('Prescription', { prescription: item })
+        }
         return (
 
-            <View style={styles.Treatment}>
+            <Pressable style={styles.Treatment} onPress={navigateHandler}>
                 <ImageBackground
                     source={require('./img/traitement.png')}  // Remplacez 'Test.jpg' par le chemin de votre image
                     style={styles.backgroundImage}
@@ -55,14 +44,14 @@ const TreatmentContainer = () => {
                                 {item.medicines.slice(0, 2).map((medicine, index) => (
                                     <Text style={styles.smallfontJomhuriaRegular} key={index}>{medicine.name}</Text>
                                 ))}
-                                <Text style={styles.smallfontJomhuriaRegular} >Et {item.medicines.length - 2} autre médicament(s)</Text>
+                                <Text style={styles.smallfontJomhuriaRegular} >Et {item.medicines.length - 2} autre médicament{item.medicines.length > 1 && '(s)'}</Text>
                             </View>
                         )}
                     </View>
                 </ImageBackground>
-            </View>
+            </Pressable>
         );
-    };
+    }
     return (
 
         <View style={styles.Body}>
@@ -72,20 +61,14 @@ const TreatmentContainer = () => {
             <View>
 
                 <FlatList
-                    ListHeaderComponent={() => <View style={styles.HeaderInfoTraitment}>
-                        <ImageBackground
-                            source={require('./img/selectraitement.png')}  // Remplacez 'Test.jpg' par le chemin de votre image
-                            style={styles.backgroundImage}
-                        >
-                            <Text style={styles.fontJomhuriaRegular}>Sélectionez un traitement</Text>
-                        </ImageBackground>
-
-                    </View>}
+                    ListHeaderComponent={() =>
+                        <Title>
+                            Sélectionez un traitement
+                        </Title>}
                     data={patient?.prescriptions}
                     renderItem={({ item }) => <RenderItem item={item} />}
-
-
                 />
+
                 <View style={styles.container}>
 
                 </View>
@@ -189,6 +172,7 @@ let styles = StyleSheet.create({
 
     },
     Treatment: {
+        width: '90%',
         height: 200,
         borderRadius: 30,
         paddingBottom: 0,
@@ -197,7 +181,7 @@ let styles = StyleSheet.create({
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
-            height: 2,
+            height: 2,gi 
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,

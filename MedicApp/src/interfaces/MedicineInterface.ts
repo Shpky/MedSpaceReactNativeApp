@@ -26,5 +26,3 @@ interface WeeklyInterface {
     delay: number, /* tous les cb de jours ex-> 1 = tous les jours, 2 = tous les 2 jours, etc */
     
 }
-
-

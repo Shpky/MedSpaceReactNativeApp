@@ -6,7 +6,7 @@ export default StyleSheet.create({
         backgroundColor: "#ff7f00",
         borderRadius: 30,
         width: "90%",
-
+        marginVertical: 20
     },
     title: {
         fontWeight: "400",
@@ -16,5 +16,13 @@ export default StyleSheet.create({
         color: "#fff",
         textAlign: "center",
 
-    }
+    },
+    background: {
+        flex: 1,
+        width: '100%',
+        height: '100%',
+        resizeMode: 'cover',
+        borderRadius: 30, // Ajustez la valeur selon vos besoins
+        overflow: 'hidden',
+    },
 });

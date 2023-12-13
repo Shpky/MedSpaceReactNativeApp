@@ -11,6 +11,8 @@ import dataManager from '@features/dataManager';
 import Debug from '@components/Debug';
 import defaultSaveForTest from '@data/defaultSaveForTest.json';
 import IndexReport from '@layouts/Report/testforCSV';
+import Prescription from '@layouts/Prescription/PrescriptionIndex';
+
 function HomeScreen() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -36,7 +38,7 @@ function App(): JSX.Element {
           header: () => <>
             <Debug>
               <Button title="print datas" onPress={() => dataManager.getSaveData().then((e) => console.log(
-                e.patients.map((e) => { return e.prescriptions })
+                e.patients.map(e => ({ ...e, icone: null }))
               ))} />
               <Button title='reset' onPress={() => dataManager.resetSaveData()} />
             </Debug>
@@ -49,7 +51,7 @@ function App(): JSX.Element {
         <Stack.Screen name="NewPrescription" component={NewPrescription} />
         <Stack.Screen name="UserPage" component={UserPageIndex} />
         <Stack.Screen name="RepportPage" component={IndexReport} />
-
+        <Stack.Screen name="Prescription" component={Prescription} />
       </Stack.Navigator >
     </NavigationContainer >
   </>
