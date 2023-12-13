@@ -1,0 +1,30 @@
+{
+    "doctors": [
+        {
+            "name": "Nathan",
+            "mail": null
+        },
+        {
+            "name": "Romain",
+            "mail": null
+        }
+    ],
+    "patients": [
+        {
+            "name": "Invité",
+            "icone": 0,
+            "prescriptions": [],
+            "actualUser": true,
+            "earliesttime": "1970-01-01T08:00:00.000Z",
+            "latesttime": "1970-01-01T22:00:00.000Z"
+        },
+        {
+            "name": "Vous",
+            "icone": 0,
+            "prescriptions": [],
+            "actualUser": false,
+            "earliesttime": "1970-01-01T08:00:00.000Z",
+            "latesttime": "1970-01-01T22:00:00.000Z"
+        }
+    ]
+}

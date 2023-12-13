@@ -1,0 +1,53 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/FontAwesome.ttf",
+      "sha1": "13b1eab65a983c7a73bc7997c479d66943f7c6cb"
+    },
+    {
+      "path": "src/assets/fonts/FontAwesome5_Brands.ttf",
+      "sha1": "3fa2d67cef22da5c3f3eb5730c6afbd6fecf0372"
+    },
+    {
+      "path": "src/assets/fonts/FontAwesome5_Regular.ttf",
+      "sha1": "7d849a3981a716e2ba4a84634bc57d0b8054a6a3"
+    },
+    {
+      "path": "src/assets/fonts/FontAwesome5_Solid.ttf",
+      "sha1": "c1b9fae262f42868c075ac865a8ab34920e20a2c"
+    },
+    {
+      "path": "src/assets/fonts/FontAwesome6_Brands.ttf",
+      "sha1": "d8b3568e9d8a1d3c01c85520eb9ca0b49b72815d"
+    },
+    {
+      "path": "src/assets/fonts/FontAwesome6_Regular.ttf",
+      "sha1": "2d7890e12afb77490112ec57fe47ca0688aebda2"
+    },
+    {
+      "path": "src/assets/fonts/FontAwesome6_Solid.ttf",
+      "sha1": "e9ace557c3aa403307f1e7a2cef1c035d522b94b"
+    },
+    {
+      "path": "src/assets/fonts/Jomhuria-Regular.ttf",
+      "sha1": "1e6812ab945305665df7fb85c515dcca60b6e2cf"
+    },
+    {
+      "path": "src/assets/fonts/Jua-Regular.ttf",
+      "sha1": "02c5a5620463755f8795947491e56b00a374961c"
+    },
+    {
+      "path": "src/assets/fonts/Jua.zip",
+      "sha1": "8e94ffac425303b031b543c0f56833836f5e3132"
+    },
+    {
+      "path": "src/assets/fonts/OFL.txt",
+      "sha1": "671900fe53332d848e38161b1f00fcdc36f03e68"
+    },
+    {
+      "path": "src/assets/img/logo.png",
+      "sha1": "34c064314605a5862a13a36c018dc50efc61594a"
+    }
+  ]
+}
