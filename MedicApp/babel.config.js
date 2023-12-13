@@ -28,7 +28,9 @@ module.exports = {
           "@features":
             "./src/features/",
           "@hooks":
-            "./src/hooks/"
+            "./src/hooks/",
+          "@navigation":
+            "./src/navigation/",
         }
       }
     ],

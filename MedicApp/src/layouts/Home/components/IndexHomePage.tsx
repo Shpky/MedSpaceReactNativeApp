@@ -6,8 +6,8 @@ import { faFile } from '@fortawesome/free-solid-svg-icons/faFile'
 import { faPills } from '@fortawesome/free-solid-svg-icons/faPills'
 import { faCalendar } from '@fortawesome/free-solid-svg-icons/faCalendar'
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons/faCircleInfo'
-import IndexReport from '@layouts/Report/testforCSV';
 import { useNavigation } from '@react-navigation/native';
+
 const HomePageBody = () => {
     const iconSize = 80;
     const navigation = useNavigation();

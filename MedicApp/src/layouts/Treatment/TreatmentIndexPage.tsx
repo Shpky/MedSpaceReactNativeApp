@@ -1,27 +1,23 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Pressable, FlatList, ImageBackground, Button } from "react-native";
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { useNavigation } from '@react-navigation/native';
-import dataManager from '@features/dataManager';
-import useSave from '@hooks/useSave';
+import { NavigationProp } from '@react-navigation/native';
 import useActualPatient from '@hooks/useActualPatient';
 import Debug from '@components/Debug';
 import Title from '@components/TitleBubble'
+import { RootStackParamList } from '@navigation/RootStackParamList';
 
-const TreatmentContainer = () => {
-    const navigation = useNavigation();
+const TreatmentContainer = ({ navigation }: { navigation: NavigationProp<RootStackParamList> }) => {
     const [patient] = useActualPatient()
 
     const navigateToNewPrescription = () => {
-        //@ts-ignore
         navigation.navigate('NewPrescription');
     };
 
     const RenderItem = ({ item }: { item: PrescriptionInterface }) => {
         const navigateHandler = () => {
-            //@ts-ignore
+            console.log('item :>> ', item);
             navigation.navigate('Prescription', { prescription: item })
         }
         return (
@@ -181,7 +177,7 @@ let styles = StyleSheet.create({
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
-            height: 2,gi 
+            height: 2,
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,

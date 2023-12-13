@@ -1,6 +1,5 @@
 import React from 'react';
 import { Pressable, View, Text, StyleSheet, Image } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { useNavigation } from '@react-navigation/native';
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
