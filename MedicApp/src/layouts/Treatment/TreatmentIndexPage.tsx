@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button, Pressable, FlatList, } from "react-native";
+import { Text, View, StyleSheet, Pressable, FlatList, ImageBackground, Button } from "react-native";
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { useNavigation } from '@react-navigation/native';
@@ -38,23 +38,28 @@ const TreatmentContainer = () => {
         return (
 
             <View style={styles.Treatment}>
-                <View>
-                    <Text style={styles.fontJomhuriaRegular}>{item.title}</Text>
-                </View>
-                <View>
-                    {item.medicines.length <= 3 ? (
-                        item.medicines.map((medicine, index) => (
-                            <Text style={styles.smallfontJomhuriaRegular} key={index}>{medicine.name}</Text>
-                        ))
-                    ) : (
-                        <View >
-                            {item.medicines.slice(0, 2).map((medicine, index) => (
+                <ImageBackground
+                    source={require('./img/traitement.png')}  // Remplacez 'Test.jpg' par le chemin de votre image
+                    style={styles.backgroundImage}
+                >
+                    <View>
+                        <Text style={styles.fontJomhuriaRegular}>{item.title}</Text>
+                    </View>
+                    <View>
+                        {item.medicines.length <= 3 ? (
+                            item.medicines.map((medicine, index) => (
                                 <Text style={styles.smallfontJomhuriaRegular} key={index}>{medicine.name}</Text>
-                            ))}
-                            <Text style={styles.smallfontJomhuriaRegular} >Et {item.medicines.length - 2} autre médicament(s)</Text>
-                        </View>
-                    )}
-                </View>
+                            ))
+                        ) : (
+                            <View >
+                                {item.medicines.slice(0, 2).map((medicine, index) => (
+                                    <Text style={styles.smallfontJomhuriaRegular} key={index}>{medicine.name}</Text>
+                                ))}
+                                <Text style={styles.smallfontJomhuriaRegular} >Et {item.medicines.length - 2} autre médicament(s)</Text>
+                            </View>
+                        )}
+                    </View>
+                </ImageBackground>
             </View>
         );
     };
@@ -67,20 +72,29 @@ const TreatmentContainer = () => {
             <View>
 
                 <FlatList
-                    ListHeaderComponent={() => <View style={styles.HeaderInfoTraitment}><Text style={styles.fontJomhuriaRegular}>Sélectionez un traitement</Text></View>}
+                    ListHeaderComponent={() => <View style={styles.HeaderInfoTraitment}>
+                        <ImageBackground
+                            source={require('./img/selectraitement.png')}  // Remplacez 'Test.jpg' par le chemin de votre image
+                            style={styles.backgroundImage}
+                        >
+                            <Text style={styles.fontJomhuriaRegular}>Sélectionez un traitement</Text>
+                        </ImageBackground>
+
+                    </View>}
                     data={patient?.prescriptions}
                     renderItem={({ item }) => <RenderItem item={item} />}
 
 
                 />
                 <View style={styles.container}>
-                    <View style={styles.NewTreatment}>
 
-                        <Pressable style={styles.buttonNewtreatment} onPress={navigateToNewPrescription}>
-                            <FontAwesomeIcon icon={faPlus} color="white" size={50} />
-                        </Pressable>
-                    </View>
                 </View>
+            </View>
+            <View style={styles.NewTreatment}>
+
+                <Pressable style={styles.buttonNewtreatment} onPress={navigateToNewPrescription}>
+                    <FontAwesomeIcon icon={faPlus} color="white" size={50} />
+                </Pressable>
             </View>
 
         </View >
@@ -105,6 +119,14 @@ let styles = StyleSheet.create({
         marginLeft: 20,
         marginRight: 20,
 
+    },
+    backgroundImage: {
+        flex: 1,
+        width: '100%',
+        height: '100%',
+        resizeMode: 'cover',
+        borderRadius: 30, // Ajustez la valeur selon vos besoins
+        overflow: 'hidden',
     },
     container: {
         flex: 1,
@@ -169,7 +191,7 @@ let styles = StyleSheet.create({
     Treatment: {
         height: 200,
         borderRadius: 30,
-        paddingBottom: 30,
+        paddingBottom: 0,
         backgroundColor: 'red',
         marginBottom: 20,
         shadowColor: '#000',

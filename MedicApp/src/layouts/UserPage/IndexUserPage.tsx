@@ -7,16 +7,17 @@ import {
     View,
     Text,
     TextInput,
-    Button,
     Image,
     StyleSheet,
     Pressable,
+    ScrollView,
+    ImageBackground
 } from 'react-native';
 import defaultIcon from '@data/defaultIcon.json';
 import {
-    launchCamera,
+
     launchImageLibrary,
-    CameraOptions,
+
     ImageLibraryOptions,
 } from 'react-native-image-picker';
 import RNFS from 'react-native-fs';
@@ -54,12 +55,18 @@ const UserPageIndex = () => {
 
     const ProfilePicker = () => {
         return (
-            <View style={styles.container}>
+            <View style={[styles.container]}>
                 <Text style={styles.smallfontJomhuriaRegular}>
                     Sélectionnez un profil
                 </Text>
                 <RNPickerSelect
+                    style={{
+                        placeholder: {
+                            color: 'white',
+                            marginLeft: 5,
+                        },
 
+                    }}
                     onValueChange={handleChangeProfile}
                     items={getPickerItems()}
                     placeholder={getPickerPlaceholder()}
@@ -116,14 +123,47 @@ const UserPageIndex = () => {
             setReload(!reload);
         }
     };
+    const handleChangeearliesttime = (inputText: string) => {
+        inputText.length == 0 ? (inputText = '8') : null;
 
+        save.patients = save.patients.map((patient) =>
+            patient === actualUser
+                ? { ...patient, earliesttime: inputText }
+                : patient
+        );
+        dataManager.setSaveData(save);
+        setReload(!reload);
+    };
+    const handleChangelatesttime = (inputText: string) => {
+        inputText.length == 0 ? (inputText = '22') : null;
+        save.patients = save.patients.map((patient) =>
+            patient === actualUser
+                ? { ...patient, latesttime: inputText }
+                : patient
+        );
+        dataManager.setSaveData(save);
+        setReload(!reload);
+
+    };
     const NewUser = (name: string, icon: string = '', actualUser: boolean = false) => {
+        let nb = 0;
+        while (save.patients.map((patient) => patient.name == name).includes(true)) {
+            name = name + nb;
+            nb++;
+
+        }
+
+
+
         save.patients.push({
             name: name,
             icone: icon,
             actualUser: actualUser,
             prescriptions: [],
+            earliesttime: "8h",
+            latesttime: "22h",
         } as PatientInterface);
+
         dataManager.setSaveData(save);
         setReload(!reload);
     };
@@ -166,8 +206,8 @@ const UserPageIndex = () => {
 
     const ControleButton = () => {
         return (
-            <View style={{ flexDirection: 'row', marginTop: 20 }}>
-                <Pressable style={styles.buttonGREEN} onPress={libraryHandler}>
+            <View style={{ flexDirection: 'row', marginTop: 5 }}>
+                <Pressable style={[styles.buttonGREEN, { backgroundColor: "green", alignItems: "center", justifyContent: "center" }]} onPress={libraryHandler}>
                     <Text style={styles.smallfontJomhuriaRegularnopading}>
                         CHANGER DE PHOTO
                     </Text>
@@ -217,37 +257,75 @@ const UserPageIndex = () => {
                 ) : (
                     <Text>Chargement...</Text>
                 )}
+                <Text style={[styles.realysmallfontJomhuriaRegular, { marginBottom: -15, marginTop: -15 }]}>Heure de prise minimal d'un médicament </Text>
+                <TextInput
+                    style={[styles.textInput]}
+                    defaultValue={actualUser?.earliesttime}
+                    onEndEditing={(event) => handleChangeearliesttime(event.nativeEvent.text)}
+                    textAlignVertical="center"
+                    textAlign="center"
+                    keyboardType="numeric">
+
+                </TextInput>
+                <Text style={[styles.realysmallfontJomhuriaRegular, { marginBottom: -15, marginTop: -15 }]}>Heure de prise maximal d'un médicament </Text>
+                <TextInput
+                    style={[styles.textInput]}
+                    defaultValue={actualUser?.latesttime}
+                    onEndEditing={(event) => handleChangelatesttime(event.nativeEvent.text)}
+                    textAlignVertical="center"
+                    textAlign="center">
+
+                </TextInput>
             </View>
         );
     };
 
     const CreateNewUser = () => {
         return (
-            <View style={{ flexDirection: 'row', marginTop: 20 }}>
+            <View style={[{ marginTop: 10, padding: 10 }]} >
                 <Pressable
-                    style={styles.buttonGREEN}
+                    style={[styles.buttonGREEN, { borderRadius: 30, },]}
                     onPress={() => {
                         NewUser('Nouvel utilisateur', defaultIcon.icon, false);
                     }}>
-                    <Text style={styles.smallfontJomhuriaRegularnopading}>NOUVEAU</Text>
+                    <Text style={[styles.smallfontJomhuriaRegularnopading]}>AJOUTER UN NOUVEL UTILISATEUR</Text>
                 </Pressable>
             </View>
         );
     };
 
     return (
-        <View style={styles.body}>
+        <ScrollView style={styles.body}>
             <View style={{ width: '100%' }}>
-                <ProfilePicker />
+                <ImageBackground
+                    source={require('./img/picker.png')}  // Remplacez 'Test.jpg' par le chemin de votre image
+                    style={[styles.backgroundImage, { marginTop: 20, }, styles.shadow]}
+                >
+                    <ProfilePicker />
+                </ImageBackground>
+                <ImageBackground
+                    source={require('./img/newuser.png')}  // Remplacez 'Test.jpg' par le chemin de votre image
+                    style={[styles.backgroundImage, { marginTop: 20, marginBottom: 20 }]}
+                >
+                    <CreateNewUser />
+                </ImageBackground>
                 <View style={styles.userInfoContainer}>
-                    <ProfileImage />
-                    {Userinfo()}
-                    {Statistique()}
-                    {ControleButton()}
+                    <ImageBackground
+                        source={require('./img/userinfo.png')}  // Remplacez 'Test.jpg' par le chemin de votre image
+                        style={styles.backgroundImage}
+                    ><View style={styles.userInfoContainer}>
+                            <ProfileImage />
+                            {Userinfo()}
+                            {Statistique()}
+                            {ControleButton()}
+
+                        </View>
+
+                    </ImageBackground>
                 </View>
-                {CreateNewUser()}
+
             </View>
-        </View>
+        </ScrollView>
     );
 };
 
@@ -261,13 +339,37 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
 
     },
-
+    backgroundImage: {
+        flex: 1,
+        width: '100%',
+        height: '100%',
+        resizeMode: 'cover',
+        borderRadius: 30, // Ajustez la valeur selon vos besoins
+        overflow: 'hidden',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+    shadow: {
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
     container: {
         alignContent: 'center',
         justifyContent: 'center',
         width: '100%',
-        backgroundColor: 'red',
+
         borderRadius: 30,
+
     },
 
     smallfontJomhuriaRegular: {
@@ -278,12 +380,15 @@ const styles = StyleSheet.create({
         marginBottom: -20,
     },
     buttonGREEN: {
-        backgroundColor: '#36b436',
-        padding: 15,
+
+
         paddingRight: 25,
         paddingLeft: 25,
         marginBottom: 15,
         marginRight: 10,
+        textAlign: 'center',
+        alignItems: 'center',
+
     },
     buttonRED: {
         backgroundColor: 'red',
@@ -337,12 +442,13 @@ const styles = StyleSheet.create({
     },
     userInfoContainer: {
         width: '100%',
-        marginTop: 20,
-        backgroundColor: 'orange',
+
+
         borderRadius: 30,
         justifyContent: 'space-between',
         alignItems: 'center',
         marginBottom: 20,
+
 
     },
 
