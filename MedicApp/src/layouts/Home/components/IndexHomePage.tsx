@@ -18,6 +18,10 @@ const HomePageBody = () => {
     const navigateToReport = () => {
         //@ts-ignore
         navigation.navigate('RepportPage');
+    };
+    const navigateToCalendar = () => {
+        //@ts-ignore
+        navigation.navigate('CalendarPage');
     }
     return (
 
@@ -53,7 +57,7 @@ const HomePageBody = () => {
                     </View>
                 </ImageBackground>
             </Pressable>
-            <Pressable style={styles.container}>
+            <Pressable style={styles.container} onPress={navigateToCalendar}>
                 <ImageBackground
                     source={require('./img/calendrierIMG.png')}  // Remplacez 'Test.jpg' par le chemin de votre image
                     style={styles.backgroundImage}

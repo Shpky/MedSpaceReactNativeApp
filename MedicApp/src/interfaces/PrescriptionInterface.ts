@@ -3,5 +3,5 @@ interface PrescriptionInterface {
     doctor: DoctorInterface | null,
     medicines: MedicineInterface[],
     notes: string,
-    date: Date | null, //Data d'ajout ?
+    date: Date | null, //Data d'ajout ? ou start
 }

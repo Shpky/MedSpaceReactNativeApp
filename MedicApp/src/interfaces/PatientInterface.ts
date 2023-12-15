@@ -3,6 +3,6 @@ interface PatientInterface {
     icone: string,
     prescriptions: PrescriptionInterface[],
     actualUser: Boolean,
-    earliesttime: string,
-    latesttime: string
+    earliesttime: number,
+    latesttime: number
 }

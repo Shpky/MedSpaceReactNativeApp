@@ -24,11 +24,11 @@
                             "dosage": 0,
                             "dosageType": "",
                             "frequency": {
-                                "morning": false,
+                                "morning": true,
                                 "noon": false,
-                                "evening": false
+                                "evening": true
                             },
-                            "duration": null,
+                            "duration": "20241025",
                             "administration_route": "",
                             "warning": false,
                             "notes": "",
@@ -36,16 +36,14 @@
                             "to_renew": 0
                         },
                         {
-                            "name": "Ventoline",
+                            "name": "Un medicamentWeekly",
                             "company": "",
-                            "dosage": 0,
-                            "dosageType": "",
+                            "dosage": 2,
+                            "dosageType": "Gelule",
                             "frequency": {
-                                "morning": false,
-                                "noon": false,
-                                "evening": false
+                               "delay":2
                             },
-                            "duration": null,
+                            "duration": "20241230",
                             "administration_route": "",
                             "warning": false,
                             "notes": "",
@@ -53,33 +51,32 @@
                             "to_renew": 0
                         },
                         {
-                            "name": "Airomir",
+                            "name": "QvarRoutine",
                             "company": "",
-                            "dosage": 0,
-                            "dosageType": "",
+                            "dosage": 2,
+                            "dosageType": "bouffé",
                             "frequency": {
-                                "morning": false,
+                                "morning": true,
                                 "noon": false,
-                                "evening": false
+                                "evening": true
                             },
-                            "duration": null,
+                            "duration": "20241230",
                             "administration_route": "",
                             "warning": false,
                             "notes": "",
                             "substitutable": false,
                             "to_renew": 0
+                            
                         },
                         {
-                            "name": "Airomir",
+                            "name": "MedicamentDaily",
                             "company": "",
                             "dosage": 0,
                             "dosageType": "",
                             "frequency": {
-                                "morning": false,
-                                "noon": false,
-                                "evening": false
+                                "count": 12
                             },
-                            "duration": null,
+                            "duration": "20241201",
                             "administration_route": "",
                             "warning": false,
                             "notes": "",
@@ -117,8 +114,8 @@
                 }
             ],
             "actualUser": true,
-            "earliesttime": "1970-01-01T08:00:00.000Z",
-            "latesttime": "1970-01-01T22:00:00.000Z"
+            "earliesttime": "8",
+            "latesttime": "22"
         },
         {
             "name": "SecondUser",
@@ -198,7 +195,7 @@
                         }
                     ],
                     "notes": "",
-                    "date": null
+                    "date": "231020"
                 },
                 {
                     "title": "Deuxième prescription",
@@ -223,12 +220,12 @@
                         }
                     ],
                     "notes": "",
-                    "date": null
+                    "date": "231020"
                 }
             ],
             "actualUser": false,
-            "earliesttime": "1970-01-01T08:00:00.000Z",
-            "latesttime": "1970-01-01T22:00:00.000Z"
+            "earliesttime": "8",
+            "latesttime": "22"
         }
     ]
 }
