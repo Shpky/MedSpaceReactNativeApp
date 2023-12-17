@@ -17,15 +17,15 @@ const HomePageBody = () => {
     };
     const navigateToReport = () => {
         //@ts-ignore
-        navigation.navigate('RepportPage');
+        navigation.navigate('Repport');
     };
     const navigateToCalendar = () => {
         //@ts-ignore
-        navigation.navigate('CalendarPage');
+        navigation.navigate('Calendar');
     }
     return (
 
-        <ScrollView style={styles.body}>
+        <ScrollView showsVerticalScrollIndicator={false} style={styles.body}>
 
             <Pressable style={styles.container} onPress={navigateToDetails} >
                 <ImageBackground

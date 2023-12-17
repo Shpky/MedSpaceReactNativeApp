@@ -5,4 +5,5 @@ export type RootStackParamList = {
     UserPage: undefined;
     RepportPage: undefined;
     Prescription: { prescription: PrescriptionInterface };
+    Calendar: undefined;
 };

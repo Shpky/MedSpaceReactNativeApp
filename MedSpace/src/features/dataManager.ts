@@ -5,7 +5,7 @@ import defaultSaveForTest from "@data/defaultSaveForTest.json";
 
 export default {
     async setSaveData(newSave: SaveInterface | ((oldSave: SaveInterface) => SaveInterface)) {
-        
+
         try {
             if (newSave instanceof Function) {
                 const oldSave = await this.getSaveData();
@@ -23,7 +23,7 @@ export default {
 
     async resetSaveData() {
         RNSecureStorage
-            .set('save', JSON.stringify(__DEV__ ? defaultSaveForTest : defaultSave),
+            .set('save', JSON.stringify(__DEV__ ? defaultSaveForTest : defaultSaveForTest),
                 { accessible: ACCESSIBLE.WHEN_UNLOCKED })
     },
 
@@ -35,6 +35,16 @@ export default {
         const data = await RNSecureStorage.get('save');
 
         const parsedData = JSON.parse(data as string);
+        parsedData.patients.forEach((patient: PatientInterface) => {
+            patient.prescriptions.forEach((prescription: PrescriptionInterface) => {
+                prescription.date != null ? prescription.date = new Date(prescription.date) : null
+                prescription.medicines.forEach((medicine: MedicineInterface) => {
+                    medicine.duration != null ? medicine.duration = new Date(medicine.duration) : null
+                })
+
+            })
+        })
+
         return parsedData as SaveInterface;
     }
 }

@@ -11,7 +11,7 @@ import UserPageIndex from '@layouts/UserPage/IndexUserPage';
 import IndexReport from '@layouts/Report/testforCSV';
 import Prescription from '@layouts/Prescription/PrescriptionIndex';
 import { RootStackParamList } from './RootStackParamList';
-
+import CalendarIndex from '@layouts/Calendar/CalendarIndex';
 export default function StackNavigator() {
 
     const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -44,6 +44,7 @@ export default function StackNavigator() {
             <Stack.Screen name="UserPage" component={UserPageIndex} />
             <Stack.Screen name="RepportPage" component={IndexReport} />
             <Stack.Screen name="Prescription" component={Prescription} />
+            <Stack.Screen name="Calendar" component={CalendarIndex} />
         </Stack.Navigator >
     </NavigationContainer >;
 };

@@ -28,7 +28,7 @@
                                 "noon": false,
                                 "evening": true
                             },
-                            "duration": "20241025",
+                            "duration": "2024-12-17T12:34:56.789Z",
                             "administration_route": "",
                             "warning": false,
                             "notes": "",
@@ -41,9 +41,9 @@
                             "dosage": 2,
                             "dosageType": "Gelule",
                             "frequency": {
-                               "delay":2
+                                "delay": 2
                             },
-                            "duration": "20241230",
+                            "duration": "2024-12-17T12:34:56.789Z",
                             "administration_route": "",
                             "warning": false,
                             "notes": "",
@@ -60,13 +60,12 @@
                                 "noon": false,
                                 "evening": true
                             },
-                            "duration": "20241230",
+                            "duration": "2024-12-17T12:34:56.789Z",
                             "administration_route": "",
                             "warning": false,
                             "notes": "",
                             "substitutable": false,
                             "to_renew": 0
-                            
                         },
                         {
                             "name": "MedicamentDaily",
@@ -76,7 +75,7 @@
                             "frequency": {
                                 "count": 12
                             },
-                            "duration": "20241201",
+                            "duration": "2024-12-17T12:34:56.789Z",
                             "administration_route": "",
                             "warning": false,
                             "notes": "",
@@ -85,7 +84,7 @@
                         }
                     ],
                     "notes": "",
-                    "date": null
+                    "date": "2023-12-17T12:34:56.789Z"
                 },
                 {
                     "title": "Deuxième prescription",
@@ -101,7 +100,7 @@
                                 "noon": false,
                                 "evening": false
                             },
-                            "duration": null,
+                            "duration": "2024-12-17T12:34:56.789Z",
                             "administration_route": "",
                             "warning": false,
                             "notes": "",
@@ -110,7 +109,7 @@
                         }
                     ],
                     "notes": "",
-                    "date": null
+                    "date": "2023-12-17T12:34:56.789Z"
                 }
             ],
             "actualUser": true,
@@ -132,10 +131,10 @@
                             "dosageType": "",
                             "frequency": {
                                 "morning": false,
-                                "noon": false,
+                                "noon": true,
                                 "evening": false
                             },
-                            "duration": null,
+                            "duration": "2024-12-17T12:34:56.789Z",
                             "administration_route": "",
                             "warning": false,
                             "notes": "",
@@ -148,11 +147,24 @@
                             "dosage": 0,
                             "dosageType": "",
                             "frequency": {
-                                "morning": false,
-                                "noon": false,
-                                "evening": false
+                                "count": 4
                             },
-                            "duration": null,
+                            "duration": "2024-12-17T12:34:56.789Z",
+                            "administration_route": "",
+                            "warning": false,
+                            "notes": "",
+                            "substitutable": false,
+                            "to_renew": 0
+                        },
+                        {
+                            "name": "Airomir",
+                            "company": "",
+                            "dosage": 0,
+                            "dosageType": "",
+                            "frequency": {
+                                "delay": 2
+                            },
+                            "duration": "2024-12-17T12:34:56.789Z",
                             "administration_route": "",
                             "warning": false,
                             "notes": "",
@@ -167,26 +179,9 @@
                             "frequency": {
                                 "morning": false,
                                 "noon": false,
-                                "evening": false
+                                "evening": true
                             },
-                            "duration": null,
-                            "administration_route": "",
-                            "warning": false,
-                            "notes": "",
-                            "substitutable": false,
-                            "to_renew": 0
-                        },
-                        {
-                            "name": "Airomir",
-                            "company": "",
-                            "dosage": 0,
-                            "dosageType": "",
-                            "frequency": {
-                                "morning": false,
-                                "noon": false,
-                                "evening": false
-                            },
-                            "duration": null,
+                            "duration": "2024-12-17T12:34:56.789Z",
                             "administration_route": "",
                             "warning": false,
                             "notes": "",
@@ -195,7 +190,7 @@
                         }
                     ],
                     "notes": "",
-                    "date": "231020"
+                    "date": "2023-12-17T12:34:56.789Z"
                 },
                 {
                     "title": "Deuxième prescription",
@@ -208,10 +203,10 @@
                             "dosageType": "",
                             "frequency": {
                                 "morning": false,
-                                "noon": false,
+                                "noon": true,
                                 "evening": false
                             },
-                            "duration": null,
+                            "duration": "2024-12-17T12:34:56.789Z",
                             "administration_route": "",
                             "warning": false,
                             "notes": "",
@@ -220,7 +215,7 @@
                         }
                     ],
                     "notes": "",
-                    "date": "231020"
+                    "date": "2023-12-17T12:34:56.789Z"
                 }
             ],
             "actualUser": false,
