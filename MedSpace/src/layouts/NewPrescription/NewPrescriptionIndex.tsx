@@ -1,24 +1,23 @@
-import { useEffect, useState } from 'react';
 import { Button, TextInput, Text, View, ScrollView } from 'react-native';
 import MedicineComponent from '@layouts/NewPrescription/Medicine/MedicineIndex';
 import Title from '@components/TitleBubble';
 import Container from '@components/form/Container/ContainerIndex';
 import style from './style';
 import defaultMedicine from '@data/defaultMedicine.json';
-import defaultPrescription from '@data/defaultPrescription.json';
 import ModalImgPicker from './ImportImg/ModalImportImg';
 import AddMedicine from './buttons/AddMedicine';
 import Debug from '@components/Debug';
-import useSave from "@hooks/useSave";
 import Id from './IdNewPrescription/IdNewPrescriptionsIndex';
 import useNewPrescription from '@hooks/useNewPrescription';
 import { useNavigation } from '@react-navigation/native';
+import type { RootStackParamList } from '@navigation/RootStackParamList';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-export default function NewPrescription() {
+type NewPrescriptionIndexProps = NativeStackScreenProps<RootStackParamList, 'NewPrescription'>
 
-    const [prescription, setPrescription, applyNewPrescription] = useNewPrescription();
-    const navigation = useNavigation();
-
+export default function NewPrescriptionIndex({ navigation, route }: NewPrescriptionIndexProps) {
+    const { prescriptionUpdate } = route.params || undefined;
+    const [prescription, setPrescription, applyNewPrescription] = useNewPrescription(prescriptionUpdate);
     const setMedicines = (newMedicines: MedicineInterface[]) =>
         setPrescription((oldP) => ({ ...oldP, medicines: newMedicines }))
 
@@ -26,17 +25,12 @@ export default function NewPrescription() {
         setPrescription((oldP) => ({ ...oldP, medicines: [...oldP.medicines, defaultMedicine] }))
     };
 
-    const backToTreatment = () => {
-        //@ts-ignore
-
-        navigation.reset({ index: 1, routes: [{ name: "Home" }, { name: "Treatment" }] })
-        //@ts-ignore
-        navigation.navigate("Treatment");
-    }
-
     const handleResetStack = () => {
-        navigation.reset({ index: 1, routes: [{ name: "Home" as never }, { name: "Treatment" as never }] })
+        prescriptionUpdate
+            ? navigation.reset({ index: 2, routes: [{ name: "Home" }, { name: "Treatment" }, { name: "Prescription", params: { prescription: prescription } }] })
+            : navigation.reset({ index: 1, routes: [{ name: "Home" }, { name: "Treatment" }] })
     }
+
     return <ScrollView>
         <Debug>
             <Button title={"Print"} onPress={() =>
