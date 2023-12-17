@@ -13,5 +13,6 @@
     "warning": false,
     "notes": "",
     "substitutable": false,
-    "to_renew": 0
+    "to_renew": 0,
+    "minimumHoursbetweenDoses": 0
 }

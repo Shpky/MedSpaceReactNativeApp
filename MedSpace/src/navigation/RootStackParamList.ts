@@ -1,7 +1,7 @@
 export type RootStackParamList = {
     Home: undefined;
     Treatment: undefined;
-    NewPrescription: undefined;
+    NewPrescription: { prescriptionUpdate?: PrescriptionInterface };
     UserPage: undefined;
     RepportPage: undefined;
     Prescription: { prescription: PrescriptionInterface };

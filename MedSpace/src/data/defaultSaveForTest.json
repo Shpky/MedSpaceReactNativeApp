@@ -28,7 +28,7 @@
                                 "noon": false,
                                 "evening": true
                             },
-                            "duration": "20241025",
+                            "duration": null,
                             "administration_route": "",
                             "warning": false,
                             "notes": "",
@@ -43,7 +43,7 @@
                             "frequency": {
                                "delay":2
                             },
-                            "duration": "20241230",
+                            "duration": null,
                             "administration_route": "",
                             "warning": false,
                             "notes": "",
@@ -60,7 +60,7 @@
                                 "noon": false,
                                 "evening": true
                             },
-                            "duration": "20241230",
+                            "duration": null,
                             "administration_route": "",
                             "warning": false,
                             "notes": "",
@@ -76,7 +76,7 @@
                             "frequency": {
                                 "count": 12
                             },
-                            "duration": "20241201",
+                            "duration": null,
                             "administration_route": "",
                             "warning": false,
                             "notes": "",

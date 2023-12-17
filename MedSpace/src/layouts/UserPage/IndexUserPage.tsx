@@ -15,9 +15,7 @@ import {
 } from 'react-native';
 import defaultIcon from '@data/defaultIcon.json';
 import {
-
     launchImageLibrary,
-
     ImageLibraryOptions,
 } from 'react-native-image-picker';
 import RNFS from 'react-native-fs';

@@ -3,6 +3,7 @@ import style from './style';
 
 
 export default function index({ children }: { children?: string | JSX.Element }) {
+    console.log('children :>> ', children);
     return (
         <View style={style.container}>
             <ImageBackground

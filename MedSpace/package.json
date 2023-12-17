@@ -17,7 +17,6 @@
     "@fortawesome/react-native-fontawesome": "^0.3.0",
     "@react-native-community/datetimepicker": "^7.6.1",
     "@react-native-ml-kit/text-recognition": "^1.5.1",
-    "@react-native-picker/picker": "^2.5.1",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.17",
     "@rneui/themed": "^4.0.0-rc.8",

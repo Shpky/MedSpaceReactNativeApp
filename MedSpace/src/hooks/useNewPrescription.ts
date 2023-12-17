@@ -7,24 +7,34 @@ import dataManager from "@features/dataManager"
  *
  * @return une nouvelle prescription, une fonction pour la modifier et une fonction pour l'appliquer au patient
  */
-export default function useNewPrescription():
+export default function useNewPrescription(prescription?: PrescriptionInterface):
     [PrescriptionInterface, React.Dispatch<React.SetStateAction<PrescriptionInterface>>, () => Promise<void>] {
-    const [prescription, setPrescription] = useState<PrescriptionInterface>(defaultPrescription)
+    const [newPrescription, setPrescription] = useState<PrescriptionInterface>(prescription || defaultPrescription)
 
     const apply = async () => {  // Ajoute la prescription à la liste des prescriptions du patient
-        await dataManager.setSaveData((oldSave) => ({
-            ...oldSave,
-            patients: oldSave.patients.map(p => p.actualUser ? {
-                ...p,
-                prescriptions: [
-                    ...p.prescriptions,
-                    prescription
-                ]
-            } : p
+        prescription ?
+            await dataManager.setSaveData((oldSave) => ({
+                ...oldSave,
+                patients: oldSave.patients.map(p => p.actualUser ? {
+                    ...p,
+                    prescriptions: p.prescriptions.map(pr => pr.title === prescription.title ? newPrescription : pr)
+                } : p
+                )
+            })
             )
-        })
-        )
+            : await dataManager.setSaveData((oldSave) => ({
+                ...oldSave,
+                patients: oldSave.patients.map(p => p.actualUser ? {
+                    ...p,
+                    prescriptions: [
+                        ...p.prescriptions,
+                        newPrescription
+                    ]
+                } : p
+                )
+            })
+            )
     }
 
-    return [prescription, setPrescription, apply]
+    return [newPrescription, setPrescription, apply]
 }
