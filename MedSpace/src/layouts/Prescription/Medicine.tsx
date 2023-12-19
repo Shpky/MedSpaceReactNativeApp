@@ -1,4 +1,5 @@
 import { Text, View } from "react-native";
+import Toggle from "./Toggle";
 
 export default function Medicine({ medicine, onToggle }: { medicine: MedicineInterface, onToggle: (isNotifOn: Boolean) => void }) {
 
@@ -22,6 +23,7 @@ export default function Medicine({ medicine, onToggle }: { medicine: MedicineInt
         <Text>{medicine.name}</Text>
         <View>
             <Text>{[dosageDescription, frequencyDescription].join(" ")}</Text>
+            <Toggle onToggle={()=> {}}/>
         </View>
     </>
 }

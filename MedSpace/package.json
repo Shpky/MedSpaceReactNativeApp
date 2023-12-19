@@ -21,6 +21,7 @@
     "@react-navigation/native-stack": "^6.9.17",
     "@rneui/themed": "^4.0.0-rc.8",
     "base-64": "^1.0.0",
+    "bcrypt-ts": "^5.0.0",
     "btoa": "^1.2.1",
     "fs": "^0.0.1-security",
     "react": "18.2.0",

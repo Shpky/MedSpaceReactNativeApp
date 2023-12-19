@@ -4,6 +4,8 @@ import { Text, ScrollView, View, Button } from "react-native";
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Medicine from "./Medicine";
 import dataManager from "@features/dataManager";
+import Toggle from "./Toggle";
+
 type PrescriptionIndexProps = NativeStackScreenProps<RootStackParamList, 'Prescription'>
 
 export default function PrescriptionIndex({ navigation, route }: PrescriptionIndexProps) {
@@ -28,6 +30,7 @@ export default function PrescriptionIndex({ navigation, route }: PrescriptionInd
                 <Text>
                     Activer toutes les notifications:
                 </Text>
+                <Toggle onToggle={()=> {}}></Toggle>
             </View>
             {
                 prescription.medicines.map((medicine, index) =>
@@ -52,6 +55,5 @@ export default function PrescriptionIndex({ navigation, route }: PrescriptionInd
             }))
             navigation.reset({ index: 1, routes: [{ name: "Home" }, { name: "Treatment" }] })
         }} />
-
     </ScrollView>
 }

@@ -1,33 +1,33 @@
 import React from 'react';
 import { Pressable, View, Text, StyleSheet, Image } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { useNavigation } from '@react-navigation/native';
-import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
-const HeaderContainer = () => {
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ParamListBase } from '@react-navigation/routers';
+import useActualPatient from '@hooks/useActualPatient';
 
+type HeaderIndexProps = NativeStackNavigationProp<ParamListBase, string, undefined>;
 
-    const navigation = useNavigation();
+const HeaderIndex = ({ navigation }: { navigation: HeaderIndexProps }) => {
+    const [actualPatient] = useActualPatient();
+
     const navigateToHome = () => {
-        //@ts-ignore
         navigation.navigate("Home");
     };
     const navigateToUserPage = () => {
-        //@ts-ignore
         navigation.navigate("UserPage");
     };
 
     return (
         <View style={styles.container}>
             <Pressable onPress={navigateToHome}>
-                <Image style={styles.logo} source={require('./img/logo.png')} />
+                <Image style={styles.logo} source={require('./logo.png')} />
             </Pressable>
             <Pressable onPress={navigateToHome}>
                 <Text style={styles.titleFont}>MEDSPACE</Text>
             </Pressable>
             <Pressable onPress={navigateToUserPage}>
-                <View style={styles.circle}>
-                    <FontAwesomeIcon icon={faUser} color='white' />
-                </View>
+                <Image style={styles.circle}
+                source={{ uri: actualPatient?.icone }}
+                />
             </Pressable>
         </View>
     );
@@ -63,4 +63,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default HeaderContainer;
+export default HeaderIndex; 
