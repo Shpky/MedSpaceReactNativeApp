@@ -14,6 +14,8 @@ import { RootStackParamList } from './RootStackParamList';
 import CalendarIndex from '@layouts/Calendar/CalendarIndex';
 import LoginIndex from '@layouts/Login/LoginIndex';
 import ProfilIndex from '@layouts/Profile/ProfilIndex';
+
+/** Permet de gérer la navigation entre les pages */
 export default function StackNavigator() {
 
     const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -36,7 +38,9 @@ export default function StackNavigator() {
                         ))} />
                         <Button title='reset' onPress={() => dataManager.resetSaveData()} />
                     </Debug>
-                    <Header navigation={props.navigation} />
+                    {
+                        ["Login", "Profil"].includes(props.route.name) ||
+                        <Header {...props} />}
                 </>,
                 animation: 'slide_from_right',
             }}>

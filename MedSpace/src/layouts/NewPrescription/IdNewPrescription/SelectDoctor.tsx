@@ -1,7 +1,7 @@
 import { Pressable, Text, StyleSheet } from 'react-native';
 import { useState, useRef, ElementRef, createRef, LegacyRef } from 'react';
 import useDoctor from '@hooks/useDoctors';
-import { Picker } from '@react-native-picker/picker'
+// import { Picker } from '@react-native-picker/picker'
 
 /**
  * Permet de sélectionner un médecin dans une liste
@@ -11,7 +11,7 @@ import { Picker } from '@react-native-picker/picker'
  */
 export default function SelectDoctor({ onSelect }: { onSelect: ((doctor: DoctorInterface) => void) }): JSX.Element {
     const [doctors] = useDoctor();
-    const pickerRef = useRef<LegacyRef<Picker<DoctorInterface>>>(null);
+    // const pickerRef = useRef<LegacyRef<Picker<DoctorInterface>>>(null);
 
     // Todo
     return <>

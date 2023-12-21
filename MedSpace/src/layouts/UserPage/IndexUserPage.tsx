@@ -1,8 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
 import RNPickerSelect from 'react-native-picker-select';
-import defaultSaveForTest from '@data/defaultSaveForTest.json';
-import dataManager from '@features/dataManager';
 import {
     View,
     Text,
@@ -20,38 +17,27 @@ import {
 } from 'react-native-image-picker';
 import RNFS from 'react-native-fs';
 import useSave from '@hooks/useSave';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from "@navigation/RootStackParamList";
 
-const UserPageIndex = () => {
+type UserIndexProps = NativeStackScreenProps<RootStackParamList, 'UserPage'>
+
+const UserPageIndex = ({ navigation }: UserIndexProps) => {
     const [save, setSave] = useSave();
+
     if (!save) return null;
-
-    const [reload, setReload] = useState<boolean>(false);
     const actualUser = save.patients.find((patient) => patient.actualUser == true);
-
-    const fetchData = async () => {
-        try {
-            setSave(await dataManager.getSaveData());
-        } catch (error) {
-            console.error('Erreur lors de la récupération des données :', error);
-        }
-    };
-
-    useEffect(() => {
-        fetchData();
-    }, []);
 
     const handleChangeProfile = (value: string) => {
         if (value !== actualUser?.name) {
-            save.patients.forEach((patient) => {
-                patient.name == value
-                    ? (patient.actualUser = true)
-                    : actualUser?.name === patient.name
-                        ? (patient.actualUser = false)
-                        : null;
-            });
-            dataManager.setSaveData(save);
+            setSave((old) => ({
+                ...old,
+                patients: save.patients.map((patient) =>
+                    ({ ...patient, actualUser: patient.name === value }))
+            } as SaveInterface))
         }
-        setReload(!reload);
+
+        navigation.reset({ index: 0, routes: [{ name: "Home" }] })
     };
 
     const ProfilePicker = () => {
@@ -112,40 +98,47 @@ const UserPageIndex = () => {
     }
 
     const handleChangeText = (inputText: string) => {
-        inputText.length == 0 ? (inputText = 'Nouveau patient') : null;
+        inputText.length || (inputText = 'Nouveau patient')
 
-        if (actualUser?.name !== inputText) {
-            save.patients = save.patients.map((patient) =>
+        setSave((old) => ({
+            ...old,
+            patients: save.patients.map((patient) =>
                 patient === actualUser
                     ? { ...patient, name: inputText }
                     : patient
-            );
-            dataManager.setSaveData(save);
-            setReload(!reload);
-        }
+            )
+        } as SaveInterface))
     };
-    const handleChangeearliesttime = (inputText: string) => {
-        const time = inputText.length == 0 ? 8 : null;
-        
-        save.patients = save.patients.map((patient) =>
-            patient === actualUser
-                ? { ...patient, earliesttime: Number(inputText) }
-                : patient
-        );
-        dataManager.setSaveData(save);
-        setReload(!reload);
-    };
-    const handleChangelatesttime = (inputText: string) => {
-        inputText.length == 0 ? (inputText = '22') : null;
-        save.patients = save.patients.map((patient) =>
-            patient === actualUser
-                ? { ...patient, latesttime: Number(inputText) }
-                : patient
-        );
-        dataManager.setSaveData(save);
-        setReload(!reload);
 
+    const handleChangeearliesttime = (inputText: string) => {
+        if (isNaN(+inputText)) return;
+        const time = inputText.length || 8;
+
+        setSave((old) => ({
+            ...old,
+            patients: save.patients.map((patient) =>
+                patient === actualUser
+                    ? { ...patient, earliesttime: time }
+                    : patient
+            )
+        } as SaveInterface))
     };
+
+
+
+    const handleChangelatesttime = (inputText: string) => {
+        if (isNaN(+inputText)) return;
+        const time = inputText.length || 22;
+        setSave((old) => ({
+            ...old,
+            patients: save.patients.map((patient) =>
+                patient === actualUser
+                    ? { ...patient, latesttime: time }
+                    : patient
+            )
+        } as SaveInterface))
+    };
+
     const NewUser = (name: string, icon: string = '', actualUser: boolean = false) => {
         let nb = 0;
         while (save.patients.filter((patient) => patient.name == name).length) {
@@ -170,27 +163,21 @@ const UserPageIndex = () => {
     };
 
     const handlePressButtonDEL = () => {
-        if (save.patients.length > 1) {
-            save.patients = save.patients.filter((patient) => patient !== actualUser);
-            save.patients[0].actualUser = true;
-            dataManager.setSaveData(save);
-        } else {
-            save.patients = [];
-            NewUser('Nouveau patient', defaultIcon.icon, true);
-            dataManager.setSaveData(save);
-        }
-        setReload(!reload);
+        save.patients.length > 1
+            ? setSave((old) => ({
+                ...old,
+                patients: old?.patients.filter((patient) => patient !== actualUser)
+            } as SaveInterface))
+            : NewUser('Nouveau patient', defaultIcon.icon, true)
     };
 
     const Changepp = async (uri: string) => {
         const base64Icon = await convertPngToBase64(uri);
-        save.patients = save.patients.map((patient) =>
-            patient === actualUser
-                ? { ...patient, icone: `data:image/png;base64,${base64Icon}` }
-                : patient
+        setSave((old) => ({
+            ...old,
+            patients: save.patients.map((patient) => patient === actualUser ? { ...patient, icone: `data:image/png;base64,${base64Icon}` } : patient)
+        } as SaveInterface)
         );
-        dataManager.setSaveData(save);
-        setReload(!reload);
     };
 
     const libraryHandler = async () => {
@@ -261,17 +248,16 @@ const UserPageIndex = () => {
                 <Text style={[styles.realysmallfontJomhuriaRegular, { marginBottom: -15, marginTop: -15 }]}>Heure de prise minimal d'un médicament </Text>
                 <TextInput
                     style={[styles.textInput]}
-                    defaultValue={String(actualUser?.earliesttime)}
+                    defaultValue={actualUser?.earliesttime.toString()}
                     onEndEditing={(event) => handleChangeearliesttime(event.nativeEvent.text)}
                     textAlignVertical="center"
                     textAlign="center"
                     keyboardType="numeric">
-
                 </TextInput>
                 <Text style={[styles.realysmallfontJomhuriaRegular, { marginBottom: -15, marginTop: -15 }]}>Heure de prise maximal d'un médicament </Text>
                 <TextInput
                     style={[styles.textInput]}
-                    defaultValue={String(actualUser!!.latesttime)}
+                    defaultValue={actualUser?.latesttime.toString()}
                     onEndEditing={(event) => handleChangelatesttime(event.nativeEvent.text)}
                     textAlignVertical="center"
                     textAlign="center">

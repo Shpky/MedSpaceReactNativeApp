@@ -4,6 +4,7 @@ import useSave from "@hooks/useSave"
 import Title from "@components/TitleBubble"
 import ProfilItem from './ProfilItem';
 import { ScrollView } from 'react-native';
+import dataManager from '@features/dataManager';
 
 type ProfilIndexProps = NativeStackScreenProps<RootStackParamList, 'Profil'>
 
@@ -17,15 +18,17 @@ export default function ProfilIndex({ navigation }: ProfilIndexProps) {
         {
             save.patients.map((patient, index) => {
                 const onClickHandler = () => {
-                    setSave({
-                        ...save, patients: save.patients.map((p, i) =>
-                            i === index ? { ...p, isSelected: true } : { ...p, isSelected: false }
-                        )
+                    dataManager.setSaveData((oldSave) => ({
+                        ...oldSave,
+                        patients: oldSave?.patients.map((p, _) =>
+                            ({ ...p, actualUser: p.name === patient.name })
+                        ) || []
+                    } as SaveInterface)).then(() => {
+                        navigation.reset({
+                            index: 0,
+                            routes: [{ name: 'Home' }],
+                        });
                     })
-                    navigation.reset({
-                        index: 0,
-                        routes: [{ name: 'Home' }],
-                    });
                 }
                 return <ProfilItem
                     key={index}
