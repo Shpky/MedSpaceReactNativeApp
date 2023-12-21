@@ -137,15 +137,16 @@ const UserPageIndex = () => {
 
 
     const handleChangelatesttime = (inputText: string) => {
-        inputText.length == 0 ? (inputText = '22') : null;
-        save.patients = save.patients.map((patient) =>
-            patient === actualUser
-                ? { ...patient, latesttime: inputText }
-                : patient
-        );
-        dataManager.setSaveData(save);
-        setReload(!reload);
-
+        if (isNaN(+inputText)) return;
+        const time = inputText.length || 22;
+        setSave((old) => ({
+            ...old,
+            patients: save.patients.map((patient) =>
+                patient === actualUser
+                    ? { ...patient, latesttime: time }
+                    : patient
+            )
+        } as SaveInterface))
     };
 
     const NewUser = (name: string, icon: string = '', actualUser: boolean = false) => {
