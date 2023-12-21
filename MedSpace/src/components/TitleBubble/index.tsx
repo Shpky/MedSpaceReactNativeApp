@@ -3,11 +3,10 @@ import style from './style';
 
 
 export default function index({ children }: { children?: string | JSX.Element }) {
-    console.log('children :>> ', children);
     return (
         <View style={style.container}>
             <ImageBackground
-                source={require('./title.png')}  // Remplacez 'Test.jpg' par le chemin de votre image
+                source={require('./title.png')} 
                 style={style.background}
             >
                 {typeof children === 'string'

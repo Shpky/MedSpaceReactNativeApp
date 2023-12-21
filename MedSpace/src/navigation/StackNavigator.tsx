@@ -3,7 +3,7 @@ import { Button } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Debug from '@components/Debug';
 import dataManager from '@features/dataManager';
-import HeaderContainer from '@layouts/Home/components/headerContainer';
+import Header from '@layouts/Header/HeaderIndex';
 import TreatmentContainer from '@layouts/Treatment/TreatmentIndexPage';
 import HomePageBody from '@layouts/Home/components/IndexHomePage';
 import NewPrescription from '@layouts/NewPrescription/NewPrescriptionIndex';
@@ -12,6 +12,8 @@ import IndexReport from '@layouts/Report/testforCSV';
 import Prescription from '@layouts/Prescription/PrescriptionIndex';
 import { RootStackParamList } from './RootStackParamList';
 import CalendarIndex from '@layouts/Calendar/CalendarIndex';
+import LoginIndex from '@layouts/Login/LoginIndex';
+import ProfilIndex from '@layouts/Profile/ProfilIndex';
 export default function StackNavigator() {
 
     const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -27,17 +29,18 @@ export default function StackNavigator() {
     return <NavigationContainer theme={MedSpaceWhiteTheme}>
         <Stack.Navigator
             screenOptions={{
-                header: () => <>
+                header: (props) => <>
                     <Debug>
                         <Button title="print datas" onPress={() => dataManager.getSaveData().then((e) => console.log(
                             e.patients.map(e => ({ ...e, icone: null }))
                         ))} />
                         <Button title='reset' onPress={() => dataManager.resetSaveData()} />
                     </Debug>
-                    <HeaderContainer /></>,
+                    <Header navigation={props.navigation} />
+                </>,
                 animation: 'slide_from_right',
             }}>
-
+            <Stack.Screen name="Login" component={LoginIndex} />
             <Stack.Screen name="Home" component={HomePageBody} />
             <Stack.Screen name="Treatment" component={TreatmentContainer} />
             <Stack.Screen name="NewPrescription" component={NewPrescription} />
@@ -45,6 +48,7 @@ export default function StackNavigator() {
             <Stack.Screen name="RepportPage" component={IndexReport} />
             <Stack.Screen name="Prescription" component={Prescription} />
             <Stack.Screen name="Calendar" component={CalendarIndex} />
+            <Stack.Screen name="Profil" component={ProfilIndex} />
         </Stack.Navigator >
     </NavigationContainer >;
 };

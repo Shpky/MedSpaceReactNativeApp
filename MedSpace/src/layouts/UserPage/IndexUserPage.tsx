@@ -18,11 +18,13 @@ import {
     launchImageLibrary,
     ImageLibraryOptions,
 } from 'react-native-image-picker';
-// import RNFS from 'react-native-fs';
+import RNFS from 'react-native-fs';
+import useSave from '@hooks/useSave';
 
 const UserPageIndex = () => {
-    //@ts-ignore
-    const [save, setSave] = useState<SaveInterface>(defaultSaveForTest);
+    const [save, setSave] = useSave();
+    if (!save) return null;
+
     const [reload, setReload] = useState<boolean>(false);
     const actualUser = save.patients.find((patient) => patient.actualUser == true);
 
@@ -123,8 +125,8 @@ const UserPageIndex = () => {
         }
     };
     const handleChangeearliesttime = (inputText: string) => {
-        inputText.length == 0 ? (inputText = '8') : null;
-
+        const time = inputText.length == 0 ? 8 : null;
+        
         save.patients = save.patients.map((patient) =>
             patient === actualUser
                 ? { ...patient, earliesttime: Number(inputText) }
@@ -146,25 +148,25 @@ const UserPageIndex = () => {
     };
     const NewUser = (name: string, icon: string = '', actualUser: boolean = false) => {
         let nb = 0;
-        while (save.patients.map((patient) => patient.name == name).includes(true)) {
+        while (save.patients.filter((patient) => patient.name == name).length) {
             name = name + nb;
             nb++;
-
         }
 
-
-
-        save.patients.push({
-            name: name,
-            icone: icon,
-            actualUser: actualUser,
-            prescriptions: [],
-            earliesttime: 8,
-            latesttime: 22,
-        } as PatientInterface);
-
-        dataManager.setSaveData(save);
-        setReload(!reload);
+        setSave((oldSave) => ({
+            ...oldSave,
+            patients: [
+                ...oldSave?.patients || [],
+                {
+                    name: name,
+                    icone: icon,
+                    actualUser: actualUser,
+                    prescriptions: [],
+                    earliesttime: 8,
+                    latesttime: 22,
+                }
+            ]
+        } as SaveInterface))
     };
 
     const handlePressButtonDEL = () => {

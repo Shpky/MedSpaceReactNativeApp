@@ -9,26 +9,43 @@ import AddMedicine from './buttons/AddMedicine';
 import Debug from '@components/Debug';
 import Id from './IdNewPrescription/IdNewPrescriptionsIndex';
 import useNewPrescription from '@hooks/useNewPrescription';
-import { useNavigation } from '@react-navigation/native';
 import type { RootStackParamList } from '@navigation/RootStackParamList';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 type NewPrescriptionIndexProps = NativeStackScreenProps<RootStackParamList, 'NewPrescription'>
 
+/** Affiche le formulaire de création d'une ordonnance
+ * 
+ * @param prescriptionUpdate { PrescriptionInterface | undefined } Si défini, NewPrescriptionIndex affiche le formulaire de modification d'une ordonnance
+ */
 export default function NewPrescriptionIndex({ navigation, route }: NewPrescriptionIndexProps) {
-    const { prescriptionUpdate } = route.params || undefined;
+
+    const { prescriptionUpdate } = route.params || { undefined };
+
     const [prescription, setPrescription, applyNewPrescription] = useNewPrescription(prescriptionUpdate);
+
     const setMedicines = (newMedicines: MedicineInterface[]) =>
-        setPrescription((oldP) => ({ ...oldP, medicines: newMedicines }))
+        setPrescription((oldP) => ({ ...oldP, medicines: newMedicines })) // Un raccourci pour modifier les médicaments de l'ordonnance
 
     const addMedicineHandler = () => {
         setPrescription((oldP) => ({ ...oldP, medicines: [...oldP.medicines, defaultMedicine] }))
-    };
+    }; // Methode du bouton addMedicine pour ajouter un médicament à l'ordonnance
 
     const handleResetStack = () => {
-        prescriptionUpdate
-            ? navigation.reset({ index: 2, routes: [{ name: "Home" }, { name: "Treatment" }, { name: "Prescription", params: { prescription: prescription } }] })
-            : navigation.reset({ index: 1, routes: [{ name: "Home" }, { name: "Treatment" }] })
+        prescriptionUpdate // Si on est en modification, on retourne à la page de l'ordonnance
+            ? navigation.reset({
+                index: 2,
+                routes: [
+                    { name: "Home" },
+                    { name: "Treatment" },
+                    { name: "Prescription", params: { prescription: prescription } }]
+            })
+            : navigation.reset({
+                index: 1,
+                routes: [
+                    { name: "Home" },
+                    { name: "Treatment" }]
+            })
     }
 
     return <ScrollView>
@@ -56,8 +73,7 @@ export default function NewPrescriptionIndex({ navigation, route }: NewPrescript
                         setMedicines([defaultMedicine])
                         return
                     }
-                    const newMedicines = [...prescription.medicines];
-                    newMedicines.splice(i, 1);
+                    const newMedicines = [...prescription.medicines].splice(i, 1);
                     setMedicines(newMedicines)
                 }
                 return <MedicineComponent key={i} medicine={p}

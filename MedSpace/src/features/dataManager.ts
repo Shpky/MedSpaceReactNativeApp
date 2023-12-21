@@ -1,11 +1,9 @@
-
 import RNSecureStorage, { ACCESSIBLE } from 'rn-secure-storage';
 import defaultSave from "@data/defaultSave.json";
 import defaultSaveForTest from "@data/defaultSaveForTest.json";
 
 export default {
     async setSaveData(newSave: SaveInterface | ((oldSave: SaveInterface) => SaveInterface)) {
-
         try {
             if (newSave instanceof Function) {
                 const oldSave = await this.getSaveData();
