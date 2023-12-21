@@ -31,9 +31,9 @@ export default function LoginIndex({ navigation }: LoginIndexProps) {
                 console.log("password", save?.password)
             }}
             />
+            <Button title={"checkPassword"} onPress={() => console.log(checkPassword("1234"))} />
         </Debug>
         <Title>Veuillez déverouillez l'application</Title>
-        <Button title={"checkPassword"} onPress={() => console.log(checkPassword("1234"))} />
         <PasswordInput onChangeText={setPasswordInput} />
         <Button title="Valider" onPress={validateButtonHandler} />
     </ScrollView>
