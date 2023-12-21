@@ -1,8 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
 import RNPickerSelect from 'react-native-picker-select';
-import defaultSaveForTest from '@data/defaultSaveForTest.json';
-import dataManager from '@features/dataManager';
 import {
     View,
     Text,
@@ -20,24 +17,16 @@ import {
 } from 'react-native-image-picker';
 import RNFS from 'react-native-fs';
 import useSave from '@hooks/useSave';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from "@navigation/RootStackParamList";
 
-const UserPageIndex = () => {
+type UserIndexProps = NativeStackScreenProps<RootStackParamList, 'UserPage'>
+
+const UserPageIndex = ({ navigation }: UserIndexProps) => {
     const [save, setSave] = useSave();
 
     if (!save) return null;
     const actualUser = save.patients.find((patient) => patient.actualUser == true);
-
-    const fetchData = async () => {
-        try {
-            setSave(await dataManager.getSaveData());
-        } catch (error) {
-            console.error('Erreur lors de la récupération des données :', error);
-        }
-    };
-
-    useEffect(() => {
-        fetchData();
-    }, []);
 
     const handleChangeProfile = (value: string) => {
         if (value !== actualUser?.name) {
@@ -48,6 +37,7 @@ const UserPageIndex = () => {
             } as SaveInterface))
         }
 
+        navigation.reset({ index: 0, routes: [{ name: "Home" }] })
     };
 
     const ProfilePicker = () => {

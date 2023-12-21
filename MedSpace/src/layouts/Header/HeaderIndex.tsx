@@ -16,7 +16,7 @@ const HeaderIndex = ({ navigation, route }: NativeStackHeaderProps) => {
     };
 
     return (
-        <View style={styles.container}>
+        <View style={styles.container} key={actualPatient?.name}>
             <Pressable onPress={navigateToHome}>
                 <Image style={styles.logo} source={require('./logo.png')} />
             </Pressable>
