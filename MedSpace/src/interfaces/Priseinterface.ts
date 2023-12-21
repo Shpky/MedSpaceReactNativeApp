@@ -1,0 +1,1 @@
+type priseInterface = { nomMedoc: string, heure: number, dosage: number, dosageType: string }
