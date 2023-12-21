@@ -18,9 +18,10 @@ import {
     launchImageLibrary,
     ImageLibraryOptions,
 } from 'react-native-image-picker';
-import RNFS from 'react-native-fs';
+// import RNFS from 'react-native-fs';
 
 const UserPageIndex = () => {
+    //@ts-ignore
     const [save, setSave] = useState<SaveInterface>(defaultSaveForTest);
     const [reload, setReload] = useState<boolean>(false);
     const actualUser = save.patients.find((patient) => patient.actualUser == true);
@@ -126,7 +127,7 @@ const UserPageIndex = () => {
 
         save.patients = save.patients.map((patient) =>
             patient === actualUser
-                ? { ...patient, earliesttime: inputText }
+                ? { ...patient, earliesttime: Number(inputText) }
                 : patient
         );
         dataManager.setSaveData(save);
@@ -136,7 +137,7 @@ const UserPageIndex = () => {
         inputText.length == 0 ? (inputText = '22') : null;
         save.patients = save.patients.map((patient) =>
             patient === actualUser
-                ? { ...patient, latesttime: inputText }
+                ? { ...patient, latesttime: Number(inputText) }
                 : patient
         );
         dataManager.setSaveData(save);
@@ -158,8 +159,8 @@ const UserPageIndex = () => {
             icone: icon,
             actualUser: actualUser,
             prescriptions: [],
-            earliesttime: "8h",
-            latesttime: "22h",
+            earliesttime: 8,
+            latesttime: 22,
         } as PatientInterface);
 
         dataManager.setSaveData(save);
@@ -258,7 +259,7 @@ const UserPageIndex = () => {
                 <Text style={[styles.realysmallfontJomhuriaRegular, { marginBottom: -15, marginTop: -15 }]}>Heure de prise minimal d'un médicament </Text>
                 <TextInput
                     style={[styles.textInput]}
-                    defaultValue={actualUser?.earliesttime}
+                    defaultValue={String(actualUser?.earliesttime)}
                     onEndEditing={(event) => handleChangeearliesttime(event.nativeEvent.text)}
                     textAlignVertical="center"
                     textAlign="center"
@@ -268,7 +269,7 @@ const UserPageIndex = () => {
                 <Text style={[styles.realysmallfontJomhuriaRegular, { marginBottom: -15, marginTop: -15 }]}>Heure de prise maximal d'un médicament </Text>
                 <TextInput
                     style={[styles.textInput]}
-                    defaultValue={actualUser?.latesttime}
+                    defaultValue={String(actualUser!!.latesttime)}
                     onEndEditing={(event) => handleChangelatesttime(event.nativeEvent.text)}
                     textAlignVertical="center"
                     textAlign="center">
