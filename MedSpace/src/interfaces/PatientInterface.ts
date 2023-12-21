@@ -4,5 +4,6 @@ interface PatientInterface {
     prescriptions: PrescriptionInterface[],
     actualUser: Boolean,
     earliesttime: number,
-    latesttime: number
+    latesttime: number,
+    calendar?: calendar,
 }

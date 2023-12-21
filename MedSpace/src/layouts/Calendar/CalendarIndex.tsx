@@ -67,22 +67,36 @@ const CalendarIndex = () => {
      * 
      * 
      */
-    const renderMedicine = (tabday: priseInterface[]) => {
+    const renderMedicine = (tabday: priseInterface[], index: number) => {
 
         let week = tabday.sort((a, b) => a.heure - b.heure)
+        let dayweek = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
         return (
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Text>{prise.nomMedoc}</Text>
-                <Text>{prise.heure}</Text>
-                <Text>{prise.dosage}</Text>
+            <View >
+                <Text>{dayweek[index]}</Text>
+                {week.map((prise) => {
+                    return (
+
+                        <View style={styles.debug}>
+                            <Text style={styles.medicine}>{prise.nomMedoc}</Text>
+                            <Text style={styles.medicine}>{prise.heure}</Text>
+                            <Text style={styles.medicine}>{prise.dosage}</Text>
+                            <Text style={styles.medicine}>{prise.dosageType}</Text>
+                        </View>
+
+                    )
+                })}
             </View>
         )
+
+
+
     }
     const calendarComponent = () => {
         return (
             <FlatList
                 data={weekcalculator(startDate)}
-                renderItem={({ item }) => renderMedicine(item)}
+                renderItem={({ item, index }) => renderMedicine(item, index)}
 
             />
         )
@@ -114,6 +128,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center', // Add this line to center vertically
     },
+    medicine: {
+        color: 'white',
+
+    },
+    debug: {
+        borderBlockColor: 'black',
+        borderSize: 4,
+
+    },
+    bgimage: {
+        flex: 1,
+
+        resizeMode: 'cover',
+        borderRadius: 30, // Ajustez la valeur selon vos besoins
+        overflow: 'hidden',
+    }
 });
 
 export default CalendarIndex;

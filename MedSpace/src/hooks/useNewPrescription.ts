@@ -1,7 +1,7 @@
 import defaultPrescription from '../data/defaultPrescription.json';
 import { useState } from "react";
 import dataManager from "@features/dataManager"
-
+import Calculator from '@layouts/Calendar/medecineCalculator';
 /**
  * Custom hook qui permet de créer une nouvelle prescription
  *
@@ -17,7 +17,8 @@ export default function useNewPrescription(prescription?: PrescriptionInterface)
                 ...oldSave,
                 patients: oldSave.patients.map(p => p.actualUser ? {
                     ...p,
-                    prescriptions: p.prescriptions.map(pr => pr.title === prescription.title ? newPrescription : pr)
+                    prescriptions: p.prescriptions.map(pr => pr.title === prescription.title ? newPrescription : pr),
+                    calendar: Calculator()
                 } : p
                 )
             })
@@ -29,11 +30,14 @@ export default function useNewPrescription(prescription?: PrescriptionInterface)
                     prescriptions: [
                         ...p.prescriptions,
                         newPrescription
-                    ]
+                    ],
+                    calendar: Calculator()
+
                 } : p
                 )
             })
             )
+
     }
 
     return [newPrescription, setPrescription, apply]
