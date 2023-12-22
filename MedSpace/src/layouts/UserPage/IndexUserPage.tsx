@@ -290,7 +290,7 @@ const UserPageIndex = ({ navigation }: UserIndexProps) => {
         <ScrollView style={styles.body}>
             <View style={{ width: '100%' }}>
                 <ImageBackground
-                    source={require('./img/picker.png')}  // Remplacez 'Test.jpg' par le chemin de votre image
+                    source={require('./img/picker.png')}  
                     style={[styles.backgroundImage, { marginTop: 20, }, styles.shadow]}
                 >
                     <ProfilePicker />
@@ -337,7 +337,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         resizeMode: 'cover',
-        borderRadius: 30, // Ajustez la valeur selon vos besoins
+        borderRadius: 30, 
         overflow: 'hidden',
         shadowOffset: {
             width: 0,

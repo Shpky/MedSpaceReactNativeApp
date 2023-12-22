@@ -3,24 +3,28 @@ import dataManager from '@features/dataManager';
 
 
 
-const Calculator = (): calendar => {
-    const [patient, setPatient] = useState<PatientInterface | undefined>();
+const Calculator = async(): Promise<calendar> => {
+    let patient: PatientInterface
     let calendar: calendar = [];
+    await dataManager.getSaveData().then((data) => {
+        patient = data.patients.find(patient => patient.actualUser) as PatientInterface;
+        if (patient) {
 
-    useEffect(() => {
-        const fetchData = async () => {
+            patient.prescriptions.forEach(prescription => {
 
-            const save = await dataManager.getSaveData();
-            const actualUserPatient = save.patients.find(patient => patient.actualUser === true);
-            if (actualUserPatient) {
-                setPatient(actualUserPatient);
-            }
+                prescription.medicines.forEach(medicine => {
 
-        };
 
-        fetchData();
-    }, []);
+                    //console.log(medicine.name)
+                    CalendarByMedecine(medicine, prescription.date as Date);
+                });
 
+            });
+        }
+        
+    })
+    
+    return calendar;
     //duration date de fin
     //prescription.date = date de debut = datestart
     function CalendarByMedecine(medicine: MedicineInterface, datestart: Date) {
@@ -31,7 +35,7 @@ const Calculator = (): calendar => {
             "morning" in medicine.frequency &&
             "noon" in medicine.frequency &&
             "evening" in medicine.frequency) {
-            console.log(medicine.name)
+
             for (let i = 0; i < (((medicine.duration as Date)?.getTime() - (datestart as Date)?.getTime()) / (1000 * 60 * 60 * 24)); i++) {
 
                 let day: priseInterface[] = [];
@@ -112,21 +116,8 @@ const Calculator = (): calendar => {
 
     }
 
-    if (patient) {
-        console.log(patient.name)
-        patient.prescriptions.forEach(prescription => {
-
-            prescription.medicines.forEach(medicine => {
 
 
-                //console.log(medicine.name)
-                CalendarByMedecine(medicine, prescription.date as Date);
-            });
-
-        });
-    }
-
-    return calendar
 }
 
 
