@@ -192,7 +192,7 @@ const CalendarIndex = () => {
         } else {
             let data = calendar.find(element => element.date.setHours(0, 0, 0, 0) === startDate.setHours(0, 0, 0, 0)) as day;
             let tempo: priseInterface = { nomMedoc: "Pas de médicament aujourd'huit", heure: 0, dosage: 0, dosageType: "" }
-            if (!data) return { date: startDate, prise: [tempo] }
+            data = { date: startDate, prise: [tempo] }
             data.prise = data.prise.sort((a, b) => a.heure - b.heure);
 
             return (
