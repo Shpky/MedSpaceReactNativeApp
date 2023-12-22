@@ -13,7 +13,8 @@ export default function usePassword(): [(p: PasswordType) => boolean, () => bool
     }, [save])
 
     const setPassword = (newPassword: PasswordType) => {
-        save && setSave({ ...save, password: hashPassword(newPassword) })
+        console.log('newPassword :>> ', newPassword);
+        save && setSave((old) => ({ ...old, password: hashPassword(newPassword) } as SaveInterface))
     }
 
     const checkPassword = (p: PasswordType) => {
