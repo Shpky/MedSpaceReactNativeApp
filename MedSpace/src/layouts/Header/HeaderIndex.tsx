@@ -5,10 +5,11 @@ import useActualPatient from '@hooks/useActualPatient';
 
 
 const HeaderIndex = ({ navigation, route }: NativeStackHeaderProps) => {
+    console.log('route.name :>> ', route.name);
     const [actualPatient] = useActualPatient([route]);
-
+    const isLogin = !["Login", "Profil"].includes(route.name);
     const navigateToHome = () => {
-        navigation.navigate("Home");
+        isLogin && navigation.navigate("Home");
     };
 
     const navigateToUserPage = () => {
@@ -23,11 +24,11 @@ const HeaderIndex = ({ navigation, route }: NativeStackHeaderProps) => {
             <Pressable onPress={navigateToHome}>
                 <Text style={styles.titleFont}>MEDSPACE</Text>
             </Pressable>
-            <Pressable onPress={navigateToUserPage}>
+            {isLogin ? <Pressable onPress={navigateToUserPage}>
                 {actualPatient?.icone && <Image style={styles.image} key={actualPatient?.name}
                     source={{ uri: actualPatient.icone }}
                 />}
-            </Pressable>
+            </Pressable> : <View style={styles.noImage} />}
         </View>
     );
 };
@@ -45,7 +46,6 @@ const styles = StyleSheet.create({
         fontFamily: 'Jua-Regular',
         fontSize: 20,
         color: 'black',
-        marginLeft: 8,
     },
     image: {
         width: 35,
@@ -58,10 +58,14 @@ const styles = StyleSheet.create({
         borderColor: 'black'
     },
     logo: {
-        width: 30,
-        height: 30,
+        width: 35,
+        height: 35,
         resizeMode: 'contain',
     },
+    noImage: {
+        width: 35,
+        height: 35,
+    }
 });
 
 export default HeaderIndex; 

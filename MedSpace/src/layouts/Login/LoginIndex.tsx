@@ -1,12 +1,15 @@
 import Title from "@components/TitleBubble"
 import Debug from "@components/Debug"
-import { Button, ScrollView } from "react-native"
+import { Button, Text, ScrollView, StyleSheet } from "react-native"
 import usePassword from "@hooks/usePassword"
 import useSave from "@hooks/useSave"
 import { useState } from "react"
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from "@navigation/RootStackParamList";
-import PasswordInput from "./PasswordInput"
+import PasswordInput from "@components/form/PasswordInput/PasswordInput"
+import Container from "@components/form/Container/ContainerIndex"
+import ConfirmXL from "@components/form/buttons/ConfirmXL"
+
 
 type LoginIndexProps = NativeStackScreenProps<RootStackParamList, 'Login'>
 
@@ -14,27 +17,54 @@ type LoginIndexProps = NativeStackScreenProps<RootStackParamList, 'Login'>
  */
 export default function LoginIndex({ navigation }: LoginIndexProps) {
     const [passwordInput, setPasswordInput] = useState("")
-    const [checkPassword] = usePassword()
+    const [checkPassword, isPassword] = usePassword()
     const [save] = useSave()
 
+
+
     const validateButtonHandler = () => {
-        if (!checkPassword(passwordInput)) return null
+        if (!checkPassword(passwordInput) || (isPassword() == null)) return null
         navigation.reset({
             index: 0,
             routes: [{ name: 'Profil' }],
         });
     }
 
-    return <ScrollView>
+    if (isPassword() !== null && isPassword() === false) {
+        console.log('isPassword() :>> ', isPassword());
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'Profil' }],
+        });
+        return;
+    } else return <ScrollView>
         <Debug>
             <Button title={"Print"} onPress={() => {
                 console.log("password", save?.password)
             }}
             />
-            <Button title={"checkPassword"} onPress={() => console.log(checkPassword("1234"))} />
+            <Button title={"checkPassword"} onPress={() => console.log(checkPassword(passwordInput))} />
         </Debug>
-        <Title>Veuillez déverouillez l'application</Title>
-        <PasswordInput onChangeText={setPasswordInput} />
-        <Button title="Valider" onPress={validateButtonHandler} />
+        <Title>Déverrouillez l'application</Title>
+        <Container>
+            <Text style={style.instructions}>Entrez votre mot de passe</Text>
+            <PasswordInput onChangeText={setPasswordInput} />
+        </Container>
+        <ConfirmXL styleProp={style.confirm} onPress={validateButtonHandler}>Valider</ConfirmXL>
     </ScrollView>
 }
+
+const style = StyleSheet.create({
+    instructions: {
+        fontFamily: "Jomhuria-Regular",
+        fontSize: 30,
+        fontStyle: "normal",
+        color: "#fff",
+        textAlign: "center",
+        marginTop: "-3%",
+        marginBottom: "5%",
+    },
+    confirm: {
+        width: "60%"
+    },
+});

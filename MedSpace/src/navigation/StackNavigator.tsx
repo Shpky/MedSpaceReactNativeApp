@@ -13,7 +13,7 @@ import Prescription from '@layouts/Prescription/PrescriptionIndex';
 import { RootStackParamList } from './RootStackParamList';
 import CalendarIndex from '@layouts/Calendar/CalendarIndex';
 import LoginIndex from '@layouts/Login/LoginIndex';
-import ProfilIndex from '@layouts/Profile/ProfilIndex';
+import ProfilIndex from '@layouts/Profil/ProfilIndex';
 
 /** Permet de gérer la navigation entre les pages */
 export default function StackNavigator() {
@@ -34,13 +34,17 @@ export default function StackNavigator() {
                 header: (props) => <>
                     <Debug>
                         <Button title="print datas" onPress={() => dataManager.getSaveData().then((e) => console.log(
-                            e.patients.map(e => ({ ...e, icone: null }))
+                            {
+                                ...e,
+                                patients: e?.patients.map((p) => ({ ...p, icone: undefined }))
+
+
+                            }
                         ))} />
                         <Button title='reset' onPress={() => dataManager.resetSaveData()} />
                     </Debug>
-                    {
-                        ["Login", "Profil"].includes(props.route.name) ||
-                        <Header {...props} />}
+
+                    <Header {...props} />
                 </>,
                 animation: 'slide_from_right',
             }}>

@@ -19,6 +19,7 @@ import RNFS from 'react-native-fs';
 import useSave from '@hooks/useSave';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from "@navigation/RootStackParamList";
+import Password from './Password';
 
 type UserIndexProps = NativeStackScreenProps<RootStackParamList, 'UserPage'>
 
@@ -280,7 +281,11 @@ const UserPageIndex = ({ navigation }: UserIndexProps) => {
             </View>
         );
     };
-
+    
+    const reloadPage = () => {
+        navigation.goBack();
+        navigation.navigate("UserPage");
+    }
     return (
         <ScrollView style={styles.body}>
             <View style={{ width: '100%' }}>
@@ -302,9 +307,10 @@ const UserPageIndex = ({ navigation }: UserIndexProps) => {
                         style={styles.backgroundImage}
                     ><View style={styles.userInfoContainer}>
                             <ProfileImage />
-                            {Userinfo()}
-                            {Statistique()}
-                            {ControleButton()}
+                            <Userinfo />
+                            <Statistique />
+                            <ControleButton />
+                            <Password onConfirm={reloadPage}/>
 
                         </View>
 

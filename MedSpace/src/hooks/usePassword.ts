@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import useSave from './useSave'
 import { genSaltSync, hashSync, compareSync } from 'bcrypt-ts'
 
-type PasswordType = string | undefined
+type PasswordType = string | undefined | null
 
-export default function usePassword(): [(p: PasswordType) => boolean, (p: PasswordType) => void] {
+export default function usePassword(): [(p: PasswordType) => boolean, () => boolean | null, (p: PasswordType) => void] {
     const [save, setSave] = useSave()
     const [password, setPasswordState] = useState<PasswordType>(undefined)
 
@@ -28,5 +28,9 @@ export default function usePassword(): [(p: PasswordType) => boolean, (p: Passwo
         return hashSync(p.toString(), salt)
     }
 
-    return [checkPassword, setPassword]
+    const isPassword = () => {
+        console.log('password :>> ', password);
+        return save ? password === undefined : null
+    }
+    return [checkPassword, isPassword, setPassword]
 }
