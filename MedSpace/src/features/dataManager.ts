@@ -41,6 +41,10 @@ export default {
                 })
 
             })
+            patient.calendar?.forEach((day: any) => {
+                day.date = new Date(day.date)
+
+            })
         })
 
         return parsedData as SaveInterface;

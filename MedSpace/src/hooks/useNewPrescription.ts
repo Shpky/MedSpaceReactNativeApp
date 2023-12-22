@@ -12,31 +12,33 @@ export default function useNewPrescription(prescription?: PrescriptionInterface)
     const [newPrescription, setPrescription] = useState<PrescriptionInterface>(prescription || defaultPrescription)
 
     const apply = async () => {  // Ajoute la prescription à la liste des prescriptions du patient
-        prescription ?
-            await dataManager.setSaveData((oldSave) => ({
-                ...oldSave,
-                patients: oldSave.patients.map(p => p.actualUser ? {
-                    ...p,
-                    prescriptions: p.prescriptions.map(pr => pr.title === prescription.title ? newPrescription : pr),
-                    calendar: Calculator()
-                } : p
+        await Calculator().then(async (calendar) => {
+            prescription ?
+                await dataManager.setSaveData((oldSave) => ({
+                    ...oldSave,
+                    patients: oldSave.patients.map(p => p.actualUser ? {
+                        ...p,
+                        prescriptions: p.prescriptions.map(pr => pr.title === prescription.title ? newPrescription : pr),
+                        calendar: calendar
+                    } : p
+                    )
+                })
                 )
-            })
-            )
-            : await dataManager.setSaveData((oldSave) => ({
-                ...oldSave,
-                patients: oldSave.patients.map(p => p.actualUser ? {
-                    ...p,
-                    prescriptions: [
-                        ...p.prescriptions,
-                        newPrescription
-                    ],
-                    calendar: Calculator()
+                : await dataManager.setSaveData((oldSave) => ({
+                    ...oldSave,
+                    patients: oldSave.patients.map(p => p.actualUser ? {
+                        ...p,
+                        prescriptions: [
+                            ...p.prescriptions,
+                            newPrescription
+                        ],
+                        calendar: calendar
 
-                } : p
+                    } : p
+                    )
+                })
                 )
-            })
-            )
+        })
 
     }
 
