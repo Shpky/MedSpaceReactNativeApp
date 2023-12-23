@@ -23,13 +23,18 @@ export default function Password({ onConfirm }: PasswordProps) {
     const [checkPassword, isPassword, setPassword] = usePassword()
     const [pwdIsEnable, setPwdIsEnable] = useState<boolean>(!!isPassword())
 
-    const validateButtonHandler = () => {
+    const validateButtonHandler = async () => {
         if (!checkPassword(passwordInput.oldPwd)) return;
-        if (!pwdIsEnable) {
-            setPassword(undefined);
-            return;
+        if (pwdIsEnable) {
+            if (passwordInput.newPwd !== passwordInput.confirmNewPwd) return;
+            setPassword(passwordInput.newPwd)
+        } else {
+            setPassword(undefined)
         }
-        if (passwordInput.newPwd === passwordInput.confirmNewPwd) setPassword(passwordInput.newPwd)
+
+        while (!checkPassword(passwordInput.newPwd)) {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
         onConfirm()
     }
 

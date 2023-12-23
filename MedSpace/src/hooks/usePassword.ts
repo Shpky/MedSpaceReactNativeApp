@@ -13,8 +13,13 @@ export default function usePassword(): [(p: PasswordType) => boolean, () => bool
     }, [save])
 
     const setPassword = (newPassword: PasswordType) => {
-        console.log('newPassword :>> ', newPassword);
-        save && setSave((old) => ({ ...old, password: hashPassword(newPassword) } as SaveInterface))
+        console.log('newPassword :>> ', newPassword, "oldPassword :>> ", password, "oldSave :>> ", ({ ...save, patients: save?.patients.map(p => ({ ...p, icone: null })) }));
+        save && setSave((old) => (
+            {
+                patients: old?.patients || [],
+                doctors: old?.doctors || [],
+                password: hashPassword(newPassword)
+            }))
     }
 
     const checkPassword = (p: PasswordType) => {
@@ -31,7 +36,7 @@ export default function usePassword(): [(p: PasswordType) => boolean, () => bool
 
     const isPassword = () => {
         console.log('password :>> ', password);
-        return save ? password === undefined : null
+        return save ? password !== undefined : null
     }
     return [checkPassword, isPassword, setPassword]
 }

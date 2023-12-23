@@ -3,7 +3,9 @@ import defaultSaveForTest from "@data/defaultSaveForTest.json";
 
 export default {
     async setSaveData(newSave: SaveInterface | ((oldSave: SaveInterface) => SaveInterface)) {
-        typeof newSave !== "function" && console.log('newSave :>> ', ({ ...newSave, patients: newSave?.patients.map(p => ({ ...p, icone: null })) }))
+        typeof newSave !== "function" &&
+            console.log('newSave :>> ', ({ ...newSave, patients: newSave?.patients.map(p => ({ ...p, icone: null })) }))
+
         try {
             if (newSave instanceof Function) {
                 const oldSave = await this.getSaveData();
@@ -31,7 +33,7 @@ export default {
         if (!exists) await this.resetSaveData()
 
         const data = await RNSecureStorage.get('save');
-
+        console.log('get');
         const parsedData = JSON.parse(data as string);
         parsedData.patients.forEach((patient: PatientInterface) => {
             patient.prescriptions.forEach((prescription: PrescriptionInterface) => {

@@ -32,7 +32,7 @@ export default function LoginIndex({ navigation }: LoginIndexProps) {
 
     if (isPassword() !== null && isPassword() === false) {
         console.log('isPassword() :>> ', isPassword());
-        navigation.reset({
+        navigation.reset({ // ya un bug ici   Warning: Cannot update a component (`ForwardRef(BaseNavigationContainer)`) while rendering a different component (`LoginIndex`). To locate the bad setState() call inside `LoginIndex`, follow the stack trace as described in https://reactjs.org/link/setstate-in-render
             index: 0,
             routes: [{ name: 'Profil' }],
         });

@@ -14,6 +14,7 @@ export default function useActualPatient(refresh: any[] = []): [PatientInterface
     }, [save])
 
     useEffect(() => {
+        console.log('patient :>> ', ({ ...patient, icone: null }));
         save && setSave(old => ({
             ...old,
             patients: old?.patients.map(p => p.actualUser ? patient : p) || [patient]
