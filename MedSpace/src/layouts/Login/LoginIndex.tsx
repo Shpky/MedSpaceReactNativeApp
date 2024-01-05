@@ -17,26 +17,28 @@ type LoginIndexProps = NativeStackScreenProps<RootStackParamList, 'Login'>
  */
 export default function LoginIndex({ navigation }: LoginIndexProps) {
     const [passwordInput, setPasswordInput] = useState("")
-    const [checkPassword, isPassword] = usePassword()
+    const [isLoading, checkPassword] = usePassword()
     const [save] = useSave()
 
 
 
     const validateButtonHandler = () => {
-        if (!checkPassword(passwordInput) || (isPassword() == null)) return null
+        if (!(isLoading == "success") || !checkPassword(passwordInput)) return null
         navigation.reset({
             index: 0,
             routes: [{ name: 'Profil' }],
         });
     }
 
-    if (isPassword() !== null && isPassword() === false) {
-        console.log('isPassword() :>> ', isPassword());
+    if (isLoading !== "success") return <ScrollView>
+        <Text>Chargement...</Text>
+    </ScrollView>
+
+    if (checkPassword(null)) {
         navigation.reset({ // ya un bug ici   Warning: Cannot update a component (`ForwardRef(BaseNavigationContainer)`) while rendering a different component (`LoginIndex`). To locate the bad setState() call inside `LoginIndex`, follow the stack trace as described in https://reactjs.org/link/setstate-in-render
             index: 0,
             routes: [{ name: 'Profil' }],
         });
-        return;
     } else return <ScrollView>
         <Debug>
             <Button title={"Print"} onPress={() => {
