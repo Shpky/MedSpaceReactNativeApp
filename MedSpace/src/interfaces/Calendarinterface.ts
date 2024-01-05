@@ -1,0 +1,1 @@
+type calendar = { date: Date, prise: priseInterface[] }[]

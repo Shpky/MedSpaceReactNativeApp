@@ -1,4 +1,5 @@
 import { Image, Pressable, Text } from 'react-native';
+import style from './style';
 
 type ProfilItemProps = {
     onPress: () => void
@@ -14,14 +15,9 @@ type ProfilItemProps = {
  * @param patientLite {object} objet contenant le nom et l'icone du patient
  */
 export default function ProfilItem({ onPress, patientLite }: ProfilItemProps) {
-    return <Pressable onPress={onPress}>
-        <Image style={{
-            width: 75,
-            height: 75,
-            marginTop: 20,
-            borderRadius: 100,
-        }}
+    return <Pressable style={style.item} onPress={onPress}>
+        <Image style={style.itemImage}
             source={{ uri: patientLite.icone }} />
-        <Text>{patientLite.name}</Text>
+        <Text style={style.itemText}>{patientLite.name}</Text>
     </Pressable>
 }

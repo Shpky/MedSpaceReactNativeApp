@@ -31,6 +31,8 @@ module.exports = {
             "./src/hooks/",
           "@navigation":
             "./src/navigation/",
+          "@backgrounds":
+            "./src/assets/backgrounds/",
         }
       }
     ],

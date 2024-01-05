@@ -1,96 +1,122 @@
 import { useState, useEffect } from 'react';
 import dataManager from '@features/dataManager';
 
-type calendar = { date: Date, prise: priseInterface[] }[]
-type priseInterface = { nomMedoc: string, heure: number, dosage: number }
-const Calculator = (): calendar => {
-    const [patient, setPatient] = useState<PatientInterface | undefined>();
+
+
+const Calculator = async(): Promise<calendar> => {
+    let patient: PatientInterface
     let calendar: calendar = [];
+    await dataManager.getSaveData().then((data) => {
+        patient = data.patients.find(patient => patient.actualUser) as PatientInterface;
+        if (patient) {
 
-    useEffect(() => {
-        const fetchData = async () => {
+            patient.prescriptions.forEach(prescription => {
 
-            const save = await dataManager.getSaveData();
-            const actualUserPatient = save.patients.find(patient => patient.actualUser === true);
-            if (actualUserPatient) {
-                setPatient(actualUserPatient);
-            }
-
-        };
-
-        fetchData();
-    }, []);
+                prescription.medicines.forEach(medicine => {
 
 
+                    //console.log(medicine.name)
+                    CalendarByMedecine(medicine, prescription.date as Date);
+                });
+
+            });
+        }
+        
+    })
+    
+    return calendar;
+    //duration date de fin
+    //prescription.date = date de debut = datestart
     function CalendarByMedecine(medicine: MedicineInterface, datestart: Date) {
-        let actualDate = new Date().setDate(datestart.getDate());
 
-        if ("WeeklyInterface" in medicine.frequency) {
-            console.log("weekly")
-            for (let i = 0; i < (medicine.duration as Date)?.getTime() - (datestart as Date)?.getTime() / (1000 * 60 * 60 * 24); i = i + (medicine.frequency as WeeklyInterface).delay) {
-                if (calendar.map(date => date.date).includes(new Date(datestart.getFullYear(), datestart.getMonth(), actualDate + i))) {
-                    calendar.map(date => {
-                        if (date.date === new Date(datestart.getFullYear(), datestart.getMonth(), actualDate + i)) {
-                            date.prise.push({ nomMedoc: medicine.name, heure: patient?.earliesttime as number, dosage: medicine.dosage });
-                        }
-                    })
-                } else {
-                    calendar.push({ date: new Date(datestart.getFullYear(), datestart.getMonth(), actualDate + i), prise: [{ nomMedoc: medicine.name, heure: patient?.earliesttime as number, dosage: medicine.dosage }] });
-                }
-            }
 
-            for (let i = 0; i < (medicine.duration as Date)?.getTime() - (datestart as Date)?.getTime() / (1000 * 60 * 60 * 24); i++) {
+
+        if (typeof medicine.frequency === "object" &&
+            "morning" in medicine.frequency &&
+            "noon" in medicine.frequency &&
+            "evening" in medicine.frequency) {
+
+            for (let i = 0; i < (((medicine.duration as Date)?.getTime() - (datestart as Date)?.getTime()) / (1000 * 60 * 60 * 24)); i++) {
+
                 let day: priseInterface[] = [];
-                if ("morning" in medicine.frequency) {
-                    if (medicine.frequency.morning) {
-                        day.push({ nomMedoc: medicine.name, heure: patient?.earliesttime as number, dosage: medicine.dosage });
-                    }
-
-                    if (medicine.frequency.noon) {
-                        day.push({ nomMedoc: medicine.name, heure: patient?.earliesttime as number < 11 ? 12 : ((patient?.earliesttime as number) - (patient?.latesttime as number)) / 2, dosage: medicine.dosage });
-                    }
-
-                    if (medicine.frequency.evening) {
-                        day.push({ nomMedoc: medicine.name, heure: patient?.latesttime as number, dosage: medicine.dosage });
-                    }
+                if (medicine.frequency.morning) {
+                    day.push({ nomMedoc: medicine.name, heure: (patient as PatientInterface).earliesttime, dosage: medicine.dosage, dosageType: medicine.dosageType });
                 }
-                if ("count" in medicine.frequency) {
-                    if (medicine.minimumHoursbetweenDoses != 0) {
-                        for (let i = 0; i < medicine.frequency.count; i++) {
-                            day.push({ nomMedoc: medicine.name, heure: (patient?.earliesttime as number) + (medicine.minimumHoursbetweenDoses as number) * i, dosage: medicine.dosage });
-                        }
-                    } else {
-                        let range = ((patient?.latesttime as number) - (patient?.earliesttime as number)) / medicine.frequency.count;
-                        for (let i = 0; i < medicine.frequency.count; i++) {
-                            day.push({ nomMedoc: medicine.name, heure: (patient?.earliesttime as number) + range * i, dosage: medicine.dosage });
-                        }
-                    }
+                if (medicine.frequency.noon) {
+                    //Midi ou date de debut + 4h
+                    (patient as PatientInterface).earliesttime > 11 ? day.push({ nomMedoc: medicine.name, heure: 12, dosage: medicine.dosage, dosageType: medicine.dosageType }) : day.push({ nomMedoc: medicine.name, heure: (patient as PatientInterface).earliesttime + 4, dosage: medicine.dosage, dosageType: medicine.dosageType });
                 }
-                if (calendar.map(date => date.date).includes(new Date(datestart.getFullYear(), datestart.getMonth(), actualDate + i))) {
-                    calendar.map(date => {
-                        if (date.date === new Date(datestart.getFullYear(), datestart.getMonth(), actualDate + i)) {
-                            date.prise.push(...day);
-                        }
-                    })
+                if (medicine.frequency.evening) {
+                    day.push({ nomMedoc: medicine.name, heure: (patient as PatientInterface).latesttime, dosage: medicine.dosage, dosageType: medicine.dosageType });
+                }
+                if (calendar.find(element => element.date.setHours(0, 0, 0, 0) == new Date(datestart.getTime() + i * 24 * 60 * 60 * 1000).setHours(0, 0, 0, 0))) {
+
+                    calendar.find(element => element.date.setHours(0, 0, 0, 0) == new Date(datestart.getTime() + i * 24 * 60 * 60 * 1000).setHours(0, 0, 0, 0))?.prise.push(...day);
                 } else {
-                    calendar.push({ date: new Date(datestart.getFullYear(), datestart.getMonth(), actualDate + i), prise: day });
+                    calendar.push({ date: new Date(datestart.getTime() + i * 24 * 60 * 60 * 1000), prise: day });
                 }
+
+
+
             }
         }
+        //Gestion des prises pour la DailyInterface
+        if (typeof medicine.frequency === "object" &&
+            "count" in medicine.frequency) {
+
+            for (let i = 0; i < (((medicine.duration as Date)?.getTime() - (datestart as Date)?.getTime()) / (1000 * 60 * 60 * 24)); i++) {
+
+                let day: priseInterface[] = [];
+                if (medicine.minimumHoursbetweenDoses != null) {
+                    for (let i = 0; i < medicine.frequency.count; i++) {
+                        day.push({ nomMedoc: medicine.name, heure: (patient?.earliesttime as number + (i as number * medicine.minimumHoursbetweenDoses as number)), dosage: medicine.dosage, dosageType: medicine.dosageType });
+                    }
+                } else {
+                    let dispatchHour = Math.floor(((patient as PatientInterface).latesttime - (patient as PatientInterface).earliesttime) / medicine.frequency.count)
+
+                    for (let i = 0; i < medicine.frequency.count; i++) {
+                        day.push({ nomMedoc: medicine.name, heure: ((patient as PatientInterface).earliesttime + ((i * dispatchHour) as number) as number), dosage: medicine.dosage, dosageType: medicine.dosageType });
+                    }
+                }
+                if (calendar.find(element => element.date.setHours(0, 0, 0, 0) == new Date(datestart.getTime() + i * 24 * 60 * 60 * 1000).setHours(0, 0, 0, 0))) {
+                    calendar.find(element => element.date.setHours(0, 0, 0, 0) == new Date(datestart.getTime() + i * 24 * 60 * 60 * 1000).setHours(0, 0, 0, 0))?.prise.push(...day);
+                } else {
+                    calendar.push({ date: new Date(datestart.getTime() + i * 24 * 60 * 60 * 1000), prise: day });
+                }
+
+
+            }
+        }
+
+        //Gestion pour les WeeklyInterface
+        if (typeof medicine.frequency === "object" &&
+            "delay" in medicine.frequency) {
+            let delay = medicine.frequency.delay;
+            for (let i = 0; i < Math.floor((((medicine.duration as Date)?.getTime() - (datestart as Date)?.getTime()) / (1000 * 60 * 60 * 24))); i = i + medicine.frequency.delay) {
+
+                let day: priseInterface[] = [];
+                day.push({ nomMedoc: medicine.name, heure: (patient as PatientInterface).earliesttime, dosage: medicine.dosage, dosageType: medicine.dosageType });
+                //date début + i*delay (i = c'est le combientième jour de la prise)
+                if (calendar.find(element => element.date.setHours(0, 0, 0, 0) == new Date(datestart.getTime() + i * 24 * 60 * 60 * 1000).setHours(0, 0, 0, 0))) {
+                    calendar.find(element => element.date.setHours(0, 0, 0, 0) == new Date(datestart.getTime() + i * 24 * 60 * 60 * 1000).setHours(0, 0, 0, 0))?.prise.push(...day);
+                } else {
+                    calendar.push({ date: new Date(datestart.getTime() + (medicine.frequency.delay * i > 0 ? i : 1) * 24 * 60 * 60 * 1000), prise: day });
+                }
+
+
+            }
+
+
+
+
+        }
+
+
+
+
     }
 
-    if (patient) {
-        patient.prescriptions.forEach(prescription => {
-            prescription.medicines.forEach(medicine => {
 
-
-
-                CalendarByMedecine(medicine, prescription.date as Date);
-            });
-
-        });
-    }
-    return calendar;
 
 }
 
