@@ -1,1 +1,1 @@
-type priseInterface ={ nomMedoc: string, heure: number, dosage: number, dosageType: string }
+type priseInterface ={ nomMedoc: string, heure: number, dosage: number, dosageType: string, consome: boolean }

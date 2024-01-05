@@ -8,11 +8,15 @@ import { BackgroundImage } from '@rneui/themed/dist/config';
 const CalendarIndex = () => {
     const [save, setSave] = useSave();
     const [startDate, setStartDate] = useState(new Date());
+    const getISOWeekNumber = (date: Date): number => Math.ceil(((date.getTime() - new Date(date.getFullYear(), 0, 1).getTime()) / (24 * 60 * 60 * 1000) + 1) / 7);
+    const [weekNumber, setWeekNumber] = useState(getISOWeekNumber(startDate));
     const [isOn, setIsOn] = useState(false);
     if (!save) return null;
-    const calendar = (save?.patients.find(patient => patient.actualUser)?.calendar as calendar)
-    type day = { date: Date, prise: priseInterface[] }
 
+    const calendar = save?.patients.find(patient => patient.actualUser)?.calendar as Wcalendar;
+
+    type day = { date: Date, prise: priseInterface[] }
+    
     //const startDate = new Date();
     const jour = (24 * 60 * 60 * 1000)
 
@@ -35,59 +39,17 @@ const CalendarIndex = () => {
         );
     };
 
-    interface WeekData {
-        [date: string]: priseInterface[];
-    }
-
-    const weekcalculator = (date: Date): WeekData => {
-        let calendarW: WeekData = {};
-        let firstDay = (date.getDay() + 6) % 7; // Décalage pour que le premier jour soit le lundi
-        let dateW = new Date(date.getTime() - ((firstDay + 6) % 7) * jour);
-        let week = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
-
-        week.forEach((day, index) => {
-            let dayData: priseInterface[] = [];
-            const currentDate = new Date(dateW.getTime() + (index * jour));
-
-            calendar.find((element) => element.date.setHours(0, 0, 0, 0) === currentDate.setHours(0, 0, 0, 0))?.prise.forEach((prise) => {
-                dayData.push(prise);
-            });
-
-
-            const key = currentDate.toISOString().split('T')[0];
-            calendarW[key] = dayData;
-        });
-
-        return calendarW;
-    };
     const getDateFromKey = (key: string): Date => {
         const [year, month, day] = key.split('-').map(Number);
         return new Date(year, month - 1, day); // Soustrayez 1 du mois car les mois commencent à partir de zéro
     };
 
-    /**
-     * 
-     * const durationInDays = Math.floor(((medicine.duration as Date)?.getTime() - (datestart as Date)?.getTime()) / (1000 * 60 * 60 * 24));
- 
-        for (let i = 0; i <= durationInDays; i++) {
-            const currentDate = new Date(datestart.getTime() + i * 24 * 60 * 60 * 1000);
- 
- 
-            const existingEntry = calendar.find(element => element.date.getTime() === currentDate.getTime());
- 
-            if (!existingEntry) {
- 
-                calendar.push({ date: currentDate, prise: [] });
-            }
-        } 
-     * 
-     * 
-     */
-    const RenderMedicine = (weekData: priseInterface[], date: string) => {
+    const RenderMedicine = (date: string, weekData: priseInterface[]) => {
         let week = weekData.sort((a, b) => a.heure - b.heure);
         let weekday = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']
 
-        if (getDateFromKey(date).setHours(0, 0, 0, 0) == new Date().setHours(0, 0, 0, 0)) {
+
+        if (date == new Date().toISOString().split('T')[0]) {
             return (
                 <View key={date} style={styles.dayContainer}>
                     <View style={styles.DayName}>
@@ -141,6 +103,8 @@ const CalendarIndex = () => {
 
     };
 
+
+
     const Title = () => {
         return (
             <View style={[{ width: '100%', justifyContent: 'center', alignContent: 'center', alignItems: "center", alignSelf: "center" }]}>
@@ -151,9 +115,11 @@ const CalendarIndex = () => {
             </View>
         )
     }
-    const dayrendering = (day: priseInterface) => {
+    const dayrendering = (date: string, day: priseInterface) => {
 
-        let weekday = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']
+        let bg = date == new Date().toISOString().split('T')[0] ? require('./img/greenbg.png') : require('./img/greybg.png')
+
+
 
 
         return (
@@ -163,7 +129,7 @@ const CalendarIndex = () => {
 
 
                 <ImageBackground style={[styles.medicineContainerBD, styles.backgroundImage]}
-                    source={require('./img/greenbg.png')}
+                    source={bg}
                 >
                     <Text style={[styles.medicine, { fontWeight: 'bold' }]} >{day.heure + (day.heure > 1 ? " heures" : " heure")} </Text>
                     <Text style={styles.medicine} >{day.nomMedoc}</Text>
@@ -180,26 +146,52 @@ const CalendarIndex = () => {
     }
     const calendarComponent = () => {
         if (isOn) {
-            let data = weekcalculator(startDate)
+
+            let tempo = calendar[weekNumber + "/" + startDate.getFullYear()]
+            let data: Wcalendar = {}
+            if (!tempo) {
+                let firstday = new Date(startDate.getTime() - startDate.getDay() * jour)
+
+                data[getISOWeekNumber(firstday) + "/" + firstday.getFullYear()] = {};
+
+                for (let i = 0; i < 7; i++) {
+                    data[getISOWeekNumber(firstday) + "/" + firstday.getFullYear()][new Date(firstday.getTime() + i * jour).toISOString().split('T')[0]] = [{ nomMedoc: "Pas de médicament aujourd'huit", heure: 0, dosage: 0, dosageType: "", consome: false }]
+
+
+                }
+                tempo = data[weekNumber + "/" + startDate.getFullYear()]
+            }
+
+
+            return (
+
+                <FlatList
+                    data={Object.entries(tempo)}
+                    renderItem={({ item }) => RenderMedicine(item[0], item[1])}
+
+                />
+            );
+        } else {
+            
+            let week = calendar[weekNumber + "/" + startDate.getFullYear()]
+            let data: priseInterface[] = []
+            if (!week) {
+                data = [{ nomMedoc: "Pas de médicament aujourd'huit", heure: 0, dosage: 0, dosageType: "", consome: false }]
+            } else {
+                data = week[startDate.toISOString().split('T')[0]]
+                !data ? data = [{ nomMedoc: "Pas de médicament aujourd'huit", heure: 0, dosage: 0, dosageType: "", consome: false }] : null
+            }
+
+            
+
+
+            data = data.sort((a, b) => a.heure - b.heure);
+
             return (
 
                 <FlatList
                     data={Object.entries(data)}
-                    renderItem={({ item }) => RenderMedicine(item[1], item[0])}
-                    keyExtractor={(item) => item[0]} // Utilise la date comme clé
-                />
-            );
-        } else {
-            let data = calendar.find(element => element.date.setHours(0, 0, 0, 0) === startDate.setHours(0, 0, 0, 0)) as day;
-            let tempo: priseInterface = { nomMedoc: "Pas de médicament aujourd'huit", heure: 0, dosage: 0, dosageType: "" }
-            data = { date: startDate, prise: [tempo] }
-            data.prise = data.prise.sort((a, b) => a.heure - b.heure);
-
-            return (
-
-                <FlatList
-                    data={Object.entries(data.prise)}
-                    renderItem={({ item }) => dayrendering(item[1] as priseInterface)}
+                    renderItem={({ item }) => dayrendering(startDate.toISOString().split('T')[0], item[1] as priseInterface)}
 
                 />
             );
@@ -209,34 +201,34 @@ const CalendarIndex = () => {
 
     const Selector = () => {
         let month = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
-        const getISOWeekNumber = (date: Date): number => Math.ceil(((date.getTime() - new Date(date.getFullYear(), 0, 1).getTime()) / (24 * 60 * 60 * 1000) + 1) / 7);
-        const weekday = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']
+
+        const weekday = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi']
         const weekNumber = getISOWeekNumber(startDate);
         return (
             <View>
 
                 <Text style={styles.Month}>{month[startDate.getMonth()] + " " + startDate.getFullYear()}</Text>
                 <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
-                    <Pressable onPress={() => setStartDate(new Date(startDate.getTime() - 7 * jour))}>
-                        <Text style={styles.bold}>{'<   '}</Text>
+                    <Pressable onPress={() => (setStartDate(new Date(startDate.getTime() - 7 * jour)), setWeekNumber(getISOWeekNumber(new Date(startDate.getTime() - 7 * jour))))}>
+                        <Text style={styles.bold}>{'   <   '}</Text>
                     </Pressable>
                     <Text>Semaine {weekNumber}</Text>
 
-                    <Pressable onPress={() => (setStartDate(new Date(startDate.getTime() + 7 * jour)), console.log(startDate))} >
-                        <Text style={styles.bold}>{'   >'}</Text>
+                    <Pressable onPress={() => (setStartDate(new Date(startDate.getTime() + 7 * jour)), setWeekNumber(getISOWeekNumber(new Date(startDate.getTime() + 7 * jour))))} >
+                        <Text style={styles.bold}>{'   >   '}</Text>
                     </Pressable>
 
                 </View>
                 {!isOn ?
 
-                    <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
-                        <Pressable onPress={() => setStartDate(new Date(startDate.getTime() - 1 * jour))}>
-                            <Text style={styles.bold}>{'<   '}</Text>
+                    <View style={{ justifyContent: 'center', flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+                        <Pressable onPress={() => (setStartDate(new Date(startDate.getTime() - 1 * jour)), setWeekNumber(getISOWeekNumber(new Date(startDate.getTime() - 1 * jour))))}>
+                            <Text style={styles.bold}>{'   <   '}</Text>
                         </Pressable>
-                        <Text style={styles.Month}>  {weekday[(startDate.getDay() - 1) < 0 ? 6 : (startDate.getDay() - 1)] + " " + startDate.getDate()} </Text>
+                        <Text style={styles.Month}>  {weekday[startDate.getDay()]} </Text>
 
-                        <Pressable onPress={() => (setStartDate(new Date(startDate.getTime() + 1 * jour)), console.log(startDate))} >
-                            <Text style={styles.bold}>{'   >'}</Text>
+                        <Pressable onPress={() => (setStartDate(new Date(startDate.getTime() + 1 * jour)), setWeekNumber(getISOWeekNumber(new Date(startDate.getTime() + 1 * jour))))} >
+                            <Text style={styles.bold}>{'   >   '}</Text>
                         </Pressable>
 
                     </View>
