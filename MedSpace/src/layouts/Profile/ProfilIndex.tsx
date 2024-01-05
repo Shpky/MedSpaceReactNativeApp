@@ -12,6 +12,7 @@ type ProfilIndexProps = NativeStackScreenProps<RootStackParamList, 'Profil'>
 export default function ProfilIndex({ navigation }: ProfilIndexProps) {
     const [save, setSave] = useSave()
     if (!save) return null
+    
     return <ScrollView>
         <Title>Sélectionner un profil</Title>
         {
