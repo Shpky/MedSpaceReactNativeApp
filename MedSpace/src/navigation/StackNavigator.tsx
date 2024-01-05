@@ -35,8 +35,9 @@ export default function StackNavigator() {
                     <Debug>
                         <Button title="print datas" onPress={() => dataManager.getSaveData().then((e) => console.log(
                             {
-                                ...e,
-                                patients: e?.patients.map((p) => ({ ...p, icone: undefined }))
+                                //...e,
+                                //patients: e?.patients.map((p) => ({ ...p, icone: undefined })),
+                                prescriptions: e?.patients.find((p) => p.actualUser)?.prescriptions.map((p) => ({ ...p.medicines.map((p) => p.name) }))
 
 
                             }

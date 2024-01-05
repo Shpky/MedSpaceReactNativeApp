@@ -9,11 +9,11 @@ import Toggle from "./Toggle";
 type PrescriptionIndexProps = NativeStackScreenProps<RootStackParamList, 'Prescription'>
 
 export default function PrescriptionIndex({ navigation, route }: PrescriptionIndexProps) {
-    console.log('route :>> ', route);
+    //console.log('route :>> ', route);
     const { prescription } = route.params
 
     if (!prescription) {
-        console.log('prescription :>> ', prescription);
+        //console.log('prescription :>> ', prescription);
         navigation.goBack()
         return null
     }

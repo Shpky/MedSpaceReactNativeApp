@@ -3,8 +3,7 @@ import defaultSaveForTest from "@data/defaultSaveForTest.json";
 
 export default {
     async setSaveData(newSave: SaveInterface | ((oldSave: SaveInterface) => SaveInterface)) {
-        typeof newSave !== "function" &&
-            console.log('newSave :>> ', ({ ...newSave, patients: newSave?.patients.map(p => ({ ...p, icone: null })) }))
+        typeof newSave !== "function"
 
         try {
             if (newSave instanceof Function) {
@@ -33,12 +32,13 @@ export default {
         if (!exists) await this.resetSaveData()
 
         const data = await RNSecureStorage.get('save');
-        console.log('get');
+
         const parsedData = JSON.parse(data as string);
         parsedData.patients.forEach((patient: PatientInterface) => {
             patient.prescriptions.forEach((prescription: PrescriptionInterface) => {
                 prescription.date != null ? prescription.date = new Date(prescription.date) : null
                 prescription.medicines.forEach((medicine: MedicineInterface) => {
+
                     medicine.duration != null ? medicine.duration = new Date(medicine.duration) : null
                 })
 

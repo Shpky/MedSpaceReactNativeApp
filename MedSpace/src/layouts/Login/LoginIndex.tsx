@@ -42,7 +42,7 @@ export default function LoginIndex({ navigation }: LoginIndexProps) {
     } else return <ScrollView>
         <Debug>
             <Button title={"Print"} onPress={() => {
-                console.log("password", save?.password)
+                
             }}
             />
             <Button title={"checkPassword"} onPress={() => console.log(checkPassword(passwordInput))} />

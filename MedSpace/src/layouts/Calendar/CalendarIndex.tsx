@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Pressable, FlatList, ImageBackground } from "react-native";
 import { TouchableOpacity, } from 'react-native';
 import useSave from '@hooks/useSave';
-import { BackgroundImage } from '@rneui/themed/dist/config';
+
+
 
 const CalendarIndex = () => {
     const [save, setSave] = useSave();
@@ -11,13 +12,18 @@ const CalendarIndex = () => {
     const getISOWeekNumber = (date: Date): number => Math.ceil(((date.getTime() - new Date(date.getFullYear(), 0, 1).getTime()) / (24 * 60 * 60 * 1000) + 1) / 7);
     const [weekNumber, setWeekNumber] = useState(getISOWeekNumber(startDate));
     const [isOn, setIsOn] = useState(false);
+
     if (!save) return null;
+    var calendar: Wcalendar = {};
 
-    const calendar = save?.patients.find(patient => patient.actualUser)?.calendar as Wcalendar;
+    calendar = save?.patients.find(patient => patient.actualUser)?.calendar as Wcalendar;
 
-    type day = { date: Date, prise: priseInterface[] }
-    
-    //const startDate = new Date();
+
+
+
+
+
+
     const jour = (24 * 60 * 60 * 1000)
 
     const OnOffButton = () => {
@@ -37,11 +43,6 @@ const CalendarIndex = () => {
                 </TouchableOpacity>
             </View>
         );
-    };
-
-    const getDateFromKey = (key: string): Date => {
-        const [year, month, day] = key.split('-').map(Number);
-        return new Date(year, month - 1, day); // Soustrayez 1 du mois car les mois commencent à partir de zéro
     };
 
     const RenderMedicine = (date: string, weekData: priseInterface[]) => {
@@ -103,8 +104,6 @@ const CalendarIndex = () => {
 
     };
 
-
-
     const Title = () => {
         return (
             <View style={[{ width: '100%', justifyContent: 'center', alignContent: 'center', alignItems: "center", alignSelf: "center" }]}>
@@ -116,18 +115,9 @@ const CalendarIndex = () => {
         )
     }
     const dayrendering = (date: string, day: priseInterface) => {
-
         let bg = date == new Date().toISOString().split('T')[0] ? require('./img/greenbg.png') : require('./img/greybg.png')
-
-
-
-
         return (
             <View key={startDate.getTime()} style={styles.dayContainerTOBD}>
-
-
-
-
                 <ImageBackground style={[styles.medicineContainerBD, styles.backgroundImage]}
                     source={bg}
                 >
@@ -147,7 +137,44 @@ const CalendarIndex = () => {
     const calendarComponent = () => {
         if (isOn) {
 
-            let tempo = calendar[weekNumber + "/" + startDate.getFullYear()]
+            let data: Wcalendar = {}
+            let week: WeekData = {}
+            if (!calendar) {
+                let firstday = new Date(startDate.getTime() - startDate.getDay() * jour)
+
+                data[weekNumber + "/" + startDate.getFullYear()] = {};
+
+                for (let i = 0; i < 7; i++) {
+
+                    data[weekNumber + "/" + startDate.getFullYear()][new Date(firstday.getTime() + i * jour).toISOString().split('T')[0]] = [{ nomMedoc: "Pas de médicament aujourd'huit", heure: 0, dosage: 0, dosageType: "", consome: false, releatedTreatment: "" }]
+
+
+                }
+
+                week = data[weekNumber + "/" + startDate.getFullYear()]
+
+            } else {
+                week = calendar[weekNumber + "/" + startDate.getFullYear()]
+                if (!week) {
+                    let firstday = new Date(startDate.getTime() - startDate.getDay() * jour)
+
+                    calendar[weekNumber + "/" + startDate.getFullYear()] = {};
+
+                    for (let i = 0; i < 7; i++) {
+                        calendar[weekNumber + "/" + startDate.getFullYear()][new Date(firstday.getTime() + i * jour).toISOString().split('T')[0]] = [{ nomMedoc: "Pas de médicament aujourd'huit", heure: 0, dosage: 0, dosageType: "", consome: false, releatedTreatment: "" }]
+
+
+                    }
+                }
+
+
+                week = calendar[weekNumber + "/" + startDate.getFullYear()] as WeekData
+            }
+            /*if (!calendar) {
+                calendar = {}
+            }
+            let tempo: WeekData = {}
+            tempo = calendar[weekNumber + "/" + startDate.getFullYear()]
             let data: Wcalendar = {}
             if (!tempo) {
                 let firstday = new Date(startDate.getTime() - startDate.getDay() * jour)
@@ -159,34 +186,32 @@ const CalendarIndex = () => {
 
 
                 }
-                tempo = data[weekNumber + "/" + startDate.getFullYear()]
-            }
+                tempo = data[weekNumber + "/" + startDate.getFullYear()]}*/
+
 
 
             return (
 
                 <FlatList
-                    data={Object.entries(tempo)}
+                    data={Object.entries(week)}
                     renderItem={({ item }) => RenderMedicine(item[0], item[1])}
 
                 />
             );
         } else {
-            
-            let week = calendar[weekNumber + "/" + startDate.getFullYear()]
             let data: priseInterface[] = []
+            if (!calendar) {
+                calendar = {}
+            }
+            let week = calendar[weekNumber + "/" + startDate.getFullYear()]
+
             if (!week) {
-                data = [{ nomMedoc: "Pas de médicament aujourd'huit", heure: 0, dosage: 0, dosageType: "", consome: false }]
+                data = [{ nomMedoc: "Pas de médicament aujourd'huit", heure: 0, dosage: 0, dosageType: "", consome: false, releatedTreatment: "" }]
             } else {
                 data = week[startDate.toISOString().split('T')[0]]
-                !data ? data = [{ nomMedoc: "Pas de médicament aujourd'huit", heure: 0, dosage: 0, dosageType: "", consome: false }] : null
+                !data ? data = [{ nomMedoc: "Pas de médicament aujourd'huit", heure: 0, dosage: 0, dosageType: "", consome: false, releatedTreatment: "" }] : null
             }
-
-            
-
-
             data = data.sort((a, b) => a.heure - b.heure);
-
             return (
 
                 <FlatList
@@ -333,7 +358,7 @@ const styles = StyleSheet.create({
 
     },
     dayContainer: {
-        flexDirection: 'row',
+        flexDirection: 'column',
         flexWrap: 'wrap',
         justifyContent: 'center',
     },
