@@ -25,6 +25,7 @@
     "bcrypt-ts": "^5.0.0",
     "btoa": "^1.2.1",
     "fs": "^0.0.1-security",
+    "mongodb": "^6.3.0",
     "react": "18.2.0",
     "react-native": "^0.72.6",
     "react-native-date-picker": "^4.3.3",
@@ -37,6 +38,7 @@
     "react-native-vector-icons": "^10.0.2",
     "react-navigation": "^5.0.0",
     "rn-secure-storage": "^2.0.8",
+    "sqlite3": "^5.1.6",
     "string-similarity": "^4.0.4"
   },
   "devDependencies": {
