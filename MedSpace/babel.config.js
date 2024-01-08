@@ -33,6 +33,8 @@ module.exports = {
             "./src/navigation/",
           "@backgrounds":
             "./src/assets/backgrounds/",
+          "@db":
+            "./src/database/"
         }
       }
     ],

@@ -3,7 +3,7 @@ import { Alert, Modal, StyleSheet, Text, Pressable, View, Image, Button } from '
 import { launchCamera, launchImageLibrary, CameraOptions, ImageLibraryOptions } from 'react-native-image-picker';
 import TextRecognition, { TextRecognitionResult } from '@react-native-ml-kit/text-recognition';
 import DetectMedicineinsentence from '@layouts/NewPrescription/ImportImg/MedicineRecognitionWE';
-
+//import { MongoDb } from '@features/sqlDataManager';
 const ModalImgPicker = ({ setprescription }: { setprescription: Dispatch<SetStateAction<PrescriptionInterface>> }) => {
     const [image, setImage] = useState<string | null>(null);
     const [modalVisible, setModalVisible] = useState(false);
@@ -14,6 +14,7 @@ const ModalImgPicker = ({ setprescription }: { setprescription: Dispatch<SetStat
         console.log(typeof (result.text));
 
 
+        //MongoDb.RefreshData()
 
         /*for (let block of result.blocks) {
             console.log('Block text:', block.text);

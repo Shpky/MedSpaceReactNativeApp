@@ -21,6 +21,7 @@
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.17",
     "@rneui/themed": "^4.0.0-rc.8",
+    "@types/react-native-sqlite-storage": "^6.0.5",
     "base-64": "^1.0.0",
     "bcrypt-ts": "^5.0.0",
     "btoa": "^1.2.1",

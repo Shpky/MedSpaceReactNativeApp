@@ -10,7 +10,9 @@ const IndexReport = () => {
     const RenderItem = ({ item }: { item: PrescriptionInterface }) => {
         return (
             <ImageBackground
-                source={require('./img/traitement.png')}>
+                source={require('./img/traitement.png')}
+                style={styles.treatmentcontainer}
+            >
                 <Text>{item.title}</Text>
                 <Text>{item.medicines.map((m) => m.name).join(', ')}</Text>
             </ImageBackground>
@@ -50,6 +52,27 @@ const IndexReport = () => {
 };
 
 const styles = StyleSheet.create({
+    treatmentcontainer: {
+        padding: 10,
+        marginVertical: 10,
+
+        flex: 1,
+
+
+        resizeMode: 'cover',
+        borderRadius: 30,
+        overflow: 'hidden',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+    title: {
+
+    },
     container: {
         flex: 1,
         justifyContent: 'center',
