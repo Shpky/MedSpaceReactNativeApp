@@ -5,5 +5,6 @@ interface PatientInterface {
     actualUser: Boolean,
     earliesttime: number,
     latesttime: number,
-    calendar?: calendar,
+    calendar?: Wcalendar,
+    
 }

@@ -18,7 +18,7 @@ type IdNewPrescriptionProps = {
  */
 export default function IdNewPrescriptions({ prescription, onChange }: IdNewPrescriptionProps) {
     const [prescriptionState, setPrescription] = useState(prescription); // Todo: j'aimerais bien retirer ça c'est simple mais c'est long
-    console.log('prescription :>> ', prescription);
+    //console.log('prescription :>> ', prescription);
     useEffect(() => {
         onChange?.(prescriptionState)
     }, [prescriptionState])
