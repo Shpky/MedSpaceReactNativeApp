@@ -20,8 +20,8 @@ export default function Password({ onConfirm }: PasswordProps) {
         newPwd: "",
         confirmNewPwd: "",
     })
-    const [checkPassword, isPassword, setPassword] = usePassword()
-    const [pwdIsEnable, setPwdIsEnable] = useState<boolean>(!!isPassword())
+    const { checkPassword, setPassword } = usePassword()
+    const [pwdIsEnable, setPwdIsEnable] = useState<boolean>(!checkPassword(null))
 
     const validateButtonHandler = async () => {
         if (!checkPassword(passwordInput.oldPwd)) return;
@@ -29,7 +29,7 @@ export default function Password({ onConfirm }: PasswordProps) {
             if (passwordInput.newPwd !== passwordInput.confirmNewPwd) return;
             setPassword(passwordInput.newPwd)
         } else {
-            setPassword(undefined)
+            setPassword(null)
         }
 
         while (!checkPassword(passwordInput.newPwd)) {
@@ -40,7 +40,7 @@ export default function Password({ onConfirm }: PasswordProps) {
 
     return <ScrollView>
         <Text>Modifier le mot de passe</Text>
-        {checkPassword(undefined) ||
+        {checkPassword(null) ||
             <>
                 <Text>Ancien mot de passe</Text>
                 <PasswordInput onChangeText={(text) => setPasswordInput({ ...passwordInput, oldPwd: text })} />

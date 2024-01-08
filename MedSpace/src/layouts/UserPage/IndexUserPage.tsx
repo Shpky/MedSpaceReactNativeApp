@@ -1,5 +1,5 @@
 import * as React from 'react';
-import RNPickerSelect from 'react-native-picker-select';
+// import RNPickerSelect from 'react-native-picker-select';
 import {
     View,
     Text,
@@ -47,7 +47,7 @@ const UserPageIndex = ({ navigation }: UserIndexProps) => {
                 <Text style={styles.smallfontJomhuriaRegular}>
                     Sélectionnez un profil
                 </Text>
-                <RNPickerSelect
+                {/* <RNPickerSelect
                     style={{
                         placeholder: {
                             color: 'white',
@@ -58,7 +58,7 @@ const UserPageIndex = ({ navigation }: UserIndexProps) => {
                     onValueChange={handleChangeProfile}
                     items={getPickerItems()}
                     placeholder={getPickerPlaceholder()}
-                />
+                /> */}
             </View>
         );
     };

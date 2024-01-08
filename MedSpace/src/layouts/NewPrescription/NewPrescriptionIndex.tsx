@@ -1,4 +1,4 @@
-import { Button, TextInput, Text, View, ScrollView } from 'react-native';
+import { Button, TextInput, Text, ScrollView } from 'react-native';
 import MedicineComponent from '@layouts/NewPrescription/Medicine/MedicineIndex';
 import Title from '@components/TitleBubble';
 import Container from '@components/form/Container/ContainerIndex';

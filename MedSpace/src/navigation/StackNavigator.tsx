@@ -14,10 +14,14 @@ import { RootStackParamList } from './RootStackParamList';
 import CalendarIndex from '@layouts/Calendar/CalendarIndex';
 import LoginIndex from '@layouts/Login/LoginIndex';
 import ProfilIndex from '@layouts/Profil/ProfilIndex';
+import usePassword from '@hooks/usePassword';
+import LoadingIndex from '@layouts/Loading/LoadingIndex';
 
 /** Permet de gérer la navigation entre les pages */
 export default function StackNavigator() {
-
+    const { checkPassword } = usePassword();
+    const withLogin = !checkPassword(null);
+    console.log('withLogin :>> ', withLogin);
     const Stack = createNativeStackNavigator<RootStackParamList>();
 
     const MedSpaceWhiteTheme = {
@@ -48,7 +52,8 @@ export default function StackNavigator() {
                 </>,
                 animation: 'slide_from_right',
             }}>
-            <Stack.Screen name="Login" component={LoginIndex} />
+            <Stack.Screen name="Loading" component={LoadingIndex} />
+            {withLogin && <Stack.Screen name="Login" component={LoginIndex} />}
             <Stack.Screen name="Home" component={HomePageBody} />
             <Stack.Screen name="Treatment" component={TreatmentContainer} />
             <Stack.Screen name="NewPrescription" component={NewPrescription} />
