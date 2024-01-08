@@ -1,21 +1,40 @@
 import React from 'react';
-import { View, Text, ImageBackground, StyleSheet, ScrollView, FlatList } from 'react-native';
+import { View, Text, ImageBackground, StyleSheet, ScrollView, FlatList, Pressable } from 'react-native';
 import useActualPatient from '@hooks/useActualPatient';
 import Title from '@components/TitleBubble'
-
-const IndexReport = () => {
+import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '@navigation/RootStackParamList';
+const IndexReport = ({ navigation }: { navigation: NavigationProp<RootStackParamList> }) => {
     const [actualPatient] = useActualPatient();
     if (!actualPatient) return null;
 
-    const RenderItem = ({ item }: { item: PrescriptionInterface }) => {
+    const navigateHandler = (prescription: PrescriptionInterface) => {
+
+        navigation.navigate('Email', { prescription: prescription })
+    }
+
+
+    const RenderMedicine = ({ item }: { item: MedicineInterface }) => {
         return (
+            <Text style={styles.textCW}>{item.name}</Text>
+        )
+    }
+
+    const RenderPrescription = ({ item }: { item: PrescriptionInterface }) => {
+        return (<Pressable onPress={() => navigateHandler(item)}>
             <ImageBackground
                 source={require('./img/traitement.png')}
                 style={styles.treatmentcontainer}
             >
-                <Text>{item.title}</Text>
-                <Text>{item.medicines.map((m) => m.name).join(', ')}</Text>
-            </ImageBackground>
+                <Text style={styles.title}>{item.title}</Text>
+                <FlatList
+                    data={item.medicines}
+                    renderItem={({ item }) => <RenderMedicine item={item} />}
+                >
+
+                </FlatList>
+                {/* <Text style={styles.textCW}>{item.medicines.map((m) => m.name).join(', ')}</Text> */}
+            </ImageBackground></Pressable>
         )
     }
 
@@ -34,7 +53,7 @@ const IndexReport = () => {
                             Sélectionez un traitement
                         </Title>}
                     data={actualPatient?.prescriptions}
-                    renderItem={({ item }) => <RenderItem item={item} />}
+                    renderItem={({ item }) => <RenderPrescription item={item} />}
                 />)
         }
 
@@ -43,25 +62,31 @@ const IndexReport = () => {
 
 
     return (
-        <View style={styles.container}>
 
-            <Text>Contenu de la vue</Text>
+        <View style={styles.container}>
             <Treatment></Treatment>
         </View >
+
     );
 };
 
 const styles = StyleSheet.create({
     treatmentcontainer: {
         padding: 10,
+
         marginVertical: 10,
-
         flex: 1,
+        flexDirection: 'column',
 
-
+        //Gestion bg
+        borderRadius: 15,
         resizeMode: 'cover',
-        borderRadius: 30,
         overflow: 'hidden',
+        justifyContent: "center",
+        alignContent: "center",
+        alignItem: "center",
+
+        //shadow
         shadowOffset: {
             width: 0,
             height: 2,
@@ -69,14 +94,34 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
+        //Alignement contenue
+
+
+    },
+    fixtitle: {
+        padding: 5
     },
     title: {
+
+        fontFamily: 'Jomhuria-Regular',
+        fontSize: 30,
+        color: 'white',
+        marginTop: -10,
+        marginBottom: -10,
+
+
+    },
+    textCW: {
+        marginRight: 10,
+        color: 'white',
+        alignSelf: "flex-start",
+        textDecorationLine: 'underline',
 
     },
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+
+        margin: "5%"
     },
     backgroundImage: {
         flex: 1,

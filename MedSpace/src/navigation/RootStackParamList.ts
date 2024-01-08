@@ -9,4 +9,5 @@ export type RootStackParamList = {
     Calendar: undefined;
     Login: undefined;
     Profil: undefined;
+    Email: { prescription: PrescriptionInterface };
 };

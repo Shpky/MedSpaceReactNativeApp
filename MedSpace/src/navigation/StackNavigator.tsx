@@ -17,6 +17,7 @@ import ProfilIndex from '@layouts/Profil/ProfilIndex';
 import usePassword from '@hooks/usePassword';
 import LoadingIndex from '@layouts/Loading/LoadingIndex';
 import RepportPage from '@layouts/Report/ReportIndex';
+import Email from '@layouts/Email/Mail';
 /** Permet de gérer la navigation entre les pages */
 export default function StackNavigator() {
     const { checkPassword } = usePassword();
@@ -63,6 +64,7 @@ export default function StackNavigator() {
             <Stack.Screen name="Rapport" component={RepportPage} />
             <Stack.Screen name="Calendar" component={CalendarIndex} />
             <Stack.Screen name="Profil" component={ProfilIndex} />
+            <Stack.Screen name="Email" component={Email} />
         </Stack.Navigator >
     </NavigationContainer >;
 };

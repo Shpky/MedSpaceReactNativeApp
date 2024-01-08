@@ -373,8 +373,6 @@ const styles = StyleSheet.create({
         marginBottom: -20,
     },
     buttonGREEN: {
-
-
         paddingRight: 25,
         paddingLeft: 25,
         marginBottom: 15,
