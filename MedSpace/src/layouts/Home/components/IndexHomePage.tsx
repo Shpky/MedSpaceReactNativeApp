@@ -17,12 +17,13 @@ const HomePageBody = () => {
     };
     const navigateToReport = () => {
         //@ts-ignore
-        navigation.navigate('Repport');
+        navigation.navigate('Rapport');
     };
     const navigateToCalendar = () => {
         //@ts-ignore
         navigation.navigate('Calendar');
     }
+
     return (
 
         <ScrollView showsVerticalScrollIndicator={false} style={styles.body}>

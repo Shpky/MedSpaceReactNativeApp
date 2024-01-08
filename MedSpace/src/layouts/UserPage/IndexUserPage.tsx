@@ -1,5 +1,5 @@
 import * as React from 'react';
-// import RNPickerSelect from 'react-native-picker-select';
+import RNPickerSelect from 'react-native-picker-select';
 import {
     View,
     Text,
@@ -47,7 +47,7 @@ const UserPageIndex = ({ navigation }: UserIndexProps) => {
                 <Text style={styles.smallfontJomhuriaRegular}>
                     Sélectionnez un profil
                 </Text>
-                {/* <RNPickerSelect
+                <RNPickerSelect
                     style={{
                         placeholder: {
                             color: 'white',
@@ -58,7 +58,7 @@ const UserPageIndex = ({ navigation }: UserIndexProps) => {
                     onValueChange={handleChangeProfile}
                     items={getPickerItems()}
                     placeholder={getPickerPlaceholder()}
-                /> */}
+                />
             </View>
         );
     };
@@ -281,7 +281,7 @@ const UserPageIndex = ({ navigation }: UserIndexProps) => {
             </View>
         );
     };
-    
+
     const reloadPage = () => {
         navigation.goBack();
         navigation.navigate("UserPage");
@@ -290,7 +290,7 @@ const UserPageIndex = ({ navigation }: UserIndexProps) => {
         <ScrollView style={styles.body}>
             <View style={{ width: '100%' }}>
                 <ImageBackground
-                    source={require('./img/picker.png')}  
+                    source={require('./img/picker.png')}
                     style={[styles.backgroundImage, { marginTop: 20, }, styles.shadow]}
                 >
                     <ProfilePicker />
@@ -310,7 +310,7 @@ const UserPageIndex = ({ navigation }: UserIndexProps) => {
                             <Userinfo />
                             <Statistique />
                             <ControleButton />
-                            <Password onConfirm={reloadPage}/>
+                            <Password onConfirm={reloadPage} />
 
                         </View>
 
@@ -337,7 +337,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         resizeMode: 'cover',
-        borderRadius: 30, 
+        borderRadius: 30,
         overflow: 'hidden',
         shadowOffset: {
             width: 0,

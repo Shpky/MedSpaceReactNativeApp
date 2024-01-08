@@ -8,7 +8,7 @@ import TreatmentContainer from '@layouts/Treatment/TreatmentIndexPage';
 import HomePageBody from '@layouts/Home/components/IndexHomePage';
 import NewPrescription from '@layouts/NewPrescription/NewPrescriptionIndex';
 import UserPageIndex from '@layouts/UserPage/IndexUserPage';
-import IndexReport from '@layouts/Report/testforCSV';
+
 import Prescription from '@layouts/Prescription/PrescriptionIndex';
 import { RootStackParamList } from './RootStackParamList';
 import CalendarIndex from '@layouts/Calendar/CalendarIndex';
@@ -16,7 +16,7 @@ import LoginIndex from '@layouts/Login/LoginIndex';
 import ProfilIndex from '@layouts/Profil/ProfilIndex';
 import usePassword from '@hooks/usePassword';
 import LoadingIndex from '@layouts/Loading/LoadingIndex';
-
+import RepportPage from '@layouts/Report/ReportIndex';
 /** Permet de gérer la navigation entre les pages */
 export default function StackNavigator() {
     const { checkPassword } = usePassword();
@@ -53,14 +53,14 @@ export default function StackNavigator() {
                 </>,
                 animation: 'slide_from_right',
             }}>
-            <Stack.Screen name="Loading" component={LoadingIndex} />
+            {/* <Stack.Screen name="Loading" component={LoadingIndex} /> */}
             {withLogin && <Stack.Screen name="Login" component={LoginIndex} />}
             <Stack.Screen name="Home" component={HomePageBody} />
             <Stack.Screen name="Treatment" component={TreatmentContainer} />
             <Stack.Screen name="NewPrescription" component={NewPrescription} />
             <Stack.Screen name="UserPage" component={UserPageIndex} />
-            <Stack.Screen name="RepportPage" component={IndexReport} />
             <Stack.Screen name="Prescription" component={Prescription} />
+            <Stack.Screen name="Rapport" component={RepportPage} />
             <Stack.Screen name="Calendar" component={CalendarIndex} />
             <Stack.Screen name="Profil" component={ProfilIndex} />
         </Stack.Navigator >
