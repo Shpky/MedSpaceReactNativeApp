@@ -1,6 +1,14 @@
+/*
 import {MongoClient} from "mongodb";
 import sqlite3 from "sqlite3";
-import {MongoDb} from "./mongoDb.mjs";
+import {MongoDb} from "./mongoDb.ts";
+
+const db = new sqlite3.Database("<PathToDatabaseFile>")
+const sql = "<YourSqlRequest>"
+db.all(sql, (err, rows) => {
+    //DO SOMETHING
+})
+db.close()
 async function testMDB() {
     const uri = "mongodb://167.71.43.120:27016/";
     const client = new MongoClient(uri);
@@ -31,3 +39,5 @@ function test() {
 await MongoDb.RefreshData();
 //testSqlite();
 //test();
+
+ */

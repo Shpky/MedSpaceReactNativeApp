@@ -5,6 +5,7 @@ CREATE TABLE medicine (cis INT PRIMARY KEY, name TEXT, form TEXT)
 CREATE TABLE admin_route (id INT PRIMARY KEY, cis INT, route TEXT, FOREIGN KEY (cis) REFERENCES medicine)
 CREATE TABLE owner (id INT PRIMARY KEY, cis INT, company TEXT, FOREIGN KEY (cis) REFERENCES medicine)
  */
+/*
 export const SqliteDb = {
     InsertMed(db, cis, name, form) {
         name = name.split(",")[0]
@@ -25,3 +26,4 @@ export const SqliteDb = {
         db.run(sql)
     }
 }
+ */
