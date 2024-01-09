@@ -8,14 +8,15 @@ import TreatmentContainer from '@layouts/Treatment/TreatmentIndexPage';
 import HomePageBody from '@layouts/Home/components/IndexHomePage';
 import NewPrescription from '@layouts/NewPrescription/NewPrescriptionIndex';
 import UserPageIndex from '@layouts/UserPage/IndexUserPage';
-import IndexReport from '@layouts/Report/testforCSV';
+
 import Prescription from '@layouts/Prescription/PrescriptionIndex';
 import { RootStackParamList } from './RootStackParamList';
 import CalendarIndex from '@layouts/Calendar/CalendarIndex';
 import LoginIndex from '@layouts/Login/LoginIndex';
 import ProfilIndex from '@layouts/Profil/ProfilIndex';
 import LoadingIndex from '@layouts/Loading/LoadingIndex';
-
+import RepportPage from '@layouts/Report/ReportIndex';
+import Email from '@layouts/Email/Mail';
 /** Permet de gérer la navigation entre les pages */
 export default function StackNavigator() {
     const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -50,11 +51,11 @@ export default function StackNavigator() {
             <Stack.Screen name="Treatment" component={TreatmentContainer} />
             <Stack.Screen name="NewPrescription" component={NewPrescription} />
             <Stack.Screen name="UserPage" component={UserPageIndex} />
-            <Stack.Screen name="RepportPage" component={IndexReport} />
             <Stack.Screen name="Prescription" component={Prescription} />
+            <Stack.Screen name="Rapport" component={RepportPage} />
             <Stack.Screen name="Calendar" component={CalendarIndex} />
             <Stack.Screen name="Profil" component={ProfilIndex} />
-
+            <Stack.Screen name="Email" component={Email} />
         </Stack.Navigator >
     </NavigationContainer >;
 };

@@ -281,7 +281,7 @@ const UserPageIndex = ({ navigation }: UserIndexProps) => {
             </View>
         );
     };
-    
+
     const reloadPage = () => {
         navigation.goBack();
         navigation.navigate("UserPage");
@@ -290,7 +290,7 @@ const UserPageIndex = ({ navigation }: UserIndexProps) => {
         <ScrollView style={styles.body}>
             <View style={{ width: '100%' }}>
                 <ImageBackground
-                    source={require('./img/picker.png')}  
+                    source={require('./img/picker.png')}
                     style={[styles.backgroundImage, { marginTop: 20, }, styles.shadow]}
                 >
                     <ProfilePicker />
@@ -310,8 +310,7 @@ const UserPageIndex = ({ navigation }: UserIndexProps) => {
                             <Userinfo />
                             <Statistique />
                             <ControleButton />
-                            
-
+                        
                         </View>
 
                     </ImageBackground>
@@ -338,7 +337,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         resizeMode: 'cover',
-        borderRadius: 30, 
+        borderRadius: 30,
         overflow: 'hidden',
         shadowOffset: {
             width: 0,
@@ -374,8 +373,6 @@ const styles = StyleSheet.create({
         marginBottom: -20,
     },
     buttonGREEN: {
-
-
         paddingRight: 25,
         paddingLeft: 25,
         marginBottom: 15,

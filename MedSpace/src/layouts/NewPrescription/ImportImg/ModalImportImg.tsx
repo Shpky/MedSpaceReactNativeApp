@@ -3,7 +3,8 @@ import { Alert, Modal, StyleSheet, Text, Pressable, View, Image, Button } from '
 import { launchCamera, launchImageLibrary, CameraOptions, ImageLibraryOptions } from 'react-native-image-picker';
 import TextRecognition, { TextRecognitionResult } from '@react-native-ml-kit/text-recognition';
 import DetectMedicineinsentence from '@layouts/NewPrescription/ImportImg/MedicineRecognitionWE';
-
+import { getDBConnection } from '@features/sqlDataManager';
+import {enablePromise} from "react-native-sqlite-storage";
 const ModalImgPicker = ({ setprescription }: { setprescription: Dispatch<SetStateAction<PrescriptionInterface>> }) => {
     const [image, setImage] = useState<string | null>(null);
     const [modalVisible, setModalVisible] = useState(false);
@@ -13,7 +14,19 @@ const ModalImgPicker = ({ setprescription }: { setprescription: Dispatch<SetStat
         console.log('Recognized text:', result.text);
         console.log(typeof (result.text));
 
-
+        enablePromise(true)
+        console.log("Hey")
+        const db= await getDBConnection()
+        console.log("DB : ", db)
+        const ress= await db.executeSql("SELECT * from owner where id < 5;").catch(err => console.log(err))
+        /*
+        ress.forEach(res => {
+            console.log("Length : ", res.rows.length)
+            for (let index = 0; index < res.rows.length; index++) {
+                console.log("Data : ", res.rows.item(index))
+            }
+        });
+         */
 
         /*for (let block of result.blocks) {
             console.log('Block text:', block.text);

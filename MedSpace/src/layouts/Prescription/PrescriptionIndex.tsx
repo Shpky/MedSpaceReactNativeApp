@@ -5,7 +5,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Medicine from "./Medicine";
 import dataManager from "@features/dataManager";
 import Toggle from "./Toggle";
-
+import DELTreamentCalculator from "@layouts/Calendar/treatmentDelCalculator";
 type PrescriptionIndexProps = NativeStackScreenProps<RootStackParamList, 'Prescription'>
 
 export default function PrescriptionIndex({ navigation, route }: PrescriptionIndexProps) {
@@ -28,7 +28,7 @@ export default function PrescriptionIndex({ navigation, route }: PrescriptionInd
                 <Text>
                     Activer toutes les notifications:
                 </Text>
-                <Toggle onToggle={()=> {}}></Toggle>
+                <Toggle onToggle={() => { }}></Toggle>
             </View>
             {
                 prescription.medicines.map((medicine, index) =>
@@ -42,12 +42,16 @@ export default function PrescriptionIndex({ navigation, route }: PrescriptionInd
             navigation.navigate('NewPrescription', { prescriptionUpdate: prescription })
         }} />
         <Button title="Supprimer" onPress={async () => {
+            let calendar: Wcalendar = await DELTreamentCalculator(prescription)
             await dataManager.setSaveData((oldData) => ({
                 ...oldData,
                 patients: oldData.patients.map((patient) => patient.actualUser ?
+
                     {
                         ...patient,
-                        prescriptions: patient.prescriptions.filter((p) => p.title !== prescription.title)
+                        prescriptions: patient.prescriptions.filter((p) => p.title !== prescription.title),
+                        calendar: calendar
+
                     }
                     : patient)
             }))
