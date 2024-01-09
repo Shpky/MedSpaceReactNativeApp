@@ -15,7 +15,7 @@ export default function PrescriptionIndex({ navigation, route }: PrescriptionInd
 
     if (!patient) return (console.log("MAIL:>>pas de patient"), null)
     if (!prescription) {
-        console.log("MAIL:>>pas de de prescription"), null
+        console.log("MAIL:>>pas de de prescription")
         navigation.goBack()
         return null
     }
