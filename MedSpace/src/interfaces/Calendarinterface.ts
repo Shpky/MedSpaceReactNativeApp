@@ -1,8 +1,7 @@
 interface WeekData {
-    [date: string]: priseInterface[];
+    [date: string]: priseInterface[]; // date => date.toIsoString()
 }
 interface Wcalendar {
     [Wnumber: string]: WeekData;
 }
 
-type calendar = { date: Date, prise: priseInterface[] }[]

@@ -1,6 +1,4 @@
-import { useState, useEffect } from 'react';
 import dataManager from '@features/dataManager';
-
 
 
 const TreamentCalculator = async (Treatment: PrescriptionInterface): Promise<Wcalendar> => {
