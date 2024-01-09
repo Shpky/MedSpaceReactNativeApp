@@ -74,4 +74,8 @@ export default StyleSheet.create({
         color: "#fff",
         textAlign: "center",
     },
+    confirmButton: {
+        width: "90%",
+        marginBottom: 40,
+    }
 });

@@ -23,6 +23,7 @@ export default function SelectDate({ date, setDate, customText }: SelectDateProp
     const onChangeDateHandler = (event: DateTimePickerEvent) => {
         const newDate = event.nativeEvent.timestamp;
         if (newDate) setDate(new Date(newDate));
+        setShow(false);
     }
     const text = customText || "Date de l'ordonnance";
     //console.log('date :>> ', date);

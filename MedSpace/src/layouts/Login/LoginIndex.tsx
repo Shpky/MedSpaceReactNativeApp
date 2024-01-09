@@ -2,7 +2,6 @@ import Title from "@components/TitleBubble"
 import Debug from "@components/Debug"
 import { Button, Text, ScrollView, StyleSheet } from "react-native"
 import usePassword from "@hooks/usePassword"
-import useSave from "@hooks/useSave"
 import { useState } from "react"
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from "@navigation/RootStackParamList";
@@ -17,8 +16,9 @@ type LoginIndexProps = NativeStackScreenProps<RootStackParamList, 'Login'>
  */
 export default function LoginIndex({ navigation }: LoginIndexProps) {
     const [passwordInput, setPasswordInput] = useState("")
-    const { checkPassword } = usePassword()
-    console.log("testttttttttttttt")
+    const { checkPassword, setPassword } = usePassword()
+
+
     const validateButtonHandler = () => {
         if (!checkPassword(passwordInput)) return null
         navigation.reset({
@@ -30,6 +30,7 @@ export default function LoginIndex({ navigation }: LoginIndexProps) {
     return <ScrollView>
         <Debug>
             <Button title={"checkPassword"} onPress={() => console.log(checkPassword(passwordInput))} />
+            <Button title={"delete"} onPress={() => setPassword(null)} />
         </Debug>
         <Title>Déverrouillez l'application</Title>
         <Container>

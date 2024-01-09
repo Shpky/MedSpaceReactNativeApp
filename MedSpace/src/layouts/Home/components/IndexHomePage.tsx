@@ -95,14 +95,9 @@ const styles = StyleSheet.create({
 
         backgroundColor: 'red',
         height: 200,
-
-
         borderRadius: 30,
-
-
-        marginTop: 20,
-
-
+        marginBottom: 20,
+        marginTop: 10,
     },
     backgroundImage: {
         flex: 1,
@@ -114,10 +109,8 @@ const styles = StyleSheet.create({
     },
     body: {
         flex: 1,
-
         marginLeft: 20,
         marginRight: 20,
-
 
     },
     fontJomhuria: {

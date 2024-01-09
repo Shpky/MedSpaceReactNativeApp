@@ -5,9 +5,9 @@ import useActualPatient from '@hooks/useActualPatient';
 
 
 const HeaderIndex = ({ navigation, route }: NativeStackHeaderProps) => {
-    
+
     const [actualPatient] = useActualPatient([route]);
-    const isLogin = !["Login", "Profil"].includes(route.name);
+    const isLogin = !["Login", "Profil", "Loading"].includes(route.name);
     const navigateToHome = () => {
         isLogin && navigation.navigate("Home");
     };
@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     logo: {
         width: 35,
         height: 35,
+        borderRadius: 100,
         resizeMode: 'contain',
     },
     noImage: {

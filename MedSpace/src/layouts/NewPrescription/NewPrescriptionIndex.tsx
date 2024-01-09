@@ -11,6 +11,7 @@ import Id from './IdNewPrescription/IdNewPrescriptionsIndex';
 import useNewPrescription from '@hooks/useNewPrescription';
 import type { RootStackParamList } from '@navigation/RootStackParamList';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import ConfirmXL from '@components/form/buttons/ConfirmXL';
 
 type NewPrescriptionIndexProps = NativeStackScreenProps<RootStackParamList, 'NewPrescription'>
 
@@ -86,9 +87,7 @@ export default function NewPrescriptionIndex({ navigation, route }: NewPrescript
             <Text style={style.textInput}>Notes de l'ordonnance</Text>
             <TextInput style={[style.input, style.full]} placeholder="Notes" placeholderTextColor={style.input.color} />
         </Container>
-        <Button title="Sauvegarder" onPress={() => {
-            applyNewPrescription().then(handleResetStack)
-        }} />
+        <ConfirmXL styleProp={style.confirmButton} onPress={()=> applyNewPrescription().then(handleResetStack)}>Sauvegarder</ConfirmXL>
     </ScrollView>
 
 } 

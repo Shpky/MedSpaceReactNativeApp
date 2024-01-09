@@ -14,13 +14,13 @@ export default StyleSheet.create({
     modal: {
         position: "absolute",
         backgroundColor: "rgba(128, 128, 128, 0.8)",
-        bottom: 30,
+        top: 30,
         right: 0,
-        // height: 200,
         width: "40%",
         flex: 1,
-        flexDirection: "column-reverse",
-        paddingBottom: 10,
+        flexDirection: "column",
+        paddingTop: 10,
+        zIndex: 1,
     },
     modalItems: {
         alignSelf: "center",

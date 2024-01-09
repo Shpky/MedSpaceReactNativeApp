@@ -17,7 +17,6 @@ const TreatmentContainer = ({ navigation }: { navigation: NavigationProp<RootSta
 
     const RenderItem = ({ item }: { item: PrescriptionInterface }) => {
         const navigateHandler = () => {
-            //console.log('item :>> ', item);
             navigation.navigate('Prescription', { prescription: item })
         }
         return (
@@ -49,37 +48,28 @@ const TreatmentContainer = ({ navigation }: { navigation: NavigationProp<RootSta
         );
     }
     return (
-
         <View style={styles.Body}>
             <Debug>
                 <Button title={"navigation stack"} onPress={() => console.log(navigation.getState())} />
             </Debug>
-            <View>
-
-                <FlatList
-                    ListHeaderComponent={() =>
-                        <Title>
-                            Sélectionez un traitement
-                        </Title>}
-                    data={patient?.prescriptions}
-                    renderItem={({ item }) => <RenderItem item={item} />}
-                />
-
                 <View style={styles.container}>
-
+                    <FlatList
+                        ListHeaderComponent={() =>
+                            <Title>
+                                Sélectionez un traitement
+                            </Title>}
+                        data={patient?.prescriptions}
+                        renderItem={({ item }) => <RenderItem item={item} />}
+                    />
                 </View>
-            </View>
             <View style={styles.NewTreatment}>
 
                 <Pressable style={styles.buttonNewtreatment} onPress={navigateToNewPrescription}>
                     <FontAwesomeIcon icon={faPlus} color="white" size={50} />
                 </Pressable>
             </View>
-
         </View >
     )
-
-
 }
 
 
@@ -130,6 +120,7 @@ let styles = StyleSheet.create({
         height: 80,
         width: 80,
         borderRadius: 40,
+        elevation: 10,
 
     },
     HeaderInfoTraitment: {
@@ -168,7 +159,7 @@ let styles = StyleSheet.create({
 
     },
     Treatment: {
-        width: '90%',
+        width: '100%',
         height: 200,
         borderRadius: 30,
         paddingBottom: 0,

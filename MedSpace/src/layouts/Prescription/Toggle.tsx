@@ -12,7 +12,7 @@ export default function Toggle({ is=true, onToggle }: { is?: boolean, onToggle: 
 
     return <TouchableOpacity style={styles.button} onPress={toggleSwitch}>
         <View style={[styles.toggleSwitch, { backgroundColor: toggleState ? 'green' : 'red' }]} >
-            <Text style={[{ color: 'white' }]}>{toggleState ? 'ON' : 'OFF'}</Text>
+            <Text style={[{ color: 'white' }]}>{toggleState ? 'OUI' : 'NON'}</Text>
         </View>
     </TouchableOpacity>
 
