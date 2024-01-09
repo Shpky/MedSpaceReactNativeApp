@@ -12,9 +12,16 @@ export default function useNewPrescription(prescription?: PrescriptionInterface)
     [PrescriptionInterface, React.Dispatch<React.SetStateAction<PrescriptionInterface>>, () => Promise<void>] {
     const [newPrescription, setPrescription] = useState<PrescriptionInterface>(prescription || defaultPrescription)
     if (newPrescription.date === null) newPrescription.date = new Date()
+
     const apply = async () => {  // Ajoute la prescription à la liste des prescriptions du patient
         await TreamentCalculator(newPrescription).then(async (calendar) => {
-            console.log("duration", newPrescription.medicines.map(m => m.duration))
+            Object.keys(calendar).forEach((week) => Object.keys(calendar[week]).forEach((day) =>
+                calendar[week][day].forEach((prise) => {
+                    
+                })))
+            
+            
+            
             prescription ?
                 await dataManager.setSaveData((oldSave) => ({
                     ...oldSave,
