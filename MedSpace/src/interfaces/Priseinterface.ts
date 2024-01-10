@@ -4,5 +4,6 @@ type priseInterface = {
     dosage: number,
     dosageType: string,
     consome: boolean,
-    releatedTreatment: string
+    releatedTreatment: string,
+    haveNotif?: boolean,
 }

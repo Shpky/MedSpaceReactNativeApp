@@ -40,6 +40,10 @@ export default function StackNavigator() {
                             }
                         ))} />
                         <Button title='reset' onPress={() => dataManager.resetSaveData()} />
+                        <Button title="print calendar"
+                            onPress={() => dataManager.getSaveData().then((e) => console.log(e?.patients.find((p) => p.actualUser)?.calendar))} />
+                        <Button title="print actual Patient"
+                            onPress={() => dataManager.getSaveData().then((e) => console.log(e?.patients.find((p) => p.actualUser)))} />
                     </Debug>
                     <Header {...props} />
                 </>,

@@ -6,56 +6,68 @@ import Medicine from "./Medicine";
 import dataManager from "@features/dataManager";
 import Toggle from "./Toggle";
 import DELTreamentCalculator from "@layouts/Calendar/treatmentDelCalculator";
+import usePrescription from "@hooks/usePrescription";
+import { useEffect } from "react";
 type PrescriptionIndexProps = NativeStackScreenProps<RootStackParamList, 'Prescription'>
 
 export default function PrescriptionIndex({ navigation, route }: PrescriptionIndexProps) {
-    const { prescription } = route.params
-
-    if (!prescription) {
-        navigation.goBack()
-        return null
-    }
+    const { prescriptionName } = route.params
+    const prescription = usePrescription(prescriptionName)
+    var data: PrescriptionInterface | undefined
+    useEffect(() => {
+        if (prescription.isLoad) {
+            const data = prescription.prescription
+            if (data === null) {
+                navigation.goBack()
+            }
+        }
+    }, [prescription.isLoad])
 
     return <ScrollView>
         <Title>
-            {"Information " + prescription.title}
+            {"Information " + prescriptionName}
         </Title>
-        <View>
-            <Text>
-                Médicament{prescription.medicines.length > 1 && "s"} :
-            </Text>
-            <View>
+        {!(data === undefined)
+            ? <><View>
                 <Text>
-                    Activer toutes les notifications:
+                    Médicament{data.medicines.length > 1 && "s"} :
                 </Text>
-                <Toggle onToggle={() => { }}></Toggle>
+                <View>
+                    <Text>
+                        Activer toutes les notifications:
+                    </Text>
+                    <Toggle onToggle={() => { }}></Toggle>
+                </View>
+                {
+                    data.medicines.map((medicine, index) =>
+                        <Medicine key={index} medicine={medicine} onToggle={(isNotifOn) => {
+                            // todo
+                        }} />
+                    )
+                }
             </View>
-            {
-                prescription.medicines.map((medicine, index) =>
-                    <Medicine key={index} medicine={medicine} onToggle={(isNotifOn) => {
-                        // todo
-                    }} />
-                )
-            }
-        </View>
-        <Button title="Modifier" onPress={() => {
-            navigation.navigate('NewPrescription', { prescriptionUpdate: prescription })
-        }} />
-        <Button title="Supprimer" onPress={async () => {
-            let calendar: Wcalendar = await DELTreamentCalculator(prescription)
-            await dataManager.setSaveData((oldData) => ({
-                ...oldData,
-                patients: oldData.patients.map((patient) => patient.actualUser ?
-
-                    {
-                        ...patient,
-                        prescriptions: patient.prescriptions.filter((p) => p.title !== prescription.title),
-                        calendar: calendar
-
+                <Button title="Modifier" onPress={() => {
+                    navigation.navigate('NewPrescription', { prescriptionUpdate: data })
+                }} />
+                <Button title="Supprimer" onPress={async () => {
+                    if (data === undefined) {
+                        return
                     }
-                    : patient)
-            }))
-            navigation.reset({ index: 1, routes: [{ name: "Home" }, { name: "Treatment" }] })
-        }} />
+                    let calendar: Wcalendar = await DELTreamentCalculator(data)
+                    await dataManager.setSaveData((oldData) => ({
+                        ...oldData,
+                        patients: oldData.patients.map((patient) => patient.actualUser ?
+
+                            {
+                                ...patient,
+                                prescriptions: patient.prescriptions.filter((p) => p.title !== data?.title),
+                                calendar: calendar
+
+                            }
+                            : patient)
+                    }))
+                    navigation.reset({ index: 1, routes: [{ name: "Home" }, { name: "Treatment" }] })
+                }} /> </>
+            : <Text>Chargement...</Text>}
     </ScrollView>
 }

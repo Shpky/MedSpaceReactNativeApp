@@ -113,7 +113,7 @@ const UserPageIndex = ({ navigation }: UserIndexProps) => {
 
     const handleChangeearliesttime = (inputText: string) => {
         if (isNaN(+inputText)) return;
-        const time = inputText.length || 8;
+        const time = inputText.length ? +inputText : 8;
 
         setSave((old) => ({
             ...old,
@@ -129,7 +129,7 @@ const UserPageIndex = ({ navigation }: UserIndexProps) => {
 
     const handleChangelatesttime = (inputText: string) => {
         if (isNaN(+inputText)) return;
-        const time = inputText.length || 22;
+        const time = inputText.length ? +inputText : 22;
         setSave((old) => ({
             ...old,
             patients: save.patients.map((patient) =>
@@ -202,7 +202,7 @@ const UserPageIndex = ({ navigation }: UserIndexProps) => {
                     </Text>
                 </Pressable>
                 <Pressable style={styles.buttonRED} onPress={handlePressButtonDEL}>
-                    <Text style={styles.smallfontJomhuriaRegularnopading}>SUPPRIMER</Text>
+                    <Text style={styles.smallfontJomhuriaRegularnopading}>SUPPRIMER LE PROFIL</Text>
                 </Pressable>
             </View>
         );
@@ -310,7 +310,7 @@ const UserPageIndex = ({ navigation }: UserIndexProps) => {
                             <Userinfo />
                             <Statistique />
                             <ControleButton />
-                        
+
                         </View>
 
                     </ImageBackground>

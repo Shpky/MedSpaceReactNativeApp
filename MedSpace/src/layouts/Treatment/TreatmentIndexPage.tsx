@@ -17,7 +17,7 @@ const TreatmentContainer = ({ navigation }: { navigation: NavigationProp<RootSta
 
     const RenderItem = ({ item }: { item: PrescriptionInterface }) => {
         const navigateHandler = () => {
-            navigation.navigate('Prescription', { prescription: item })
+            navigation.navigate('Prescription', { prescriptionName: item.title })
         }
         return (
 
