@@ -17,16 +17,7 @@ const ModalImgPicker = ({ setprescription }: { setprescription: Dispatch<SetStat
         enablePromise(true)
         console.log("Hey")
         const db= await getDBConnection()
-        console.log("DB : ", db)
-        const ress= await db.executeSql("SELECT * from owner where id < 5;").catch(err => console.log(err))
-        /*
-        ress.forEach(res => {
-            console.log("Length : ", res.rows.length)
-            for (let index = 0; index < res.rows.length; index++) {
-                console.log("Data : ", res.rows.item(index))
-            }
-        });
-         */
+        const ress= await db.executeSql("SELECT * from owner where id < 5;")
 
         /*for (let block of result.blocks) {
             console.log('Block text:', block.text);
