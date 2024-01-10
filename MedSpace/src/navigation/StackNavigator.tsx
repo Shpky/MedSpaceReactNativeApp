@@ -33,7 +33,7 @@ export default function StackNavigator() {
         <Stack.Navigator
             screenOptions={{
                 header: (props) => <>
-                    <Debug>
+                    {/* <Debug>
                         <Button title="print datas" onPress={() => dataManager.getSaveData().then((e) => console.log(
                             {
                                 prescriptions: e?.patients.find((p) => p.actualUser)?.prescriptions.map((p) => ({ ...p.medicines.map((p) => p.name) }))
@@ -44,7 +44,7 @@ export default function StackNavigator() {
                             onPress={() => dataManager.getSaveData().then((e) => console.log(e?.patients.find((p) => p.actualUser)?.calendar))} />
                         <Button title="print actual Patient"
                             onPress={() => dataManager.getSaveData().then((e) => console.log(e?.patients.find((p) => p.actualUser)))} />
-                    </Debug>
+                    </Debug> */}
                     <Header {...props} />
                 </>,
                 animation: 'slide_from_right',
