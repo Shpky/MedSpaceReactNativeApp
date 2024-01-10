@@ -5,7 +5,7 @@ export type RootStackParamList = {
     NewPrescription: { prescriptionUpdate?: PrescriptionInterface } | undefined;
     UserPage: undefined;
     Rapport: undefined;
-    Prescription: { prescription: PrescriptionInterface };
+    Prescription: { prescriptionName: String };
     Calendar: undefined;
     Login: undefined;
     Profil: undefined;

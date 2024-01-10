@@ -1,7 +1,7 @@
 import defaultPrescription from '../data/defaultPrescription.json';
 import { useState } from "react";
 import dataManager from "@features/dataManager"
-import Calculator from '@layouts/Calendar/medecineCalculator';
+import setNotifications from '@features/notifications';
 import TreamentCalculator from '@layouts/Calendar/treatmentCalculator';
 /**
  * Custom hook qui permet de créer une nouvelle prescription
@@ -15,13 +15,9 @@ export default function useNewPrescription(prescription?: PrescriptionInterface)
 
     const apply = async () => {  // Ajoute la prescription à la liste des prescriptions du patient
         await TreamentCalculator(newPrescription).then(async (calendar) => {
-            Object.keys(calendar).forEach((week) => Object.keys(calendar[week]).forEach((day) =>
-                calendar[week][day].forEach((prise) => {
-                    
-                })))
-            
-            
-            
+
+
+
             prescription ?
                 await dataManager.setSaveData((oldSave) => ({
                     ...oldSave,
@@ -47,6 +43,7 @@ export default function useNewPrescription(prescription?: PrescriptionInterface)
                     )
                 })
                 )
+            setNotifications()
         })
 
     }
