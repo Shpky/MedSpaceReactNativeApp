@@ -39,8 +39,8 @@ CREATE TABLE admin_route (id INT PRIMARY KEY, cis INT, route TEXT, FOREIGN KEY (
 CREATE TABLE owner (id INT PRIMARY KEY, cis INT, company TEXT, FOREIGN KEY (cis) REFERENCES medicine)
 */
 export const getDBConnection = async () => {
-    return openDatabase({ name: "../database/database.sqlite3" },
-        (success) => {console.log("Database open successful")},
+    return openDatabase({ name: "database.sqlite3", createFromLocation : "~database.sqlite3"},
+        (db) => {console.log("Database open : ", db)},
         (err) => console.log("Database error will opening :\n", err));
 }
 
