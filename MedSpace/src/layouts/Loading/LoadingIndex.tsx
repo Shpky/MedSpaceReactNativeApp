@@ -17,7 +17,7 @@ export default function LoadingIndex({ navigation }: LoadingScreenNavigationProp
         checkPassword(null)
             ? navigation.reset({
                 index: 0,
-                routes: [{ name: 'Home' }],
+                routes: [{ name: 'Profil' }],
             })
             : navigation.reset({
                 index: 0,

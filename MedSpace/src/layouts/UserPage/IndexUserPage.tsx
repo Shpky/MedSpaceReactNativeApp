@@ -20,7 +20,7 @@ import useSave from '@hooks/useSave';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from "@navigation/RootStackParamList";
 import Password from './Password';
-
+import dataManager from '@features/dataManager';
 type UserIndexProps = NativeStackScreenProps<RootStackParamList, 'UserPage'>
 
 const UserPageIndex = ({ navigation }: UserIndexProps) => {
@@ -30,15 +30,18 @@ const UserPageIndex = ({ navigation }: UserIndexProps) => {
     const actualUser = save.patients.find((patient) => patient.actualUser == true);
 
     const handleChangeProfile = (value: string) => {
-        if (value !== actualUser?.name) {
-            setSave((old) => ({
-                ...old,
-                patients: save.patients.map((patient) =>
-                    ({ ...patient, actualUser: patient.name === value }))
-            } as SaveInterface))
-        }
-
-        navigation.reset({ index: 0, routes: [{ name: "Home" }] })
+        if (value === actualUser?.name) return;
+        dataManager.setSaveData((oldSave) => ({
+            ...oldSave,
+            patients: oldSave?.patients.map((p, _) =>
+                ({ ...p, actualUser: p.name === value })
+            ) || []
+        } as SaveInterface)).then(() => {
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Home' }],
+            });
+        })
     };
 
     const ProfilePicker = () => {

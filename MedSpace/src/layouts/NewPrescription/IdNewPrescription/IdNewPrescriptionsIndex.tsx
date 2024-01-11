@@ -4,10 +4,8 @@ import style from "../style";
 import DatePicker from "./SelectDate";
 import { useState, useEffect } from "react";
 import SelectDoctor from "./SelectDoctor";
+import { useNewPrescription } from "@hooks/useNewPrescription";
 
-type IdNewPrescriptionProps = {
-    prescription: PrescriptionInterface, onChange?: (newPrescription: PrescriptionInterface) => void
-}
 
 /**
  * Permet de modifier les informations d'identité de l'ordonnance
@@ -16,16 +14,13 @@ type IdNewPrescriptionProps = {
  * @param prescription prescription à modifier 
  * @param onChange callback appelé lorsqu'un champ est modifié
  */
-export default function IdNewPrescriptions({ prescription, onChange }: IdNewPrescriptionProps) {
-    const [prescriptionState, setPrescription] = useState(prescription); // Todo: j'aimerais bien retirer ça c'est simple mais c'est long
-    //console.log('prescription :>> ', prescription);
-    useEffect(() => {
-        onChange?.(prescriptionState)
-    }, [prescriptionState])
+export default function IdNewPrescriptions() {
+    const { prescription, setPrescription } = useNewPrescription();
+    
 
     return <Container>
         <Text style={style.textInput}>Nom du traitement</Text>
-        <TextInput style={[style.input, style.full]}
+        <TextInput style={[style.input, style.full, prescription.title.length <= 0 ? style.badInput : null]}
             placeholder="Nom du traitement" placeholderTextColor={style.input.color}
             onChange={(e) => setPrescription((oldP) => ({ ...oldP, title: e.nativeEvent.text }))}
         >{prescription.title}</TextInput>

@@ -10,11 +10,16 @@ export default StyleSheet.create({
     },
     input: {
         borderRadius: 4,
+        borderWidth: 1,
         backgroundColor: "#fff",
         paddingLeft: 9,
         color: "#000",
         minHeight: 50,
         textAlignVertical: "center",
+    },
+    badInput: {
+        borderColor: "#FF0000",
+        borderWidth: 3,
     },
     full: {
         width: "100%",

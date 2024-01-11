@@ -70,7 +70,7 @@ export default function PrescriptionIndex({ navigation, route }: PrescriptionInd
                             : patient)
                     }))
                     navigation.reset({ index: 1, routes: [{ name: "Home" }, { name: "Treatment" }] })
-                }} /> </>
+                }} /></>
             : <Text>Chargement...</Text>}
     </ScrollView>
 }
