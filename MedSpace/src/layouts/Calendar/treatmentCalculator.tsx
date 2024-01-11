@@ -4,7 +4,7 @@ import dataManager from '@features/dataManager';
 const TreamentCalculator = async (Treatment: PrescriptionInterface): Promise<Wcalendar> => {
     let patient: PatientInterface
     let wcalendar: Wcalendar = {};
-    console.log("treatment calculator")
+    console.log("debut treatment calculator")
     await dataManager.getSaveData().then((data) => {
         patient = data.patients.find(patient => patient.actualUser) as PatientInterface;
 
@@ -27,7 +27,7 @@ const TreamentCalculator = async (Treatment: PrescriptionInterface): Promise<Wca
         }
 
     })
-    //console.log(wcalendar)
+    console.log("calendar dans la fonction :>>", wcalendar)
     return wcalendar;
     function getISOWeekNumber(date: Date): number { return Math.ceil(((date.getTime() - new Date(date.getFullYear(), 0, 1).getTime()) / (24 * 60 * 60 * 1000) + 1) / 7) }
 

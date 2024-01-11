@@ -20,6 +20,8 @@ export function NewPrescriptionContextProvider({ prescription, children }: NewPr
 
     const apply = async () => {  // Ajoute la prescription à la liste des prescriptions du patient
         await TreamentCalculator(newPrescription).then(async (calendar) => {
+            // console.log("newPrescription", newPrescription)
+            // console.log("calendarCONTEXTS", calendar)
             prescription ?
                 await dataManager.setSaveData((oldSave) => ({
                     ...oldSave,

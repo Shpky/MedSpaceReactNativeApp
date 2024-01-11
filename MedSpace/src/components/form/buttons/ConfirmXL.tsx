@@ -40,8 +40,9 @@ const style = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        backgroundColor: "#76B36A",
         elevation: 10,
+        backgroundColor: "#76B36A",
+
     },
     button: {
         textAlign: 'center',

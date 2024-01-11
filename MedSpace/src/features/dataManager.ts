@@ -9,6 +9,7 @@ export default {
             if (newSave instanceof Function) {
                 const oldSave = await this.getSaveData();
                 newSave = newSave(oldSave);
+                newSave && console.log("newSave", newSave.patients.map((patient) => ({ ...patient, icone: null })))
                 RNSecureStorage.set('save', JSON.stringify(newSave),
                     { accessible: ACCESSIBLE.WHEN_UNLOCKED })
             } else {
