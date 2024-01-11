@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Pressable, FlatList, ImageBackground } from "react-native";
+import { Text, View, StyleSheet, Pressable, FlatList, ImageBackground, ScrollView } from "react-native";
 import { TouchableOpacity, } from 'react-native';
 import useSave from '@hooks/useSave';
 
@@ -30,7 +30,7 @@ const CalendarIndex = () => {
 
 
         const toggleSwitch = () => {
-            console.log("isOn", isOn)
+
             setIsOn((prevIsOn) => !prevIsOn);
         };
 
@@ -44,11 +44,48 @@ const CalendarIndex = () => {
             </View>
         );
     };
+    const MedicineConsumed = (week: string, day: string, medicine: priseInterface) => {
+        const tempo = calendar[week][day].findIndex((prise) => prise == medicine)
+        if (tempo != -1) {
+            calendar[week][day][tempo].consome = !calendar[week][day][tempo].consome
+        }
 
+        setSave((prevSave: SaveInterface | undefined) => {
+            if (!prevSave) return prevSave;
+            return {
+                ...prevSave,
+                patients: prevSave.patients.map((patient) => (patient.actualUser ? { ...patient, calendar: calendar } : patient)),
+            };
+        });
+
+
+    }
+    const OnOffButtonTaken = ({ is, onToggle }: { is: boolean, onToggle: () => void }) => {
+        //const [isTake, setIsTake] = useState(false);
+
+        const [isTake, setIsTake] = useState(is);
+        const toggleSwitchtake = () => {
+
+            setIsTake((isTake) => !isTake);
+
+            onToggle()
+
+        };
+
+        return (
+            <View style={styles.container}>
+
+                <TouchableOpacity style={styles.button} onPress={toggleSwitchtake}>
+
+                    <View style={[styles.toggleSwitchMED, { backgroundColor: isTake ? 'green' : 'red' }, { borderColor: isTake ? 'white' : "", borderWidth: isTake ? 1 : 0 }]} ><Text style={[{ color: 'white' }]}>{isTake ? 'MEDICAMENT PRIS' : 'VALIDER LA PRISE'}</Text></View>
+                </TouchableOpacity>
+            </View>
+        );
+    };
     const RenderMedicine = (date: string, weekData: priseInterface[]) => {
         let week = weekData.sort((a, b) => a.heure - b.heure);
-        let weekday = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']
-
+        const weekday = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']
+        const key = getISOWeekNumber(new Date(date)) + "/" + new Date(date).getFullYear()
 
         if (date == new Date().toISOString().split('T')[0]) {
             return (
@@ -64,16 +101,17 @@ const CalendarIndex = () => {
                             <ImageBackground key={innerIndex} style={[styles.medicineContainer, styles.backgroundImage]}
                                 source={require('./img/greenbg.png')}
                             >
-                                <Text style={[styles.medicine, { fontWeight: 'bold' }]}>{prise.heure + (prise.heure > 1 ? " heures" : " heure")} </Text>
-                                <Text style={styles.medicine}>{prise.nomMedoc}</Text>
+                                <Text style={[styles.medicine, { fontWeight: 'bold' }]}>{prise.heure === -1 && prise.dosage === -1 && prise.dosageType === "4267" ? "Pas de Médicament pour aujourd'hui" : prise.heure + (prise.heure > 1 ? " heures" : " heure")} </Text>
+                                <Text style={styles.medicine}>{prise.heure == -1 && prise.dosage == -1 && prise.dosageType == "4267" == true ? null : prise.nomMedoc}</Text>
                                 <View style={styles.rowContainer}>
-                                    <Text style={[styles.medicine, { marginRight: 5 }]}>{prise.dosage}</Text>
-                                    <Text style={styles.medicine}>{prise.dosageType}</Text>
+                                    <Text style={[styles.medicine, { marginRight: 5 }]}>{prise.heure == -1 && prise.dosage == -1 && prise.dosageType == "4267" == true ? null : prise.dosage}</Text>
+                                    <Text style={styles.medicine}>{prise.heure == -1 && prise.dosage == -1 && prise.dosageType == "4267" == true ? null : prise.dosageType}</Text>
                                 </View>
+                                <OnOffButtonTaken is={prise.consome} onToggle={() => MedicineConsumed(key, date, prise)} />
                             </ImageBackground>
                         ))}
                     </View>
-                    <View style={styles.horizontalLine} />
+
                 </View>
             );
         } else {
@@ -88,16 +126,17 @@ const CalendarIndex = () => {
                             <ImageBackground key={innerIndex} style={[styles.medicineContainer, styles.backgroundImage]}
                                 source={require('./img/greybg.png')}
                             >
-                                <Text style={[styles.medicine, { fontWeight: 'bold' }]}>{prise.heure + (prise.heure > 1 ? " heures" : " heure")} </Text>
-                                <Text style={styles.medicine}>{prise.nomMedoc}</Text>
+                                <Text style={[styles.medicine, { fontWeight: 'bold' }]}>{prise.heure === -1 && prise.dosage === -1 && prise.dosageType === "4267" ? "Pas de Médicament pour aujourd'hui" : prise.heure + (prise.heure > 1 ? " heures" : " heure")} </Text>
+                                <Text style={styles.medicine}>{prise.heure == -1 && prise.dosage == -1 && prise.dosageType == "4267" == true ? null : prise.nomMedoc}</Text>
                                 <View style={styles.rowContainer}>
-                                    <Text style={[styles.medicine, { marginRight: 5 }]}>{prise.dosage}</Text>
-                                    <Text style={styles.medicine}>{prise.dosageType}</Text>
+                                    <Text style={[styles.medicine, { marginRight: 5 }]}>{prise.heure == -1 && prise.dosage == -1 && prise.dosageType == "4267" == true ? null : prise.dosage}</Text>
+                                    <Text style={styles.medicine}>{prise.heure == -1 && prise.dosage == -1 && prise.dosageType == "4267" == true ? null : prise.dosageType}</Text>
                                 </View>
+                                {prise.heure === -1 && prise.dosage === -1 && prise.dosageType === "4267" == true ? null : <OnOffButtonTaken is={prise.consome} onToggle={() => MedicineConsumed(key, date, prise)} />}
                             </ImageBackground>
                         ))}
                     </View>
-                    <View style={styles.horizontalLine} />
+
                 </View>
             );
         }
@@ -116,17 +155,19 @@ const CalendarIndex = () => {
     }
     const dayrendering = (date: string, day: priseInterface) => {
         let bg = date == new Date().toISOString().split('T')[0] ? require('./img/greenbg.png') : require('./img/greybg.png')
+        const key = getISOWeekNumber(new Date(date)) + "/" + new Date(date).getFullYear()
         return (
             <View key={startDate.getTime()} style={styles.dayContainerTOBD}>
                 <ImageBackground style={[styles.medicineContainerBD, styles.backgroundImage]}
                     source={bg}
                 >
-                    <Text style={[styles.medicine, { fontWeight: 'bold' }]} >{day.heure + (day.heure > 1 ? " heures" : " heure")} </Text>
-                    <Text style={styles.medicine} >{day.nomMedoc}</Text>
+                    <Text style={[styles.medicine, { fontWeight: 'bold' }]}>{day.heure === -1 && day.dosage === -1 && day.dosageType === "4267" ? "Pas de Médicament pour aujourd'hui" : day.heure + (day.heure > 1 ? " heures" : " heure")} </Text>
+                    <Text style={styles.medicine}>{day.heure == -1 && day.dosage == -1 && day.dosageType == "4267" == true ? null : day.nomMedoc}</Text>
                     <View style={styles.rowContainer}>
-                        <Text style={[styles.medicine, { marginRight: 5 }]}>{day.dosage}</Text>
-                        <Text style={styles.medicine}>{day.dosageType}</Text>
+                        <Text style={[styles.medicine, { marginRight: 5 }]}>{day.heure == -1 && day.dosage == -1 && day.dosageType == "4267" == true ? null : day.dosage}</Text>
+                        <Text style={styles.medicine}>{day.heure == -1 && day.dosage == -1 && day.dosageType == "4267" == true ? null : day.dosageType}</Text>
                     </View>
+                    {day.heure === -1 && day.dosage === -1 && day.dosageType === "4267" == true ? null : <OnOffButtonTaken is={day.consome} onToggle={() => MedicineConsumed(key, date, day)} />}
                 </ImageBackground>
 
 
@@ -134,11 +175,12 @@ const CalendarIndex = () => {
             </View >)
 
     }
-    const calendarComponent = () => {
+    const CalendarComponent = () => {
         if (isOn) {
 
             let data: Wcalendar = {}
             let week: WeekData = {}
+            //Si pas de calendar généré
             if (!calendar) {
                 let firstday = new Date(startDate.getTime() - startDate.getDay() * jour)
 
@@ -146,57 +188,58 @@ const CalendarIndex = () => {
 
                 for (let i = 0; i < 7; i++) {
 
-                    data[weekNumber + "/" + startDate.getFullYear()][new Date(firstday.getTime() + i * jour).toISOString().split('T')[0]] = [{ nomMedoc: "Pas de médicament aujourd'huit", heure: 0, dosage: 0, dosageType: "", consome: false, releatedTreatment: "" }]
-
+                    data[weekNumber + "/" + startDate.getFullYear()][new Date(firstday.getTime() + i * jour).toISOString().split('T')[0]] = [{ nomMedoc: "Pas de médicament aujourd'hui", heure: -1, dosage: -1, dosageType: "4267", consome: false, releatedTreatment: "" }]
 
                 }
-
                 week = data[weekNumber + "/" + startDate.getFullYear()]
 
             } else {
                 week = calendar[weekNumber + "/" + startDate.getFullYear()]
+                //Le calendrier existe mais la semaine non
                 if (!week) {
                     let firstday = new Date(startDate.getTime() - startDate.getDay() * jour)
 
-                    calendar[weekNumber + "/" + startDate.getFullYear()] = {};
-
+                    week = {};
+                    data[weekNumber + "/" + startDate.getFullYear()] = {};
                     for (let i = 0; i < 7; i++) {
-                        calendar[weekNumber + "/" + startDate.getFullYear()][new Date(firstday.getTime() + i * jour).toISOString().split('T')[0]] = [{ nomMedoc: "Pas de médicament aujourd'huit", heure: 0, dosage: 0, dosageType: "", consome: false, releatedTreatment: "" }]
+
+                        data[weekNumber + "/" + startDate.getFullYear()][new Date(firstday.getTime() + i * jour).toISOString().split('T')[0]] = [{ nomMedoc: "Pas de médicament aujourd'hui", heure: -1, dosage: -1, dosageType: "4267", consome: false, releatedTreatment: "" }]
 
 
                     }
+                    week = data[weekNumber + "/" + startDate.getFullYear()]
+                }
+                //Le calendrier existe mais la semaine oui mais elle n'est pas complètre
+                if (Object.keys(week).length < 7) {
+                    let firstday = new Date(startDate.getTime() - startDate.getDay() * jour)
+                    for (let i = 0; i < 7; i++) {
+                        if (!week[new Date(firstday.getTime() + i * jour).toISOString().split('T')[0]]) {
+                            week[new Date(firstday.getTime() + i * jour).toISOString().split('T')[0]] = [{ nomMedoc: "Pas de médicament aujourd'hui", heure: -1, dosage: -1, dosageType: "4267", consome: false, releatedTreatment: "" }]
+                        }
+                    }
                 }
 
-
-                week = calendar[weekNumber + "/" + startDate.getFullYear()] as WeekData
+                //remise dans l'ordre des jours de la semaine
+                let tempo: WeekData = {}
+                let a = Object.keys(week).sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
+                a.forEach((key) => {
+                    tempo[key] = week[key];
+                });
+                week = tempo
             }
-            /*if (!calendar) {
-                calendar = {}
-            }
-            let tempo: WeekData = {}
-            tempo = calendar[weekNumber + "/" + startDate.getFullYear()]
-            let data: Wcalendar = {}
-            if (!tempo) {
-                let firstday = new Date(startDate.getTime() - startDate.getDay() * jour)
 
-                data[getISOWeekNumber(firstday) + "/" + firstday.getFullYear()] = {};
-
-                for (let i = 0; i < 7; i++) {
-                    data[getISOWeekNumber(firstday) + "/" + firstday.getFullYear()][new Date(firstday.getTime() + i * jour).toISOString().split('T')[0]] = [{ nomMedoc: "Pas de médicament aujourd'huit", heure: 0, dosage: 0, dosageType: "", consome: false }]
-
-
-                }
-                tempo = data[weekNumber + "/" + startDate.getFullYear()]}*/
 
 
 
             return (
 
                 <FlatList
+                    style={{ width: '100%', marginBottom: 100, alignSelf: 'center' }}
                     data={Object.entries(week)}
                     renderItem={({ item }) => RenderMedicine(item[0], item[1])}
 
                 />
+
             );
         } else {
             let data: priseInterface[] = []
@@ -206,10 +249,10 @@ const CalendarIndex = () => {
             let week = calendar[weekNumber + "/" + startDate.getFullYear()]
 
             if (!week) {
-                data = [{ nomMedoc: "Pas de médicament aujourd'huit", heure: 0, dosage: 0, dosageType: "", consome: false, releatedTreatment: "" }]
+                data = [{ nomMedoc: "Pas de médicament aujourd'hui", heure: -1, dosage: -1, dosageType: "4267", consome: false, releatedTreatment: "" }]
             } else {
                 data = week[startDate.toISOString().split('T')[0]]
-                !data ? data = [{ nomMedoc: "Pas de médicament aujourd'huit", heure: 0, dosage: 0, dosageType: "", consome: false, releatedTreatment: "" }] : null
+                !data ? data = [{ nomMedoc: "Pas de médicament aujourd'hui", heure: -1, dosage: -1, dosageType: "4267", consome: false, releatedTreatment: "" }] : null
             }
             data = data.sort((a, b) => a.heure - b.heure);
             return (
@@ -265,10 +308,13 @@ const CalendarIndex = () => {
 
     return (
         <View style={styles.container}>
+            <View><Title /></View>
 
-            <Title />
+
+
             <Selector />
-            {calendarComponent()}
+            <CalendarComponent />
+
         </View>
     )
 }
@@ -325,8 +371,9 @@ const styles = StyleSheet.create({
     horizontalLine: {
         borderBottomColor: 'black',
         borderBottomWidth: 1,
-        marginVertical: 10, // Ajustez la marge verticale selon vos besoins
+        marginVertical: 15, // Ajustez la marge verticale selon vos besoins
         borderStyle: 'dashed',
+        alignSelf: 'center',
     },
     MedecinedayContainer: {
         flexDirection: 'row',
@@ -334,8 +381,10 @@ const styles = StyleSheet.create({
         borderColor: 'black',
 
         justifyContent: 'center',
+        alignItems: 'center',
+
         //justifyContent: 'space-between',
-        margin: 5,
+
     },
     backgroundImage: {
 
@@ -352,7 +401,7 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     container: {
-        flex: 1,
+
         justifyContent: 'center',
         alignItems: 'center',
 
@@ -361,11 +410,14 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         flexWrap: 'wrap',
         justifyContent: 'center',
+
+        alignSelf: 'center',
     },
     dayText: {
         fontSize: 20,
         fontWeight: 'bold',
         color: 'black',
+        textAlign: 'center',
 
     },
     medicineContainer: {
@@ -406,6 +458,14 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         alignItems: 'center',
         justifyContent: 'center', // Add this line to center vertically
+    },
+    toggleSwitchMED: {
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        borderRadius: 15,
+        alignItems: 'center',
+        justifyContent: 'center', // Add this line to center vertically
+
     },
     // ... (other styles)
 });
