@@ -7,21 +7,24 @@ import dataManager from "@features/dataManager";
 import Toggle from "./Toggle";
 import DELTreamentCalculator from "@layouts/Calendar/treatmentDelCalculator";
 import usePrescription from "@hooks/usePrescription";
-import { useEffect } from "react";
+import { useMemo } from "react";
 type PrescriptionIndexProps = NativeStackScreenProps<RootStackParamList, 'Prescription'>
 
 export default function PrescriptionIndex({ navigation, route }: PrescriptionIndexProps) {
     const { prescriptionName } = route.params
     const prescription = usePrescription(prescriptionName)
-    var data: PrescriptionInterface | undefined
-    useEffect(() => {
+
+    const data = useMemo(() => {
         if (prescription.isLoad) {
-            const data = prescription.prescription
-            if (data === null) {
+            if (prescription.prescription === null) {
                 navigation.goBack()
+                return undefined
             }
+            return prescription.prescription
         }
+        return undefined
     }, [prescription.isLoad])
+
 
     return <ScrollView>
         <Title>
