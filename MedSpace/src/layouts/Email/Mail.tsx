@@ -357,7 +357,7 @@ const styles = StyleSheet.create({
 
 
         resizeMode: 'cover',
-        borderRadius: 30, // Ajustez la valeur selon vos besoins
+        borderRadius: 30, 
         overflow: 'hidden',
     },
 })

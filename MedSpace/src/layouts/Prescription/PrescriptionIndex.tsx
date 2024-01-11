@@ -1,6 +1,6 @@
 import Title from "@components/TitleBubble"
 import { RootStackParamList } from "@navigation/RootStackParamList";
-import { Text, ScrollView, View, Button } from "react-native";
+import { Text, ScrollView, View, Button, ImageBackground, Pressable, StyleSheet } from "react-native";
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Medicine from "./Medicine";
 import dataManager from "@features/dataManager";
@@ -28,19 +28,17 @@ export default function PrescriptionIndex({ navigation, route }: PrescriptionInd
 
     return <ScrollView>
         <Title>
-            {"Information " + prescriptionName}
+            {"Médicament du traitement " + prescriptionName}
         </Title>
         {!(data === undefined)
             ? <><View>
-                <Text>
-                    Médicament{data.medicines.length > 1 && "s"} :
-                </Text>
-                <View>
+
+                {/* <View>
                     <Text>
                         Activer toutes les notifications:
                     </Text>
                     <Toggle onToggle={() => { }}></Toggle>
-                </View>
+                </View> */}
                 {
                     data.medicines.map((medicine, index) =>
                         <Medicine key={index} medicine={medicine} onToggle={(isNotifOn) => {
@@ -49,10 +47,19 @@ export default function PrescriptionIndex({ navigation, route }: PrescriptionInd
                     )
                 }
             </View>
-                <Button title="Modifier" onPress={() => {
+
+                <Pressable onPress={() => {
                     navigation.navigate('NewPrescription', { prescriptionUpdate: data })
-                }} />
-                <Button title="Supprimer" onPress={async () => {
+                }}>
+                    <ImageBackground
+                        style={styles.container}
+                        source={require("./orange.png")}
+                    ><Text style={styles.textWB}>MODIFIER</Text>
+                    </ImageBackground>
+                </Pressable>
+
+
+                <Pressable onPress={async () => {
                     if (data === undefined) {
                         return
                     }
@@ -70,7 +77,39 @@ export default function PrescriptionIndex({ navigation, route }: PrescriptionInd
                             : patient)
                     }))
                     navigation.reset({ index: 1, routes: [{ name: "Home" }, { name: "Treatment" }] })
-                }} /> </>
+                }}><ImageBackground
+                    style={styles.container}
+                    source={require("./red.png")}
+                ><Text style={styles.textWB}>SUPPRIMER</Text></ImageBackground></Pressable>
+
+
+
+            </>
             : <Text>Chargement...</Text>}
     </ScrollView>
 }
+const styles = StyleSheet.create({
+
+    container: {
+
+        padding: 10,
+        paddingLeft: 20,
+        resizeMode: 'cover',
+        borderRadius: 30,
+        overflow: 'hidden',
+        marginBottom: 15,
+
+    },
+    textWB: {
+        color: 'white',
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+    textW: {
+        color: 'white',
+        fontSize: 15,
+
+    }
+
+})

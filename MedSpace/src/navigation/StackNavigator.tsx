@@ -1,14 +1,10 @@
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
-import { Button } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Debug from '@components/Debug';
-import dataManager from '@features/dataManager';
 import Header from '@layouts/Header/HeaderIndex';
 import TreatmentContainer from '@layouts/Treatment/TreatmentIndexPage';
 import HomePageBody from '@layouts/Home/components/IndexHomePage';
 import NewPrescription from '@layouts/NewPrescription/NewPrescriptionIndex';
 import UserPageIndex from '@layouts/UserPage/IndexUserPage';
-
 import Prescription from '@layouts/Prescription/PrescriptionIndex';
 import { RootStackParamList } from './RootStackParamList';
 import CalendarIndex from '@layouts/Calendar/CalendarIndex';
