@@ -2,12 +2,10 @@ import { useNewPrescription } from "@hooks/useNewPrescription";
 import AddMedicine from "./buttons/AddMedicine";
 import MedicineComponent from "./Medicine/MedicineIndex";
 import defaultMedicine from "@data/defaultMedicine.json";
+import { useCallback } from "react";
 
 export default function Medicines() {
     const { prescription, setPrescription } = useNewPrescription();
-    
-    const setMedicines = (newMedicines: MedicineInterface[]) =>
-        setPrescription((oldP) => ({ ...oldP, medicines: newMedicines })) // Un raccourci pour modifier les médicaments de l'ordonnance
 
     const addMedicineHandler = () => {
         setPrescription((oldP) => ({ ...oldP, medicines: [...oldP.medicines, defaultMedicine] }))
@@ -16,20 +14,29 @@ export default function Medicines() {
     return <>
         {
             prescription.medicines.map((p, i) => {
+
                 const modifyMedicine = (newMedicine: MedicineInterface) => {
-                    const newMedicines = [...prescription.medicines];
-                    newMedicines[i] = newMedicine;
-                    setMedicines(newMedicines)
+                    setPrescription((old) => ({
+                        ...old,
+                        medicines: old.medicines.map((mp, mi) => mi === i ? newMedicine : mp)
+                    }))
                 }
                 const dropMedicine = () => {
                     if (prescription.medicines.length === 1) {
-                        setMedicines([defaultMedicine])
+                        setPrescription((old) => ({
+                            ...old,
+                            medicines: [defaultMedicine]
+                        }))
                         return
                     }
-                    const newMedicines = [...prescription.medicines].splice(i, 1);
-                    setMedicines(newMedicines)
+                    const newMedicines = prescription.medicines.splice(i, 1);
+                    setPrescription((old) => ({
+                        ...old,
+                        medicines: newMedicines
+                    }))
                 }
-                return <MedicineComponent key={p.name} medicine={p}
+
+                return <MedicineComponent key={i} medicine={p}
                     onChange={modifyMedicine} drop={dropMedicine} />
             }
             )

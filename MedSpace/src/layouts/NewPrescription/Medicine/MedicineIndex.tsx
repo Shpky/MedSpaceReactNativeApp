@@ -10,7 +10,7 @@ import Notes from './Notes';
 import DeleteButton from '../buttons/DeleteMedicine';
 
 type MedicineProps = {
-    medicine: MedicineInterface, onChange?: (newMedicine: MedicineInterface) => void
+    medicine: MedicineInterface, onChange: (newMedicine: MedicineInterface) => void
     drop: () => void
 }
 
@@ -23,35 +23,28 @@ type MedicineProps = {
  */
 export default function Medicine({ medicine, onChange, drop }: MedicineProps) {
 
-    const [medicineState, setMedicine] = useState(medicine);
-
-    useEffect(() => {
-        onChange?.(medicineState)
-    }, [medicineState])
-
-
     return <Container>
-        <Name name={medicineState.name}
-            onChange={(e) => setMedicine({ ...medicineState, name: e.nativeEvent.text })} />
+        <Name name={medicine.name}
+            onChange={(e) => onChange({ ...medicine, name: e.nativeEvent.text })} />
 
-        <Company company={medicineState.company}
-            onChange={(e) => setMedicine({ ...medicineState, company: e.nativeEvent.text })} />
+        <Company company={medicine.company}
+            onChange={(e) => onChange({ ...medicine, company: e.nativeEvent.text })} />
 
-        <Dosage dosage={{ quantity: medicineState.dosage, unit: medicineState.dosageType }}
-            onChangeDosage={(e) => setMedicine({ ...medicineState, dosage: parseInt(e.nativeEvent.text) })}
-            onChangeUnit={(e) => setMedicine({ ...medicineState, dosageType: e.nativeEvent.text })} />
+        <Dosage dosage={{ quantity: medicine.dosage, unit: medicine.dosageType }}
+            onChangeDosage={(e) => onChange({ ...medicine, dosage: parseInt(e.nativeEvent.text) })}
+            onChangeUnit={(e) => onChange({ ...medicine, dosageType: e.nativeEvent.text })} />
 
-        <Frequency frequency={medicineState.frequency} key={medicineState.frequency?.toString()}
-            setFrequency={(newFrequency) => setMedicine({ ...medicineState, frequency: newFrequency })} />
+        <Frequency frequency={medicine.frequency} key={medicine.frequency?.toString()}
+            setFrequency={(newFrequency) => onChange({ ...medicine, frequency: newFrequency })} />
 
-        <Duration date={medicineState.duration} key={medicineState.duration?.toString()} customText="Fin du traitement"
-            setDate={(newDuration) => setMedicine({ ...medicineState, duration: newDuration })} />
+        <Duration date={medicine.duration} key={medicine.duration?.toString()} customText="Fin du traitement"
+            setDate={(newDuration) => onChange({ ...medicine, duration: newDuration })} />
 
-        <Renew renew={medicineState.to_renew}
-            onChange={(e) => setMedicine({ ...medicineState, to_renew: parseInt(e.nativeEvent.text) })} />
+        <Renew renew={medicine.to_renew}
+            onChange={(e) => onChange({ ...medicine, to_renew: parseInt(e.nativeEvent.text) })} />
 
-        <Notes notes={medicineState.notes}
-            onChange={(e) => setMedicine({ ...medicineState, notes: e.nativeEvent.text })} />
+        <Notes notes={medicine.notes}
+            onChange={(e) => onChange({ ...medicine, notes: e.nativeEvent.text })} />
         <DeleteButton onClick={drop} />
     </Container >
 }

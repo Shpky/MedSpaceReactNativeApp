@@ -1,39 +1,118 @@
-import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
-import { Alert, Modal, StyleSheet, Text, Pressable, View, Image, Button } from 'react-native';
+import React, { useState } from 'react';
+import { Alert, Modal, StyleSheet, Text, Pressable, View} from 'react-native';
 import { launchCamera, launchImageLibrary, CameraOptions, ImageLibraryOptions } from 'react-native-image-picker';
-import TextRecognition, { TextRecognitionResult } from '@react-native-ml-kit/text-recognition';
-import DetectMedicineinsentence from '@layouts/NewPrescription/ImportImg/MedicineRecognitionWE';
-import { getDBConnection } from '@features/sqlDataManager';
+import TextRecognition from '@react-native-ml-kit/text-recognition';
+import * as stringSimilarity from "string-similarity"
+import {getDBConnection} from "@features/sqlDataManager";
 import {enablePromise} from "react-native-sqlite-storage";
-const ModalImgPicker = ({ setprescription }: { setprescription: Dispatch<SetStateAction<PrescriptionInterface>> }) => {
+import {useNewPrescription} from "@hooks/useNewPrescription";
+const ModalImgPicker = () => {
+    const {setPrescription} = useNewPrescription()
+
     const [image, setImage] = useState<string | null>(null);
     const [modalVisible, setModalVisible] = useState(false);
 
     const TextRecognitionContainer = async (input: string) => {
-        const result = await TextRecognition.recognize(input);
-        console.log('Recognized text:', result.text);
-        console.log(typeof (result.text));
-
         enablePromise(true)
-        console.log("Hey")
-        const db= await getDBConnection()
-        const ress= await db.executeSql("SELECT * from owner where id < 5;")
+        const db = await getDBConnection()
 
-        /*for (let block of result.blocks) {
-            console.log('Block text:', block.text);
-            console.log('Block frame:', block.frame);
+        const result = await TextRecognition.recognize(input);
+        console.log(result.text)
 
-            for (let line of block.lines) {
-                console.log('Line text:', line.text);
-                console.log('Line frame:', line.frame);
+        let medNames = new Set<string>
+        let medLine = new Set<string>
+
+        for (const block of result.blocks) {
+
+            for (const line of block.lines) {
+                let isMedicine = false
+
+                for (let word of line.text.split(" ")) {
+                    if (word.length < 6) {continue}
+                    word = word.toUpperCase()
+                    word = word.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                    try {
+                        const sql = `SELECT name FROM medicine WHERE name LIKE "%${word}%";`;
+                        const results = await db.executeSql(sql)
+                        if (results[0].rows.length > 0) {
+                            isMedicine = true
+                            results.forEach(res => {
+                                for (let index = 0; index < res.rows.length; index++) {
+                                    medNames.add(res.rows.item(index).name)
+                                }
+                            });
+                        }
+                    } catch {}
+                }
+
+                if (isMedicine) {
+                    medLine.add(line.text)
+                    isMedicine = false
+                }
             }
+        }
 
-        }*/
+        const listMedicine = new Set<string>
+        medLine.forEach(med => {
+            listMedicine.add(stringSimilarity.findBestMatch(med, Array.from(medNames)).bestMatch.target)
+        })
+
+        console.log(listMedicine)
+
+        let prescriptionMedicines: MedicineInterface[] = []
+        for (const med of listMedicine) {
+            try {
+                const results = await db.executeSql(`SELECT name, company, form FROM medicine INNER JOIN owner o on medicine.cis = o.cis WHERE name = "${med}";`)
+                results.forEach(res => {
+                    for (let index = 0; index < res.rows.length; index++) {
+                        const medicines: MedicineInterface = {
+                            name: res.rows.item(index).name,
+                            company: res.rows.item(index).company,
+                            administration_route: "",
+                            dosage : 0,
+                            dosageType : res.rows.item(index).form,
+                            frequency: {
+                                morning: false,
+                                noon: false,
+                                evening: false,
+                            },
+                            duration: null,
+                            warning: false,
+                        }
+                        prescriptionMedicines.push(medicines)
+                    }
+                });
+            } catch (e) {
+                console.log(e)
+            }
+        }
+
+        prescriptionMedicines = prescriptionMedicines.filter((value, index, self) =>
+                index === self.findIndex((t) => (
+                    t.name === value.name
+                ))
+        )
+
+        const newPrescription : PrescriptionInterface = {
+            medicines: prescriptionMedicines,
+            doctor: {
+                name: "",
+                mail: ""
+            },
+            date: null,
+            notes: "",
+            title: ""
+        }
+
+        setPrescription(newPrescription)
     }
 
+    /*
     const DetectMedicineContainer = async (input: TextRecognitionResult) => {
-        let Medecines = DetectMedicineinsentence(input)
+        let Medecines = DetectMedicineInSentence(input)
     }
+
+     */
 
 
 
