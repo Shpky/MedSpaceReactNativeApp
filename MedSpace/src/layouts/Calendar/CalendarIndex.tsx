@@ -107,7 +107,7 @@ const CalendarIndex = () => {
                                     <Text style={[styles.medicine, { marginRight: 5 }]}>{prise.heure == -1 && prise.dosage == -1 && prise.dosageType == "4267" == true ? null : prise.dosage}</Text>
                                     <Text style={styles.medicine}>{prise.heure == -1 && prise.dosage == -1 && prise.dosageType == "4267" == true ? null : prise.dosageType}</Text>
                                 </View>
-                                <OnOffButtonTaken is={prise.consome} onToggle={() => MedicineConsumed(key, date, prise)} />
+                                {prise.heure === -1 && prise.dosage === -1 && prise.dosageType === "4267" == true ? null : <OnOffButtonTaken is={prise.consome} onToggle={() => MedicineConsumed(key, date, prise)} />}
                             </ImageBackground>
                         ))}
                     </View>
@@ -148,7 +148,7 @@ const CalendarIndex = () => {
             <View style={[{ width: '100%', justifyContent: 'center', alignContent: 'center', alignItems: "center", alignSelf: "center" }]}>
                 <ImageBackground style={styles.Titlecontainer} source={require('./img/yellowbg.png')}  >
                     <Text style={styles.titleW}>Calendrier</Text>
-                    <View style={styles.rowContainer}><Text style={styles.titlesmallW}>Mode d'affichage par semaine</Text><OnOffButton /></View>
+                    <View style={styles.rowContainer}><Text style={[styles.titlesmallW, { marginHorizontal: 10 }]}>Mode d'affichage par semaine</Text><OnOffButton /></View>
                 </ImageBackground>
             </View>
         )
@@ -355,7 +355,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Jomhuria-Regular',
         fontSize: 20,
         color: 'white',
-
+        marginLeft: 10,
         fontWeight: 'bold',
     },
     titlesmallW: {
@@ -379,7 +379,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         borderColor: 'black',
-        
+
         justifyContent: 'center',
         alignItems: 'center',
 
