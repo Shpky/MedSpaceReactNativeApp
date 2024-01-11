@@ -26,7 +26,7 @@ export default function NewPrescriptionIndex({ navigation, route }: NewPrescript
         <NewPrescriptionContextProvider prescription={prescriptionUpdate}>
             <Title>Veuillez renseigner les informations de l'ordonnance</Title>
 
-            {/* <ModalImgPicker /> */}
+            <ModalImgPicker />
             <Id />
             <Medicines />
             <Footer navigation={navigation} />
