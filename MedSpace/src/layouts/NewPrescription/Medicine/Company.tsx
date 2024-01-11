@@ -1,7 +1,7 @@
 import style from '../style';
 import { TextInputChangeEventData, TextInput, NativeSyntheticEvent, Text } from 'react-native';
 
-export default function Name({ company, onChange }:
+export default function Company({ company, onChange }:
     {
         company?: string,
         onChange: (e: NativeSyntheticEvent<TextInputChangeEventData>) => void

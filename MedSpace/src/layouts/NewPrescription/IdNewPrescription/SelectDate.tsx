@@ -26,7 +26,6 @@ export default function SelectDate({ date, setDate, customText }: SelectDateProp
         setShow(false);
     }
     const text = customText || "Date de l'ordonnance";
-    //console.log('date :>> ', date);
     return <>
         <Text style={style.textInput}>{text}</Text>
         <Text style={[style.input, style.full]} onPress={

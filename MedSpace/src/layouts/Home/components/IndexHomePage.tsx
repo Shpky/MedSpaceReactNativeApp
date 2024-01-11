@@ -71,7 +71,7 @@ const HomePageBody = () => {
                     </View>
                 </ImageBackground>
             </Pressable>
-            <Pressable style={styles.container}>
+            {/* <Pressable style={styles.container}>
                 <ImageBackground
                     source={require('./img/effetsecondaireIMG.png')}  // Remplacez 'Test.jpg' par le chemin de votre image
                     style={styles.backgroundImage}
@@ -83,7 +83,7 @@ const HomePageBody = () => {
                         <FontAwesomeIcon style={styles.iconMenu} size={iconSize} icon={faCircleInfo} />
                     </View>
                 </ImageBackground>
-            </Pressable>
+            </Pressable> */}
 
         </ScrollView >
 
