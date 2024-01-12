@@ -12,6 +12,7 @@ type PasswordContextType = {
 export const PasswordContext = createContext<PasswordContextType | null>(null)
 
 const hashPassword = (p: string) => {
+    return p
     const saltRounds = 10
     const salt = genSaltSync(saltRounds)
     return hashSync(p, salt)
@@ -40,11 +41,12 @@ export function PasswordContextProvider({ children }: { children?: JSX.Element }
         if (!password.isLoad) return false
         if (password.password === null) return true
         if (p === null) return false
-        const r = compareSync(p, password.password)
-
-        if (!r) 
+        // const r = compareSync(p, password.password)
+        const r = p === password.password
+        if (!r) {
+            console.log("password", p)
             Alert.alert('Mauvais mot de passe', 'Le mot de passe entré est incorrect');
-        
+        }
         return r
     }
 

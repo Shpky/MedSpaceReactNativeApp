@@ -16,7 +16,7 @@ type LoginIndexProps = NativeStackScreenProps<RootStackParamList, 'Login'>
  */
 export default function LoginIndex({ navigation }: LoginIndexProps) {
     const [passwordInput, setPasswordInput] = useState("")
-    const { checkPassword, setPassword } = usePassword()
+    const { checkPassword } = usePassword()
 
 
     const validateButtonHandler = () => {
@@ -28,10 +28,6 @@ export default function LoginIndex({ navigation }: LoginIndexProps) {
     }
 
     return <ScrollView>
-        <Debug>
-            <Button title={"checkPassword"} onPress={() => console.log(checkPassword(passwordInput))} />
-            <Button title={"delete"} onPress={() => setPassword(null)} />
-        </Debug>
         <Title>Déverrouillez l'application</Title>
         <Container>
             <Text style={style.instructions}>Entrez votre mot de passe</Text>
