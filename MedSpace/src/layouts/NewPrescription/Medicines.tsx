@@ -15,14 +15,13 @@ export default function Medicines() {
         {
             prescription.medicines.map((p, i) => {
 
-                const modifyMedicine = useCallback((newMedicine: MedicineInterface) => {
+                const modifyMedicine = (newMedicine: MedicineInterface) => {
                     setPrescription((old) => ({
                         ...old,
                         medicines: old.medicines.map((mp, mi) => mi === i ? newMedicine : mp)
                     }))
-                }, [prescription])
-
-                const dropMedicine = useCallback(() => {
+                }
+                const dropMedicine = () => {
                     if (prescription.medicines.length === 1) {
                         setPrescription((old) => ({
                             ...old,
@@ -35,7 +34,7 @@ export default function Medicines() {
                         ...old,
                         medicines: newMedicines
                     }))
-                }, [prescription])
+                }
 
                 return <MedicineComponent key={i} medicine={p}
                     onChange={modifyMedicine} drop={dropMedicine} />

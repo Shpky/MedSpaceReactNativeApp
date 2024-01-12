@@ -10,14 +10,14 @@ const GlobalCalculator = async (): Promise<Wcalendar> => {
     await dataManager.getSaveData().then((data) => {
         patient = data.patients.find(patient => patient.actualUser) as PatientInterface;
         if (patient) {
-            console.log(patient.prescriptions.length)
+            // console.log(patient.prescriptions.length)
 
             patient.prescriptions.forEach(prescription => {
 
                 prescription.medicines.forEach(medicine => {
 
 
-                    console.log(medicine.name)
+                    //console.log(medicine.name)
                     CalendarByMedecine(prescription.title,medicine, prescription.date as Date);
 
                 });

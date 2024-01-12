@@ -1,5 +1,4 @@
-import { Button, TextInput, Text, ScrollView } from 'react-native';
-import MedicineComponent from '@layouts/NewPrescription/Medicine/MedicineIndex';
+import {  ScrollView } from 'react-native';
 import Title from '@components/TitleBubble';
 import Id from './IdNewPrescription/IdNewPrescriptionsIndex';
 import type { RootStackParamList } from '@navigation/RootStackParamList';
@@ -7,6 +6,8 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Footer from './Footer';
 import { NewPrescriptionContextProvider } from '../../contexts/NewPrescriptionContext';
 import Medicines from './Medicines';
+import ModalImgPicker from './ImportImg/ModalImportImg';
+
 type NewPrescriptionIndexProps = NativeStackScreenProps<RootStackParamList, 'NewPrescription'>
 
 /** Affiche le formulaire de création d'une ordonnance
@@ -20,7 +21,7 @@ export default function NewPrescriptionIndex({ navigation, route }: NewPrescript
         <NewPrescriptionContextProvider prescription={prescriptionUpdate}>
             <Title>Veuillez renseigner les informations de l'ordonnance</Title>
 
-            {/* <ModalImgPicker /> */}
+            <ModalImgPicker />
             <Id />
             <Medicines />
             <Footer navigation={navigation} />

@@ -40,13 +40,17 @@ export default function Footer({ navigation }: { navigation: NativeStackNavigati
             alert("Veuillez renseigner la date de l'ordonnance");
             return false;
         }
+        if (prescription.medicines.length <= 0) {
+            alert("Veuillez renseigner au moins un médicament");
+            return false;
+        }
         for (const medicine of prescription.medicines) {
             if (medicine.name.length <= 0) {
                 alert("Veuillez renseigner le nom d'un médicament");
                 return false;
             }
             if (medicine.duration === undefined || medicine.duration === null) {
-                alert("Veuillez renseigner la durée d'un médicament");
+                alert("Il y a un problème avec la durée d'un traitement");
                 return false;
             }
             if (medicine.duration.valueOf() <= prescription.date!.valueOf()) {

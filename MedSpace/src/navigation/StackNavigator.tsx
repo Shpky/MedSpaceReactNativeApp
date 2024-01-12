@@ -13,6 +13,11 @@ import ProfilIndex from '@layouts/Profil/ProfilIndex';
 import LoadingIndex from '@layouts/Loading/LoadingIndex';
 import RepportPage from '@layouts/Report/ReportIndex';
 import Email from '@layouts/Email/Mail';
+import Debug from '@components/Debug';
+import { Text, ScrollView, View, Button, ImageBackground, Pressable, StyleSheet } from "react-native";
+import { delByRomain } from '@layouts/Calendar/treatmentDelCalculator';
+import dataManager from '@features/dataManager';
+import FirstCo from '@layouts/Connection/firstconnection';
 /** Permet de gérer la navigation entre les pages */
 export default function StackNavigator() {
     const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -40,12 +45,14 @@ export default function StackNavigator() {
                             onPress={() => dataManager.getSaveData().then((e) => console.log(e?.patients.find((p) => p.actualUser)?.calendar))} />
                         <Button title="print actual Patient"
                             onPress={() => dataManager.getSaveData().then((e) => console.log(e?.patients.find((p) => p.actualUser)))} />
+
                     </Debug> */}
                     <Header {...props} />
                 </>,
                 animation: 'slide_from_right',
             }}>
             <Stack.Screen name="Loading" component={LoadingIndex} options={{ header: () => null }} />
+            <Stack.Screen name="CreateAccount" component={FirstCo} />
             <Stack.Screen name="Login" component={LoginIndex} />
             <Stack.Screen name="Home" component={HomePageBody} />
             <Stack.Screen name="Treatment" component={TreatmentContainer} />

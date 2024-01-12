@@ -5,9 +5,10 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Medicine from "./Medicine";
 import dataManager from "@features/dataManager";
 import Toggle from "./Toggle";
-import DELTreamentCalculator from "@layouts/Calendar/treatmentDelCalculator";
+//import DELTreamentCalculator from "@layouts/Calendar/treatmentDelCalculator";
 import usePrescription from "@hooks/usePrescription";
 import { useMemo } from "react";
+import { delByRomain } from "@layouts/Calendar/treatmentDelCalculator";
 type PrescriptionIndexProps = NativeStackScreenProps<RootStackParamList, 'Prescription'>
 
 export default function PrescriptionIndex({ navigation, route }: PrescriptionIndexProps) {
@@ -31,7 +32,7 @@ export default function PrescriptionIndex({ navigation, route }: PrescriptionInd
             {"Médicament du traitement " + prescriptionName}
         </Title>
         {!(data === undefined)
-            ? <><View>
+            ? <><ScrollView>
 
                 {/* <View>
                     <Text>
@@ -46,42 +47,34 @@ export default function PrescriptionIndex({ navigation, route }: PrescriptionInd
                         }} />
                     )
                 }
-            </View>
-
-                <Pressable onPress={() => {
-                    navigation.navigate('NewPrescription', { prescriptionUpdate: data })
+            </ScrollView>
+                <View style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-around',
                 }}>
-                    <ImageBackground
+                    <Pressable onPress={() => {
+                        navigation.navigate('NewPrescription', { prescriptionUpdate: data })
+                    }}>
+                        <ImageBackground
+                            style={styles.container}
+                            source={require("./jaune.png")}
+                        ><Text style={styles.textWB}>MODIFIER</Text>
+                        </ImageBackground>
+                    </Pressable>
+
+
+                    <Pressable onPress={async () => {
+                        if (data === undefined) {
+                            return
+                        }
+                        delByRomain(data.title, () => navigation.reset({ index: 1, routes: [{ name: "Home" }, { name: "Treatment" }] })
+                        )
+                    }}><ImageBackground
                         style={styles.container}
-                        source={require("./orange.png")}
-                    ><Text style={styles.textWB}>MODIFIER</Text>
-                    </ImageBackground>
-                </Pressable>
-
-
-                <Pressable onPress={async () => {
-                    if (data === undefined) {
-                        return
-                    }
-                    let calendar: Wcalendar = await DELTreamentCalculator(data)
-                    await dataManager.setSaveData((oldData) => ({
-                        ...oldData,
-                        patients: oldData.patients.map((patient) => patient.actualUser ?
-
-                            {
-                                ...patient,
-                                prescriptions: patient.prescriptions.filter((p) => p.title !== data?.title),
-                                calendar: calendar
-
-                            }
-                            : patient)
-                    }))
-                    navigation.reset({ index: 1, routes: [{ name: "Home" }, { name: "Treatment" }] })
-                }}><ImageBackground
-                    style={styles.container}
-                    source={require("./red.png")}
-                ><Text style={styles.textWB}>SUPPRIMER</Text></ImageBackground></Pressable>
-
+                        source={require("./rouge2.png")}
+                    ><Text style={styles.textWB}>SUPPRIMER</Text></ImageBackground></Pressable>
+                </View>
 
 
             </>
@@ -95,10 +88,16 @@ const styles = StyleSheet.create({
         padding: 10,
         paddingLeft: 20,
         resizeMode: 'cover',
-        borderRadius: 30,
+        borderRadius: 15,
         overflow: 'hidden',
         marginBottom: 15,
-
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 10,
     },
     textWB: {
         color: 'white',

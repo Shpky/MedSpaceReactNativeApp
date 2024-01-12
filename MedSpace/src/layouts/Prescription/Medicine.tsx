@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         padding: 10,
         paddingLeft: 20,
         resizeMode: 'cover',
-        borderRadius: 30,
+        borderRadius: 15,
         overflow: 'hidden',
         marginBottom: 15,
 

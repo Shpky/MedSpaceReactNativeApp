@@ -1,26 +1,5 @@
 {
     "doctors": [
-        {
-            "name": "Dr Nathan",
-            "mail": null
-        }
     ],
-    "patients": [
-        {
-            "name": "Invité",
-            "icone": 0,
-            "prescriptions": [],
-            "actualUser": true,
-            "earliesttime": "8",
-            "latesttime": "22"
-        },
-        {
-            "name": "Vous",
-            "icone": 0,
-            "prescriptions": [],
-            "actualUser": false,
-            "earliesttime": "8",
-            "latesttime": "22"
-        }
-    ]
+    "patients": []
 }
