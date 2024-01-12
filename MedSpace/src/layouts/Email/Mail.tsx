@@ -230,7 +230,7 @@ export default function MailIndex({ navigation, route }: PrescriptionIndexProps)
                 <View style={styles.centreurRow}><Text style={styles.fontblack}>M</Text><View style={{ height: 10, width: 10, backgroundColor: week[3], borderRadius: 5, }}></View></View>
                 <View style={styles.centreurRow}><Text style={styles.fontblack}>J</Text><View style={{ height: 10, width: 10, backgroundColor: week[4], borderRadius: 5, }}></View></View>
                 <View style={styles.centreurRow}><Text style={styles.fontblack}>V</Text><View style={{ height: 10, width: 10, backgroundColor: week[5], borderRadius: 5, }}></View></View>
-                <View style={styles.centreurRow}><Text style={styles.fontblack}>D</Text><View style={{ height: 10, width: 10, backgroundColor: week[6], borderRadius: 5, }}></View></View>
+                <View style={styles.centreurRow}><Text style={styles.fontblack}>S</Text><View style={{ height: 10, width: 10, backgroundColor: week[6], borderRadius: 5, }}></View></View>
             </View>
         )
     }
