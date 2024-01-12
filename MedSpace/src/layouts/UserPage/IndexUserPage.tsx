@@ -168,11 +168,27 @@ const UserPageIndex = ({ navigation }: UserIndexProps) => {
 
     const handlePressButtonDEL = () => {
         save.patients.length > 1
-            ? setSave((old) => ({
+            ? (dataManager.setSaveData((old) => ({
+                ...old,
+                patients: old?.patients.filter((patient) => !patient.actualUser).map((p, i) => !i ? ({ ...p, actualUser: true }) : p)
+            }))).then(() => {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Home' }],
+                })
+            })
+            : (dataManager.setSaveData((old) => ({
                 ...old,
                 patients: old?.patients.filter((patient) => patient !== actualUser)
-            } as SaveInterface))
-            : NewUser('Nouveau patient', defaultIcon.icon, true)
+            }))).then(() => {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Home' }],
+                }), NewUser('Nouveau patient', defaultIcon.icon, true)
+            })
+
+
+
     };
 
     const Changepp = async (uri: string) => {

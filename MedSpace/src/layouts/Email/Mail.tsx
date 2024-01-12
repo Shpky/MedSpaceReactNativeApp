@@ -239,7 +239,7 @@ export default function MailIndex({ navigation, route }: PrescriptionIndexProps)
 
         return (
             <View>
-                <View style={[styles.centreurRow, { marginTop: 10 }]}><Text style={[styles.fontblack]}>Nº de semaine/année</Text><Text style={styles.fontblack}>Jour de la semaine/status</Text></View>
+                <View style={[styles.centreurRow, { marginHorizontal: 20 }]}><Text style={[styles.fontblack]}>Nº de semaine/année</Text><Text style={styles.fontblack}>Jour de la semaine/status</Text></View>
 
                 <FlatList
                     data={Object.keys(calendar)}
@@ -275,7 +275,7 @@ export default function MailIndex({ navigation, route }: PrescriptionIndexProps)
     }
     return (
         <>
-            {/* Your JSX content goes here */}
+
 
 
             <View style={{ justifyContent: "center", alignItems: "center", marginTop: 10 }}>
@@ -296,7 +296,8 @@ export default function MailIndex({ navigation, route }: PrescriptionIndexProps)
 
                     <EncadreLegend />
                     <Text style={[styles.fontblack, { fontSize: 12 }]}>Médicament(s) dans ce traitement: {prescription.medicines.map(e => e.name).join(", ")}</Text>
-                    <ReportBuilder />
+                    <ScrollView><ReportBuilder /></ScrollView>
+
                 </View>
             </View >
 
