@@ -26,7 +26,9 @@ export default {
             .set('save', JSON.stringify(__DEV__ ? defaultSaveForTest : defaultSaveForTest),
                 { accessible: ACCESSIBLE.WHEN_UNLOCKED })
     },
-
+    async isExisting(): Promise<boolean> {
+        return await RNSecureStorage.exists('save') || false;
+    },
     async getSaveData(): Promise<SaveInterface> {
 
         const exists = await RNSecureStorage.exists('save');

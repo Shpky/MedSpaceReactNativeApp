@@ -1,4 +1,5 @@
 export type RootStackParamList = {
+    CreateAccount: undefined;
     Loading: undefined;
     Home: undefined;
     Treatment: undefined;

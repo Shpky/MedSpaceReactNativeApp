@@ -90,7 +90,7 @@ export default function MailIndex({ navigation, route }: PrescriptionIndexProps)
                         </div>
                         <div style="display: flex; justify-content: space-evenly;align-items: center;margin-top: 50px;">
                             <h2 style="font-size: 30px; font-weight: bold;">Ce document constitue le rapport de prise
-                                médicamenteuse pour le patient M./Mme.${patient.name} dans le constext de son traitement
+                                médicamenteuse pour le patient M./Mme.${patient.name} dans le context de son traitement
                                 ${prescription.title}.</h2>
                         </div>
                         <div style="display: flex; justify-content: flex-start;align-items: flex-start;margin-left: 20px;">
@@ -174,7 +174,7 @@ export default function MailIndex({ navigation, route }: PrescriptionIndexProps)
             const externalDir = RNFS.DownloadDirectoryPath;
 
             // Copiez le fichier vers le dossier download
-            const destPath = `${externalDir}/rapport.pdf`;
+            const destPath = `${externalDir}/MEDSPACE-rapport.pdf`;
             await RNFS.copyFile(pdfFilePath || "", destPath);
 
             let email = prescription.doctor?.mail;
@@ -357,7 +357,7 @@ const styles = StyleSheet.create({
 
 
         resizeMode: 'cover',
-        borderRadius: 30, 
+        borderRadius: 30,
         overflow: 'hidden',
     },
 })

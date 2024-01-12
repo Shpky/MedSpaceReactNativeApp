@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
 
     container: {
 
-        backgroundColor: 'red',
+        backgroundColor: 'blue',
         height: 200,
         borderRadius: 30,
         marginBottom: 20,
@@ -112,6 +112,8 @@ const styles = StyleSheet.create({
         flex: 1,
         marginLeft: 20,
         marginRight: 20,
+
+
 
     },
     fontJomhuria: {

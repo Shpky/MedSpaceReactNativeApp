@@ -7,7 +7,7 @@ import useActualPatient from '@hooks/useActualPatient';
 const HeaderIndex = ({ navigation, route }: NativeStackHeaderProps) => {
 
     const [actualPatient] = useActualPatient([route]);
-    const isLogin = !["Login", "Profil", "Loading"].includes(route.name);
+    const isLogin = !["Login", "Profil", "Loading", "CreateAccount"].includes(route.name);
     const navigateToHome = () => {
         isLogin && navigation.navigate("Home");
     };

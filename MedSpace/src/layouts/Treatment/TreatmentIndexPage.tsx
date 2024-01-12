@@ -52,16 +52,16 @@ const TreatmentContainer = ({ navigation }: { navigation: NavigationProp<RootSta
             <Debug>
                 <Button title={"navigation stack"} onPress={() => console.log(navigation.getState())} />
             </Debug>
-                <View style={styles.container}>
-                    <FlatList
-                        ListHeaderComponent={() =>
-                            <Title>
-                                Sélectionez un traitement
-                            </Title>}
-                        data={patient?.prescriptions}
-                        renderItem={({ item }) => <RenderItem item={item} />}
-                    />
-                </View>
+            <View style={styles.container}>
+                <FlatList
+                    ListHeaderComponent={() =>
+                        <Title>
+                            Sélectionez un traitement
+                        </Title>}
+                    data={patient?.prescriptions}
+                    renderItem={({ item }) => <RenderItem item={item} />}
+                />
+            </View>
             <View style={styles.NewTreatment}>
 
                 <Pressable style={styles.buttonNewtreatment} onPress={navigateToNewPrescription}>
@@ -163,7 +163,7 @@ let styles = StyleSheet.create({
         height: 200,
         borderRadius: 30,
         paddingBottom: 0,
-        backgroundColor: 'red',
+        backgroundColor: 'lightblue',
         marginBottom: 20,
         shadowColor: '#000',
         shadowOffset: {

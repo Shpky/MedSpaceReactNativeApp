@@ -61,18 +61,18 @@ const TreamentCalculator = async (Treatment: PrescriptionInterface): Promise<Wca
                 if (medicine.frequency.morning) {
                     //console.log("morning")
                     let before = wcalendar[key][dayKey].length
-                    wcalendar[key][dayKey].push({ nomMedoc: medicine.name, heure: (patient as PatientInterface).earliesttime, dosage: medicine.dosage, dosageType: medicine.dosageType, consome: false, releatedTreatment: Treatment });
+                    wcalendar[key][dayKey].push({ nomMedoc: medicine.name, heure: patient.earliesttime, dosage: medicine.dosage, dosageType: medicine.dosageType, consome: false, releatedTreatment: Treatment });
                     //console.log(before < wcalendar[key][dayKey].length)
                 }
                 if (medicine.frequency.noon) {
                     //Midi ou date de debut + 4h
 
-                    (patient as PatientInterface).earliesttime > 11 ?
+                    patient.earliesttime < 11 ?
                         wcalendar[key][dayKey].push({ nomMedoc: medicine.name, heure: 12, dosage: medicine.dosage, dosageType: medicine.dosageType, consome: false, releatedTreatment: Treatment })
-                        : wcalendar[key][dayKey].push({ nomMedoc: medicine.name, heure: (patient as PatientInterface).earliesttime as number + 4, dosage: medicine.dosage, dosageType: medicine.dosageType, consome: false, releatedTreatment: Treatment });
+                        : wcalendar[key][dayKey].push({ nomMedoc: medicine.name, heure: +patient.earliesttime + 4, dosage: medicine.dosage, dosageType: medicine.dosageType, consome: false, releatedTreatment: Treatment });
                 }
                 if (medicine.frequency.evening) {
-                    wcalendar[key][dayKey].push({ nomMedoc: medicine.name, heure: (patient as PatientInterface).latesttime, dosage: medicine.dosage, dosageType: medicine.dosageType, consome: false, releatedTreatment: Treatment });
+                    wcalendar[key][dayKey].push({ nomMedoc: medicine.name, heure: patient.latesttime, dosage: medicine.dosage, dosageType: medicine.dosageType, consome: false, releatedTreatment: Treatment });
                 }
 
 
@@ -101,13 +101,13 @@ const TreamentCalculator = async (Treatment: PrescriptionInterface): Promise<Wca
                 i
                 if (medicine.minimumHoursbetweenDoses != null) {
                     for (let i = 0; i < medicine.frequency.count; i++) {
-                        wcalendar[key][dayKey].push({ nomMedoc: medicine.name, heure: (patient?.earliesttime as number + (i as number * medicine.minimumHoursbetweenDoses as number)), dosage: medicine.dosage, dosageType: medicine.dosageType, consome: false, releatedTreatment: Treatment });
+                        wcalendar[key][dayKey].push({ nomMedoc: medicine.name, heure: (+patient.earliesttime + (+i * +medicine.minimumHoursbetweenDoses)), dosage: medicine.dosage, dosageType: medicine.dosageType, consome: false, releatedTreatment: Treatment });
                     }
                 } else {
-                    let dispatchHour = Math.floor(((patient as PatientInterface).latesttime - (patient as PatientInterface).earliesttime) / medicine.frequency.count)
+                    let dispatchHour = Math.floor((patient.latesttime - patient.earliesttime) / medicine.frequency.count)
 
                     for (let i = 0; i < medicine.frequency.count; i++) {
-                        wcalendar[key][dayKey].push({ nomMedoc: medicine.name, heure: ((patient as PatientInterface).earliesttime + ((i * dispatchHour) as number) as number), dosage: medicine.dosage, dosageType: medicine.dosageType, consome: false, releatedTreatment: Treatment });
+                        wcalendar[key][dayKey].push({ nomMedoc: medicine.name, heure: (+patient.earliesttime + ((+i * +dispatchHour))), dosage: medicine.dosage, dosageType: medicine.dosageType, consome: false, releatedTreatment: Treatment });
                     }
                 }
 
@@ -135,7 +135,7 @@ const TreamentCalculator = async (Treatment: PrescriptionInterface): Promise<Wca
                 if (!wcalendar[key][dayKey]) {
                     wcalendar[key][dayKey] = [];
                 }
-                wcalendar[key][dayKey].push({ nomMedoc: medicine.name, heure: (patient as PatientInterface).earliesttime, dosage: medicine.dosage, dosageType: medicine.dosageType, consome: false, releatedTreatment: Treatment });
+                wcalendar[key][dayKey].push({ nomMedoc: medicine.name, heure: patient.earliesttime, dosage: medicine.dosage, dosageType: medicine.dosageType, consome: false, releatedTreatment: Treatment });
                 //date début + i*delay (i = c'est le combientième jour de la prise)
 
             }
