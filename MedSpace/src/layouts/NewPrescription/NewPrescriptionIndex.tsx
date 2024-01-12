@@ -1,12 +1,6 @@
 import { Button, TextInput, Text, ScrollView } from 'react-native';
 import MedicineComponent from '@layouts/NewPrescription/Medicine/MedicineIndex';
 import Title from '@components/TitleBubble';
-import Container from '@components/form/Container/ContainerIndex';
-import style from './style';
-import defaultMedicine from '@data/defaultMedicine.json';
-import ModalImgPicker from './ImportImg/ModalImportImg';
-import AddMedicine from './buttons/AddMedicine';
-import Debug from '@components/Debug';
 import Id from './IdNewPrescription/IdNewPrescriptionsIndex';
 import type { RootStackParamList } from '@navigation/RootStackParamList';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';

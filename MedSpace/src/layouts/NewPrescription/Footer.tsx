@@ -30,17 +30,17 @@ export default function Footer({ navigation }: { navigation: NativeStackNavigati
             alert("Veuillez renseigner le nom du traitement");
             return false;
         }
-        save?.patients.forEach((patient) => {
+        for (const patient of save?.patients || []) {
             if (patient.prescriptions.find((p) => p.title === prescription.title)) {
                 alert("Un traitement avec ce nom existe déjà");
                 return false;
             }
-        })
+        }
         if (prescription.date === undefined || prescription.date === null) {
             alert("Veuillez renseigner la date de l'ordonnance");
             return false;
         }
-        prescription.medicines.forEach((medicine) => {
+        for (const medicine of prescription.medicines) {
             if (medicine.name.length <= 0) {
                 alert("Veuillez renseigner le nom d'un médicament");
                 return false;
@@ -57,7 +57,7 @@ export default function Footer({ navigation }: { navigation: NativeStackNavigati
                 alert("Veuillez renseigner la fréquence d'un médicament");
                 return false;
             }
-        })
+        }
         return true;
     }
 

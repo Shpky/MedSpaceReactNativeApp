@@ -82,5 +82,34 @@ export default StyleSheet.create({
     confirmButton: {
         width: "90%",
         marginBottom: 40,
+    },
+    modalAutoComplete: {
+        backgroundColor: "#ababab",
+        borderRadius: 10,
+        position: "absolute",
+        padding: 10,
+        top: "5%",
+        left: "5%",
+        right: "5%",
+        bottom: "5%",
+    },
+    modalAutoCompleteText: {
+        color: "#000",
+        fontSize: 22,
+        marginTop: 10,
+        marginBottom: 10,
+    },
+    modalAutoCompleteItemContainer: {
+        borderBottomColor: "#000",
+        borderBottomWidth: 1,
+        marginHorizontal: 10,
+        
+    },
+    modalAutoCompleteItemText: {
+        color: "#000",
+        fontSize: 20,
+        textAlign: "center",
+        marginTop: 10,
+        marginBottom: 10,
     }
 });
