@@ -35,10 +35,6 @@ export default function Password({ onConfirm }: PasswordProps) {
             setPassword(null)
         }
 
-        while (!checkPassword(passwordInput.newPwd)) {
-            await new Promise(resolve => setTimeout(resolve, 1000));
-        }
-
         onConfirm()
     }
 
