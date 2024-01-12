@@ -51,8 +51,8 @@ export default function StackNavigator() {
                 </>,
                 animation: 'slide_from_right',
             }}>
-            <Stack.Screen name="CreateAccount" component={FirstCo} />
             <Stack.Screen name="Loading" component={LoadingIndex} options={{ header: () => null }} />
+            <Stack.Screen name="CreateAccount" component={FirstCo} />
             <Stack.Screen name="Login" component={LoginIndex} />
             <Stack.Screen name="Home" component={HomePageBody} />
             <Stack.Screen name="Treatment" component={TreatmentContainer} />

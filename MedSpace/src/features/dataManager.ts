@@ -1,5 +1,6 @@
 import RNSecureStorage, { ACCESSIBLE } from 'rn-secure-storage';
 import defaultSaveForTest from "@data/defaultSaveForTest.json";
+import defaultSave from "@data/defaultSave.json";
 
 export default {
     async setSaveData(newSave: SaveInterface | ((oldSave: SaveInterface) => SaveInterface)) {
@@ -23,11 +24,11 @@ export default {
 
     async resetSaveData() {
         RNSecureStorage
-            .set('save', JSON.stringify(__DEV__ ? defaultSaveForTest : defaultSaveForTest),
+            .set('save', JSON.stringify(defaultSave),
                 { accessible: ACCESSIBLE.WHEN_UNLOCKED })
     },
     async isExisting(): Promise<boolean> {
-        return await RNSecureStorage.exists('save') || false;
+        return !!(await RNSecureStorage.exists('save'));
     },
     async getSaveData(): Promise<SaveInterface> {
 

@@ -1,7 +1,6 @@
-import { View, Text, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 import styles from './styles';
-import { icon } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faEye, faEyeLowVision } from '@fortawesome/free-solid-svg-icons';
 export default function Toggle({ is = true, onToggle }: { is?: boolean, onToggle: (isNotifOn: Boolean) => void }) {

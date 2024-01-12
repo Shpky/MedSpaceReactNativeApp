@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import OpenAutoComplete from './OpenAutoComple';
 import Container from '@components/form/Container/ContainerIndex';
 import Name from './Name';
 import Company from './Company';
@@ -24,6 +24,7 @@ type MedicineProps = {
 export default function Medicine({ medicine, onChange, drop }: MedicineProps) {
 
     return <Container>
+        <OpenAutoComplete onChange={(m) => onChange(m)} />
         <Name name={medicine.name}
             onChange={(e) => onChange({ ...medicine, name: e.nativeEvent.text })} />
 

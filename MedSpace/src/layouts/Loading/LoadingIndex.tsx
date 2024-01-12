@@ -3,6 +3,7 @@ import { useMemo, useEffect } from 'react';
 import usePassword from '@hooks/usePassword';
 import { RootStackParamList } from '@navigation/RootStackParamList';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import dataManager from '@features/dataManager';
 
 type LoadingScreenNavigationProp = NativeStackScreenProps<RootStackParamList, 'Loading'>;
 
@@ -13,16 +14,18 @@ export default function LoadingIndex({ navigation }: LoadingScreenNavigationProp
 
     useEffect(() => {
         if (isLoading) return;
-
-        checkPassword(null)
-            ? navigation.reset({
-                index: 0,
-                routes: [{ name: 'Profil' }],
-            })
-            : navigation.reset({
-                index: 0,
-                routes: [{ name: 'Login' }],
-            });
+        dataManager.isExisting().then((isExisting) => {
+            console.log('isExisting :>> ', isExisting);
+            isExisting
+                ? navigation.reset({
+                    index: 0,
+                    routes: [{ name: checkPassword(null) ? 'Profil' : 'Login' }],
+                })
+                : navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'CreateAccount' }],
+                });
+        });
 
     }, [isLoading]);
 

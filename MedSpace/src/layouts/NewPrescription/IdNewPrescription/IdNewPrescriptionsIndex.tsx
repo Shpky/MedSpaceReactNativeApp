@@ -22,7 +22,7 @@ export default function IdNewPrescriptions() {
         <Text style={style.textInput}>Nom du traitement</Text>
         <TextInput style={[style.input, style.full, prescription.title.length <= 0 ? style.badInput : null]}
             placeholder="Nom du traitement" placeholderTextColor={style.input.color}
-            onChange={(e) => setPrescription((oldP) => ({ ...oldP, title: e.nativeEvent.text }))}
+            onChangeText={(t) => setPrescription((oldP) => ({ ...oldP, title: t }))}
         >{prescription.title}</TextInput>
         <View>
             <Text style={style.textInput}>Nom et coordonnées du médecin</Text>

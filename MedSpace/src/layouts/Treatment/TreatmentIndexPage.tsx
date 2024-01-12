@@ -49,9 +49,6 @@ const TreatmentContainer = ({ navigation }: { navigation: NavigationProp<RootSta
     }
     return (
         <View style={styles.Body}>
-            <Debug>
-                <Button title={"navigation stack"} onPress={() => console.log(navigation.getState())} />
-            </Debug>
             <View style={styles.container}>
                 <FlatList
                     ListHeaderComponent={() =>

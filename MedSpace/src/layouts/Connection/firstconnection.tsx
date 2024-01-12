@@ -101,19 +101,30 @@ const FirstCo = ({ navigation }: { navigation: NavigationProp<RootStackParamList
         /></View>
         <View style={styles.fixing}><XLButton onPress={() => {
             if (isSelected && name.length > 0) {
-                dataManager.getSaveData().then((data) => {
-                    data.patients.find(patient => patient.actualUser)!.name = name;
-                    //dataManager.saveData(data);
-                    navigation.navigate("Home")
+                dataManager.resetSaveData().then(() => {
+                    dataManager.setSaveData((data) =>
+                    ({
+                        ...data, patients: [{
+                            name: name, prescriptions: [], earliesttime: 8, latesttime: 22,
+                            actualUser: true, icone: require("@data/defaultIcon.json").icon
+                        }]
+                    })
+                    )
+                        .then(() =>
+                            //dataManager.saveData(data);
+                            navigation.reset({
+                                index: 0,
+                                routes: [{ name: "Home" }]
+                            })
+                        )
                 })
             } else {
                 if (!(name.length > 0)) {
                     Alert.alert("ATTENTION", "Merci de rentrer un nom valide")
-                } else {
-                    if (!isSelected) {
-                        Alert.alert("ATTENTION", "Merci d'accepter les conditions d'utilisation.")
-                    }
+                } else if (!isSelected) {
+                    Alert.alert("ATTENTION", "Merci d'accepter les conditions d'utilisation.")
                 }
+
 
             }
         }}><Text style={styles.SUPtitle}>Valider</Text></XLButton></View>
