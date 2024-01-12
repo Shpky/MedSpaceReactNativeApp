@@ -143,14 +143,14 @@ let styles = StyleSheet.create({
     fontJomhuriaRegular: {
 
         fontFamily: 'Jomhuria-Regular',
-        fontSize: 30,
+        fontSize: 40,
         color: 'white',
         marginLeft: 20,
     },
     smallfontJomhuriaRegular: {
-        marginLeft: 20,
+        marginLeft: 25,
         fontFamily: 'Jomhuria-Regular',
-        fontSize: 20,
+        fontSize: 30,
         color: 'white',
         marginTop: -10,
 
