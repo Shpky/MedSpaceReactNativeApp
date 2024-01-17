@@ -7,15 +7,15 @@ const EncadreLegend = () => {
             <Text style={styles.fontblack}>Légendes</Text>
             <View style={styles.coleur}>
                 <View style={{ marginHorizontal: 5, height: 10, width: 10, backgroundColor: "green", borderRadius: 5, }}></View>
-                <Text style={styles.smallfont}>Tout les médicaments ont bien été pris par le patient.</Text>
+                <Text style={styles.smallfont}>Tous les médicaments ont bien été prit par le patient.</Text>
             </View>
             <View style={styles.coleur}>
                 <View style={{ marginHorizontal: 5, height: 10, width: 10, backgroundColor: "orange", borderRadius: 5, }}></View>
-                <Text style={styles.smallfont}>Tout les médicaments n'ont pas été prit.</Text>
+                <Text style={styles.smallfont}>Tous les médicaments n'ont pas été prit.</Text>
             </View>
             <View style={styles.coleur}>
                 <View style={{ marginHorizontal: 5, height: 10, width: 10, backgroundColor: "red", borderRadius: 5, }}></View>
-                <Text style={styles.smallfont}>Aucun des médicaments n'a été pris par le patient.</Text>
+                <Text style={styles.smallfont}>Aucun des médicaments n'a été prit par le patient.</Text>
             </View>
             <View style={styles.coleur}>
                 <View style={{ marginHorizontal: 5, height: 10, width: 10, backgroundColor: "grey", borderRadius: 5, }}></View>

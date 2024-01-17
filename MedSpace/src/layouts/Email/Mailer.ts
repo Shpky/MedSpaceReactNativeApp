@@ -1,10 +1,17 @@
-import { logo } from './logo';
-import superHtmlReportBuiler from './htmlReportBuilder';
+import { logo } from './Logo';
+import superHtmlReportBuiler from './HtmlReportBuilder';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import RNFS from 'react-native-fs';
 import Mailer from 'react-native-mail';
-export const htmlmailtemplate = async (prescription: PrescriptionInterface,patient:PatientInterface) => {
-
+import Permissions from 'react-native-permissions';
+export const htmlmailtemplate = async (prescription: PrescriptionInterface, patient: PatientInterface) => {
+    Permissions.request(Permissions.PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE).then(response => {
+        if (response === Permissions.RESULTS.GRANTED) {
+            console.log('Permission accordée');
+        } else {
+            console.warn('Permission refusée');
+        }
+    })
 
     try {
         let htmlContent = `
@@ -30,16 +37,16 @@ export const htmlmailtemplate = async (prescription: PrescriptionInterface,patie
                             <div style="display: flex;align-items: center;">
                                 <div style="background-color: green;width: 10px;height: 10px;margin: 10px;;border-radius: 50%;">
                                 </div>
-                                <p style="">Tout les médicaments ont bien été pris par le patient.</p>
+                                <p style="">Tous les médicaments ont bien été prit par le patient.</p>
                             </div>
                             <div style=" display: flex;align-items: center;">
                                 <div style="background-color: orange;width: 10px;height: 10px;margin: 10px;border-radius: 50%;"></div>
-                                <p style="">Tout les médicaments n'ont pas été prit</p>
+                                <p style="">Tous les médicaments n'ont pas été prit</p>
                             </div>
                             <div style="display: flex;align-items: center">
                                 <div style="background-color: red;width: 10px;height: 10px;margin-left: 10px;margin-right: 10px;border-radius: 50%;">
                                 </div>
-                                <p>Aucun des médicaments n'a été pris par le patient.</p>
+                                <p>Aucun des médicaments n'a été prit par le patient.</p>
                             </div>
                             <div style="display: flex;align-items: center;">
                                 <div style="background-color: grey;width: 10px;height: 10px;margin: 10px;border-radius: 50%;"></div>
@@ -92,25 +99,16 @@ export const htmlmailtemplate = async (prescription: PrescriptionInterface,patie
         const pdf = await RNHTMLtoPDF.convert(options);
 
         const pdfFilePath = pdf.filePath;
-
-        //await requestWritePermission();
-
+        
 
 
-        // Obtenez le chemin du dossier de stockage externe
-        const externalDir = RNFS.DownloadDirectoryPath;
-
-        // Copiez le fichier vers le dossier download
-        const destPath = `${externalDir}/MEDSPACE-rapport.pdf`;
-        await RNFS.copyFile(pdfFilePath || "", destPath);
-
-        let email = prescription.doctor?.mail;
+        let email = prescription.doctor?.mail || "";
         let subject = 'Rapport de prise médicamenteuse pour la patient M./Mme.' + patient.name + ' dans le contexte de son traitement ' + prescription.title + '.';
         let body = 'Bonjour Docteur, \n\nVeuillez trouver ci-joint le rapport de prise médicamenteuse pour le patient M./Mme.' + patient.name + ' dans le contexte de son traitement ' + prescription.title + '.\n\nCordialement,\n\nL\'équipe MedSpace';
 
         const attachments = [
             {
-                path: destPath,
+                path: pdfFilePath,
                 type: 'pdf',
                 name: 'rapport.pdf',
             },
@@ -119,7 +117,7 @@ export const htmlmailtemplate = async (prescription: PrescriptionInterface,patie
         Mailer.mail(
             {
                 subject,
-                recipients: [email || ""],
+                recipients: [email],
                 body,
                 isHTML: true,
                 attachments,

@@ -30,8 +30,8 @@ type ReportBuilderProps = {
     Prescription: PrescriptionInterface,
     Rowcalendar?: Wcalendar
 }
-export const ReportBuilder =  ({ Prescription, Rowcalendar }: ReportBuilderProps) => {
-    let calendar =  generateCalendar(Prescription, Rowcalendar || {});
+export const ReportBuilder = ({ Prescription, Rowcalendar }: ReportBuilderProps) => {
+    let calendar = generateCalendar(Prescription, Rowcalendar || {});
     console.log(calendar)
     return (
         <View>

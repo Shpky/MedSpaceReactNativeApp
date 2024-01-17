@@ -5,11 +5,11 @@ import { RootStackParamList } from '@navigation/RootStackParamList';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import useActualPatient from '@hooks/useActualPatient';
-import { htmlmailtemplate } from './htmlreporttemplate'
+import { htmlmailtemplate } from './Mailer'
 
-import superHtmlReportBuiler from './htmlReportBuilder';
-import EncadreLegend from './encadreLegend'
-import { ReportBuilder } from './reportBuilder'
+import superHtmlReportBuiler from './HtmlReportBuilder';
+import EncadreLegend from './Legend'
+import { ReportBuilder } from './ReportBuilder'
 type PrescriptionIndexProps = NativeStackScreenProps<RootStackParamList, 'Email'>
 export default function MailIndex({ navigation, route }: PrescriptionIndexProps) {
     const { prescription } = route.params
