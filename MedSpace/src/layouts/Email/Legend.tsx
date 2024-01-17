@@ -1,5 +1,11 @@
 import { StyleSheet, Text, View } from "react-native"
 
+/**
+ * Component that displays legends for medication status.
+ * 
+ * @returns JSX.Element
+ */
+
 const EncadreLegend = () => {
     return (
         <View style={styles.encadreLegende}>

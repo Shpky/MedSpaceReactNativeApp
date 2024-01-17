@@ -3,7 +3,7 @@ type priseInterface = {
     heure: number,
     dosage: number,
     dosageType: string,
-    consome: boolean,
+    consumed: boolean,
     releatedTreatment: string,
     haveNotif?: boolean,
 }

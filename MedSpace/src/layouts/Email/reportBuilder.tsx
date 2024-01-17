@@ -2,6 +2,12 @@ import React from 'react';
 import {  StyleSheet, Text,  View, FlatList } from 'react-native';
 import { generateCalendar } from './IntakeCalculator'
 
+/**
+ * Renders a week with corresponding colors for each day.
+ * @param week - An array of colors representing each day of the week.
+ * @param num - The week number.
+ * @returns The rendered week component.
+ */
 const RenderWeek = (week: string[], num: string) => {
 
     return (
@@ -30,6 +36,12 @@ type ReportBuilderProps = {
     Prescription: PrescriptionInterface,
     Rowcalendar?: Wcalendar
 }
+/**
+ * Renders the ReportBuilder component.
+ * 
+ * @param {ReportBuilderProps} props - The props for the ReportBuilder component.
+ * @returns {JSX.Element} The rendered ReportBuilder component.
+ */
 export const ReportBuilder = ({ Prescription, Rowcalendar }: ReportBuilderProps) => {
     let calendar = generateCalendar(Prescription, Rowcalendar || {});
     console.log(calendar)

@@ -3,15 +3,14 @@ import superHtmlReportBuiler from './HtmlReportBuilder';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 
 import Mailer from 'react-native-mail';
-import Permissions from 'react-native-permissions';
+
+/**
+ * Generates an HTML email template for sending a medication report to a doctor.
+ * @param prescription - The prescription object containing medication details.
+ * @param patient - The patient object containing patient details.
+ */
 export const htmlmailtemplate = async (prescription: PrescriptionInterface, patient: PatientInterface) => {
-    Permissions.request(Permissions.PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE).then(response => {
-        if (response === Permissions.RESULTS.GRANTED) {
-            console.log('Permission accordée');
-        } else {
-            console.warn('Permission refusée');
-        }
-    })
+    
 
     try {
         let htmlContent = `

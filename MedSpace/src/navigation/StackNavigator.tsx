@@ -12,12 +12,12 @@ import LoginIndex from '@layouts/Login/LoginIndex';
 import ProfilIndex from '@layouts/Profil/ProfilIndex';
 import LoadingIndex from '@layouts/Loading/LoadingIndex';
 import RepportPage from '@layouts/Report/ReportIndex';
-import Email from '@layouts/Email/Mail';
+import Email from '@layouts/Email/MailIndex';
 import Debug from '@components/Debug';
 import { Text, ScrollView, View, Button, ImageBackground, Pressable, StyleSheet } from "react-native";
 import { delByRomain } from '@layouts/Calendar/treatmentDelCalculator';
 import dataManager from '@features/dataManager';
-import FirstCo from '@layouts/Connection/firstconnection';
+import FirstCo from '@layouts/Connection/Firstconnection';
 /** Permet de gérer la navigation entre les pages */
 export default function StackNavigator() {
     const Stack = createNativeStackNavigator<RootStackParamList>();
