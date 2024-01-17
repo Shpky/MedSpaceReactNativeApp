@@ -10,12 +10,12 @@ export default function setNotifications() {
                     patient.calendar && Object.keys(patient.calendar[week]).forEach((day) =>
                         patient.calendar && patient.calendar[week][day].forEach((prise) => {
                             const date = new Date(day)
-                            date.setHours(prise.heure, 0, 0, 0)
+                            date.setHours(prise.hour, 0, 0, 0)
                             if (date.valueOf() < (new Date()).valueOf()) return;
                             PushNotification.localNotificationSchedule({
                                 title: prise.releatedTreatment,
                                 channelId: 'medspace-channel',
-                                message: `Il est l'heure de prendre ${prise.dosage}${prise.dosageType} de ${prise.nomMedoc}`,
+                                message: `Il est l'heure de prendre ${prise.dosage}${prise.dosageType} de ${prise.MedicineName}`,
                                 date: date,
                                 allowWhileIdle: true,
                             });

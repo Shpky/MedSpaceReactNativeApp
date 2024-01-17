@@ -8,15 +8,15 @@ import dataManager from "@features/dataManager"
  */
 export default function useSave(refresh: any[] = []): [SaveInterface | undefined, React.Dispatch<React.SetStateAction<SaveInterface | undefined>>] {
     const [save, setSaveState] = useState<SaveInterface | undefined>(undefined)
-
+    console.log("useSave", save?.patients.map(p => ({ ...p, icone: null })))
     useEffect(() => {
-        
+
         dataManager.getSaveData().then(s => setSaveState(s))
-        
+
     }, refresh)
 
     useEffect(() => {
-        
+
         save && dataManager.setSaveData(save)
     }, [save])
 

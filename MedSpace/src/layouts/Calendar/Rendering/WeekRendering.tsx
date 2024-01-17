@@ -13,7 +13,7 @@ import { getISOWeekNumber } from "../getISOWeekNumber"
  */
 
 export const WeekRendering = (date: string, weekData: priseInterface[], calendar: Wcalendar, setSave: React.Dispatch<React.SetStateAction<SaveInterface | undefined>>) => {
-    let week = weekData.sort((a, b) => a.heure - b.heure);
+    let week = weekData.sort((a, b) => a.hour - b.hour);
     const weekday = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']
     const key = getISOWeekNumber(new Date(date)) + "/" + new Date(date).getFullYear()
 
@@ -31,13 +31,13 @@ export const WeekRendering = (date: string, weekData: priseInterface[], calendar
                     <ImageBackground key={innerIndex} style={[styles.medicineContainer, styles.backgroundImage]}
                         source={date == new Date().toISOString().split('T')[0] ? require('../img/greenbg.png') : require('../img/greybg.png')}
                     >
-                        <Text style={[styles.medicine, { fontWeight: 'bold' }]}>{prise.heure === -1 && prise.dosage === -1 && prise.dosageType === "4267" ? "Pas de Médicament pour aujourd'hui" : prise.heure + (prise.heure > 1 ? " heures" : " heure")} </Text>
-                        <Text style={styles.medicine}>{prise.heure == -1 && prise.dosage == -1 && prise.dosageType == "4267" == true ? null : prise.nomMedoc}</Text>
+                        <Text style={[styles.medicine, { fontWeight: 'bold' }]}>{prise.hour === -1 && prise.dosage === -1 && prise.dosageType === "4267" ? "Pas de Médicament pour aujourd'hui" : prise.hour + (prise.hour > 1 ? " heures" : " heure")} </Text>
+                        <Text style={styles.medicine}>{prise.hour == -1 && prise.dosage == -1 && prise.dosageType == "4267" == true ? null : prise.MedicineName}</Text>
                         <View style={styles.rowContainer}>
-                            <Text style={[styles.medicine, { marginRight: 5 }]}>{prise.heure == -1 && prise.dosage == -1 && prise.dosageType == "4267" == true ? null : prise.dosage}</Text>
-                            <Text style={styles.medicine}>{prise.heure == -1 && prise.dosage == -1 && prise.dosageType == "4267" == true ? null : prise.dosageType}</Text>
+                            <Text style={[styles.medicine, { marginRight: 5 }]}>{prise.hour == -1 && prise.dosage == -1 && prise.dosageType == "4267" == true ? null : prise.dosage}</Text>
+                            <Text style={styles.medicine}>{prise.hour == -1 && prise.dosage == -1 && prise.dosageType == "4267" == true ? null : prise.dosageType}</Text>
                         </View>
-                        {prise.heure === -1 && prise.dosage === -1 && prise.dosageType === "4267" == true ? null : <OnOffButtonTaken is={prise.consumed} onToggle={() => MedicineConsumed(calendar, key, date, prise, setSave)} />}
+                        {prise.hour === -1 && prise.dosage === -1 && prise.dosageType === "4267" == true ? null : <OnOffButtonTaken is={prise.consumed} onToggle={() => MedicineConsumed(calendar, key, date, prise, setSave)} />}
                     </ImageBackground>
                 ))}
             </View>

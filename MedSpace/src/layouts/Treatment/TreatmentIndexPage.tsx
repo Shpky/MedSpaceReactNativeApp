@@ -53,7 +53,7 @@ const TreatmentContainer = ({ navigation }: { navigation: NavigationProp<RootSta
                 <FlatList
                     ListHeaderComponent={() =>
                         <Title>
-                            Sélectionez un traitement
+                            Sélectionnez un traitement
                         </Title>}
                     data={patient?.prescriptions}
                     renderItem={({ item }) => <RenderItem item={item} />}

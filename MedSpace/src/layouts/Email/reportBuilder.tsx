@@ -1,5 +1,5 @@
 import React from 'react';
-import {  StyleSheet, Text,  View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { generateCalendar } from './IntakeCalculator'
 
 /**
@@ -47,7 +47,7 @@ export const ReportBuilder = ({ Prescription, Rowcalendar }: ReportBuilderProps)
     console.log(calendar)
     return (
         <View>
-            <View style={[styles.centreurRow, { marginHorizontal: 20 }]}><Text style={[styles.fontblack]}>Nº de semaine/année</Text><Text style={styles.fontblack}>Jour de la semaine/status</Text></View>
+            <View style={[styles.centreurRow, { marginHorizontal: 20 }]}><Text style={[styles.fontblack]}>Semaine/Année</Text><Text style={styles.fontblack}>Jour /Statut</Text></View>
 
             <FlatList
                 data={Object.keys(calendar)}

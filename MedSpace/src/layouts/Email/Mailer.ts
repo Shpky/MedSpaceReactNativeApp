@@ -10,7 +10,7 @@ import Mailer from 'react-native-mail';
  * @param patient - The patient object containing patient details.
  */
 export const htmlmailtemplate = async (prescription: PrescriptionInterface, patient: PatientInterface) => {
-    
+
 
     try {
         let htmlContent = `
@@ -23,29 +23,29 @@ export const htmlmailtemplate = async (prescription: PrescriptionInterface, pati
                     </div>
                     <div style="display: flex; justify-content: space-evenly;align-items: center;margin-top: 50px;">
                         <h2 style="font-size: 30px; font-weight: bold;">Ce document constitue le rapport de prise
-                            médicamenteuse pour le patient M./Mme.${patient.name} dans le context de son traitement
+                            médicamenteuse pour le patient M./Mme.${patient.name} dans le contexte de son traitement
                             ${prescription.title}.</h2>
                     </div>
                     <div style="display: flex; justify-content: flex-start;align-items: flex-start;margin-left: 20px;">
                         <h3 style="font-size: 20px; font-weight: bold;">Ce document a été généré le ${new Date().toISOString().split("T")[0]}.</h3>
                     </div>
-                    <h2 style="dashed;page-break-before: always;">Rapport de prise des médicaments par le patient par semaine.</h2>
+                    <h2 style="dashed;page-break-before: always;">Rapport de prise des médicaments par le patient par semaine</h2>
                     <div style="border-color: black;border-width: 1px;border-style: dashed;margin-left:20px;margin-right:20px">
                         <p style=""><b>Légendes</b></p>
                         <div style=" display: grid;grid-template-rows: repeat(4, 30px);row-gap: 5px;">
                             <div style="display: flex;align-items: center;">
                                 <div style="background-color: green;width: 10px;height: 10px;margin: 10px;;border-radius: 50%;">
                                 </div>
-                                <p style="">Tous les médicaments ont bien été prit par le patient.</p>
+                                <p style="">Tous les médicaments ont bien été pris par le patient.</p>
                             </div>
                             <div style=" display: flex;align-items: center;">
                                 <div style="background-color: orange;width: 10px;height: 10px;margin: 10px;border-radius: 50%;"></div>
-                                <p style="">Tous les médicaments n'ont pas été prit</p>
+                                <p style="">Tous les médicaments n'ont pas été pris</p>
                             </div>
                             <div style="display: flex;align-items: center">
                                 <div style="background-color: red;width: 10px;height: 10px;margin-left: 10px;margin-right: 10px;border-radius: 50%;">
                                 </div>
-                                <p>Aucun des médicaments n'a été prit par le patient.</p>
+                                <p>Aucun des médicaments n'a été pris par le patient.</p>
                             </div>
                             <div style="display: flex;align-items: center;">
                                 <div style="background-color: grey;width: 10px;height: 10px;margin: 10px;border-radius: 50%;"></div>
@@ -55,7 +55,7 @@ export const htmlmailtemplate = async (prescription: PrescriptionInterface, pati
                     </div>
     <div style="margin-top:20px">
     <p>Médicament(s) dans ce traitement ${prescription.medicines.map(e => e.name).join(", ")}</p>
-    <div style="display: flex;align-items: center;justify-content:space-evenly"><p>Nº de semaine/année</p><p>Jours de la semaine et satus de la prise de médicament.</p></div>
+    <div style="display: flex;align-items: center;justify-content:space-evenly"><p>Semaine/Année</p><p>Jours/Statut de la prise de médicament.</p></div>
     ${superHtmlReportBuiler(patient.calendar || {}, prescription)}
     </div>
     <h2 style="page-break-before: always;margin-top:15px">Confidentialité du document</h2>

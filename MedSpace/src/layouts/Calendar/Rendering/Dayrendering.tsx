@@ -21,13 +21,13 @@ export const dayrendering = (date: string, day: priseInterface, startDate: Date,
             <ImageBackground style={[styles.medicineContainerBD, styles.backgroundImage]}
                 source={date == new Date().toISOString().split('T')[0] ? require('../img/greenbg.png') : require('../img/greybg.png')}
             >
-                <Text style={[styles.medicine, { fontWeight: 'bold' }]}>{day.heure === -1 && day.dosage === -1 && day.dosageType === "4267" ? "Pas de Médicament pour aujourd'hui" : day.heure + (day.heure > 1 ? " heures" : " heure")} </Text>
-                <Text style={styles.medicine}>{day.heure == -1 && day.dosage == -1 && day.dosageType == "4267" == true ? null : day.nomMedoc}</Text>
+                <Text style={[styles.medicine, { fontWeight: 'bold' }]}>{day.hour === -1 && day.dosage === -1 && day.dosageType === "4267" ? "Pas de Médicament pour aujourd'hui" : day.hour + (day.hour > 1 ? " heures" : " heure")} </Text>
+                <Text style={styles.medicine}>{day.hour == -1 && day.dosage == -1 && day.dosageType == "4267" == true ? null : day.MedicineName}</Text>
                 <View style={styles.rowContainer}>
-                    <Text style={[styles.medicine, { marginRight: 5 }]}>{day.heure == -1 && day.dosage == -1 && day.dosageType == "4267" == true ? null : day.dosage}</Text>
-                    <Text style={styles.medicine}>{day.heure == -1 && day.dosage == -1 && day.dosageType == "4267" == true ? null : day.dosageType}</Text>
+                    <Text style={[styles.medicine, { marginRight: 5 }]}>{day.hour == -1 && day.dosage == -1 && day.dosageType == "4267" == true ? null : day.dosage}</Text>
+                    <Text style={styles.medicine}>{day.hour == -1 && day.dosage == -1 && day.dosageType == "4267" == true ? null : day.dosageType}</Text>
                 </View>
-                {day.heure === -1 && day.dosage === -1 && day.dosageType === "4267" == true ? null : <OnOffButtonTaken is={day.consumed} onToggle={() => MedicineConsumed(calendar, key, date, day, setSave)} />}
+                {day.hour === -1 && day.dosage === -1 && day.dosageType === "4267" == true ? null : <OnOffButtonTaken is={day.consumed} onToggle={() => MedicineConsumed(calendar, key, date, day, setSave)} />}
             </ImageBackground>
 
 

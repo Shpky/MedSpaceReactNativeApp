@@ -15,7 +15,7 @@ export default function ProfilIndex({ navigation }: ProfilIndexProps) {
     const [save] = useSave()
     if (!save) return null
     return <ScrollView>
-        <Title>Sélectionner un profil</Title>
+        <Title>Sélectionnez un profil</Title>
         <View style={style.container}>
             {
                 save.patients.map((patient, index) => {

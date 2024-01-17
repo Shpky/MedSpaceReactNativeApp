@@ -1,5 +1,5 @@
 import * as React from 'react';
-import RNPickerSelect from 'react-native-picker-select';
+
 import {
     View,
     Text,
@@ -15,291 +15,41 @@ import {
     launchImageLibrary,
     ImageLibraryOptions,
 } from 'react-native-image-picker';
-import RNFS from 'react-native-fs';
+
 import useSave from '@hooks/useSave';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from "@navigation/RootStackParamList";
 import Password from './Password';
 import dataManager from '@features/dataManager';
+import { ProfilePicker } from './HandleChangeProfile';
+import { convertPngToBase64 } from './PngToBase64';
+import { ProfileImage } from './Component/ProfileImage';
+import { handleChangeUserName } from './UserPreference/ChangeUserName';
+import useActualPatient from '@hooks/useActualPatient';
+import { ChangeEarliesttime } from "./UserPreference/handleChangeEarliestTime"
+import { ChangeLastestTime } from "./UserPreference/handleChangeLatestTime"
+import { CreateNewUser, NewUser } from './NewUser';
+import { handlePressButtonDEL } from './ControleButton/DellUser';
+import { Changepp } from './ControleButton/NewPP';
+import { ControleButton } from './ControleButton/ControleButton';
+import { Userinfo } from './Component/UserInfo';
+import { Statistique } from './Component/Statistics';
 type UserIndexProps = NativeStackScreenProps<RootStackParamList, 'UserPage'>
+
+/**
+ * Renders the user page index.
+ * @param {UserIndexProps} props - The component props.
+ * @returns {JSX.Element} The rendered component.
+ */
 
 const UserPageIndex = ({ navigation }: UserIndexProps) => {
     const [save, setSave] = useSave();
 
+
+    const [actualUser] = useActualPatient();
     if (!save) return null;
-    const actualUser = save.patients.find((patient) => patient.actualUser == true);
+    if (!actualUser) return null;
 
-    const handleChangeProfile = (value: string) => {
-        if (value === actualUser?.name) return;
-        dataManager.setSaveData((oldSave) => ({
-            ...oldSave,
-            patients: oldSave?.patients.map((p, _) =>
-                ({ ...p, actualUser: p.name === value })
-            ) || []
-        } as SaveInterface)).then(() => {
-            navigation.reset({
-                index: 0,
-                routes: [{ name: 'Home' }],
-            });
-        })
-    };
-
-    const ProfilePicker = () => {
-        return (
-            <View style={[styles.container]}>
-                <Text style={styles.smallfontJomhuriaRegular}>
-                    Sélectionnez un profil
-                </Text>
-                <RNPickerSelect
-                    style={{
-                        placeholder: {
-                            color: 'white',
-                            marginLeft: 5,
-                        },
-
-                    }}
-                    onValueChange={handleChangeProfile}
-                    items={getPickerItems()}
-                    placeholder={getPickerPlaceholder()}
-                />
-            </View>
-        );
-    };
-
-    const getPickerItems = () => {
-        return save.patients
-            .filter((patient) => !patient.actualUser)
-            .map((patient) => ({
-                label: patient.name,
-                value: patient.name,
-            }));
-    };
-
-    const getPickerPlaceholder = () => {
-        return {
-            label: actualUser?.name,
-            value: actualUser?.name,
-        };
-    };
-
-    const ProfileImage = () => {
-        return (
-            <Image
-                style={{
-                    width: 150,
-                    height: 150,
-                    marginTop: 20,
-                    borderRadius: 100,
-                }}
-                source={{ uri: actualUser?.icone }}
-            />
-        );
-    };
-
-    async function convertPngToBase64(pngImage: string): Promise<string | null> {
-        const binaryString = await RNFS.readFile(pngImage, 'base64');
-        return binaryString;
-    }
-
-    const handleChangeText = (inputText: string) => {
-        inputText.length || (inputText = 'Nouveau patient')
-
-        setSave((old) => ({
-            ...old,
-            patients: save.patients.map((patient) =>
-                patient === actualUser
-                    ? { ...patient, name: inputText }
-                    : patient
-            )
-        } as SaveInterface))
-    };
-
-    const handleChangeearliesttime = (inputText: string) => {
-        if (isNaN(+inputText)) return;
-        const time = inputText.length ? +inputText : 8;
-
-        setSave((old) => ({
-            ...old,
-            patients: save.patients.map((patient) =>
-                patient === actualUser
-                    ? { ...patient, earliesttime: time }
-                    : patient
-            )
-        } as SaveInterface))
-    };
-
-
-
-    const handleChangelatesttime = (inputText: string) => {
-        if (isNaN(+inputText)) return;
-        const time = inputText.length ? +inputText : 22;
-        setSave((old) => ({
-            ...old,
-            patients: save.patients.map((patient) =>
-                patient === actualUser
-                    ? { ...patient, latesttime: time }
-                    : patient
-            )
-        } as SaveInterface))
-    };
-
-    const NewUser = (name: string, icon: string = '', actualUser: boolean = false) => {
-        let nb = 0;
-        while (save.patients.filter((patient) => patient.name == name).length) {
-            name = name + nb;
-            nb++;
-        }
-
-        setSave((oldSave) => ({
-            ...oldSave,
-            patients: [
-                ...oldSave?.patients || [],
-                {
-                    name: name,
-                    icone: icon,
-                    actualUser: actualUser,
-                    prescriptions: [],
-                    earliesttime: 8,
-                    latesttime: 22,
-                }
-            ]
-        } as SaveInterface))
-    };
-
-    const handlePressButtonDEL = () => {
-        save.patients.length > 1
-            ? (dataManager.setSaveData((old) => ({
-                ...old,
-                patients: old?.patients.filter((patient) => !patient.actualUser).map((p, i) => !i ? ({ ...p, actualUser: true }) : p)
-            }))).then(() => {
-                navigation.reset({
-                    index: 0,
-                    routes: [{ name: 'Home' }],
-                })
-            })
-            : (dataManager.setSaveData((old) => ({
-                ...old,
-                patients: old?.patients.filter((patient) => patient !== actualUser)
-            }))).then(() => {
-                navigation.reset({
-                    index: 0,
-                    routes: [{ name: 'Home' }],
-                }), NewUser('Nouveau patient', defaultIcon.icon, true)
-            })
-
-
-
-    };
-
-    const Changepp = async (uri: string) => {
-        const base64Icon = await convertPngToBase64(uri);
-        setSave((old) => ({
-            ...old,
-            patients: save.patients.map((patient) => patient === actualUser ? { ...patient, icone: `data:image/png;base64,${base64Icon}` } : patient)
-        } as SaveInterface)
-        );
-    };
-
-    const libraryHandler = async () => {
-        const options: ImageLibraryOptions = {
-            mediaType: 'photo',
-            selectionLimit: 1,
-        };
-        launchImageLibrary(options, async (response) => {
-            if (response.assets && response.assets[0] && typeof response.assets[0].uri === 'string') {
-                Changepp(response.assets[0].uri);
-            }
-        });
-    };
-
-    const ControleButton = () => {
-        return (
-            <View style={{ flexDirection: 'row', marginTop: 5 }}>
-                <Pressable style={[styles.buttonGREEN, { backgroundColor: "green", alignItems: "center", justifyContent: "center" }]} onPress={libraryHandler}>
-                    <Text style={styles.smallfontJomhuriaRegularnopading}>
-                        CHANGER DE PHOTO
-                    </Text>
-                </Pressable>
-                <Pressable style={styles.buttonRED} onPress={handlePressButtonDEL}>
-                    <Text style={styles.smallfontJomhuriaRegularnopading}>SUPPRIMER LE PROFIL</Text>
-                </Pressable>
-            </View>
-        );
-    };
-
-    const Userinfo = () => {
-        return (
-            <View style={styles.nameContainer}>
-                <Text style={styles.smallfontJomhuriaRegular}>
-                    Le nom de l'utilisateur actuelle est:
-                </Text>
-                <TextInput
-                    style={[styles.textInput]}
-                    defaultValue={actualUser?.name}
-                    onEndEditing={(event) => handleChangeText(event.nativeEvent.text)}
-                    textAlignVertical="center"
-                    textAlign="center"
-                />
-            </View>
-        );
-    };
-
-    const Statistique = () => {
-        return (
-            <View>
-                <Text style={[styles.smallfontJomhuriaRegular, { marginLeft: 5 }]}>
-                    Statistique de l'utilisateur
-                </Text>
-                <Text style={[styles.realysmallfontJomhuriaRegular, { marginBottom: -15 }]}>
-                    Nombre de traitement : {actualUser?.prescriptions.length}
-                </Text>
-                {actualUser && actualUser.prescriptions ? (
-                    <Text style={styles.realysmallfontJomhuriaRegular}>
-                        Nombre moyen de médicaments par traitement :{' '}
-                        {actualUser.prescriptions.reduce(
-                            (totalMedicines, prescription) =>
-                                totalMedicines + prescription.medicines.length,
-                            0
-                        ) / actualUser.prescriptions.length}
-                    </Text>
-                ) : (
-                    <Text>Chargement...</Text>
-                )}
-                <Text style={[styles.realysmallfontJomhuriaRegular, { marginBottom: -15, marginTop: -15 }]}>Heure de prise minimal d'un médicament </Text>
-                <TextInput
-                    style={[styles.textInput]}
-                    defaultValue={actualUser?.earliesttime.toString()}
-                    onEndEditing={(event) => handleChangeearliesttime(event.nativeEvent.text)}
-                    textAlignVertical="center"
-                    textAlign="center"
-                    keyboardType="numeric">
-                </TextInput>
-                <Text style={[styles.realysmallfontJomhuriaRegular, { marginBottom: -15, marginTop: -15 }]}>Heure de prise maximal d'un médicament </Text>
-                <TextInput
-                    style={[styles.textInput]}
-                    defaultValue={actualUser?.latesttime.toString()}
-                    onEndEditing={(event) => handleChangelatesttime(event.nativeEvent.text)}
-                    textAlignVertical="center"
-                    textAlign="center">
-
-                </TextInput>
-            </View>
-        );
-    };
-
-    const CreateNewUser = () => {
-        return (
-            <View style={[{ marginTop: 10, padding: 10 }]} >
-                <Pressable
-                    style={[styles.buttonGREEN, { borderRadius: 30, },]}
-                    onPress={() => {
-                        NewUser('Nouvel utilisateur', defaultIcon.icon, false);
-                    }}>
-                    <Text style={[styles.smallfontJomhuriaRegularnopading]}>AJOUTER UN NOUVEL UTILISATEUR</Text>
-                </Pressable>
-            </View>
-        );
-    };
 
     const reloadPage = () => {
         navigation.goBack();
@@ -312,23 +62,24 @@ const UserPageIndex = ({ navigation }: UserIndexProps) => {
                     source={require('./img/picker.png')}
                     style={[styles.backgroundImage, { marginTop: 20, }, styles.shadow]}
                 >
-                    <ProfilePicker />
+                    <ProfilePicker save={save} actualUser={actualUser} navigation={navigation} />
                 </ImageBackground>
                 <ImageBackground
-                    source={require('./img/newuser.png')}  // Remplacez 'Test.jpg' par le chemin de votre image
+                    source={require('./img/newuser.png')}  
                     style={[styles.backgroundImage, { marginTop: 20, marginBottom: 20 }]}
                 >
-                    <CreateNewUser />
+                    <CreateNewUser save={save} setSave={setSave} />
                 </ImageBackground>
+
                 <View style={styles.userInfoContainer}>
                     <ImageBackground
-                        source={require('./img/userinfo.png')}  // Remplacez 'Test.jpg' par le chemin de votre image
+                        source={require('./img/userinfo.png')}  
                         style={styles.backgroundImage}
                     ><View style={styles.userInfoContainer}>
-                            <ProfileImage />
-                            <Userinfo />
-                            <Statistique />
-                            <ControleButton />
+                            <ProfileImage actualUser={actualUser} />
+                            <Userinfo actualUser={actualUser} navigation={navigation} setSave={setSave} />
+                            <Statistique actualUser={actualUser} navigation={navigation} />
+                            <ControleButton actualUser={actualUser} navigation={navigation} save={save} setSave={setSave} />
 
                         </View>
 
@@ -345,12 +96,7 @@ const UserPageIndex = ({ navigation }: UserIndexProps) => {
 
 
 const styles = StyleSheet.create({
-    nameContainer: {
-        width: '95%',
 
-        justifyContent: 'center',
-
-    },
     backgroundImage: {
         flex: 1,
         width: '100%',
@@ -384,13 +130,7 @@ const styles = StyleSheet.create({
 
     },
 
-    smallfontJomhuriaRegular: {
-        marginLeft: 20,
-        fontFamily: 'Jomhuria-Regular',
-        fontSize: 30,
-        color: 'white',
-        marginBottom: -20,
-    },
+
     buttonGREEN: {
         paddingRight: 25,
         paddingLeft: 25,
@@ -400,11 +140,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
 
     },
-    buttonRED: {
-        backgroundColor: 'red',
-        padding: 15,
-        marginBottom: 15,
-    },
+
     containter: {
         alignContent: 'center',
         justifyContent: 'center',
@@ -460,6 +196,13 @@ const styles = StyleSheet.create({
         marginBottom: 20,
 
 
+    },
+    smallfontJomhuriaRegular: {
+        marginLeft: 20,
+        fontFamily: 'Jomhuria-Regular',
+        fontSize: 30,
+        color: 'white',
+        marginBottom: -20,
     },
 
 })

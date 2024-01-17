@@ -34,7 +34,7 @@ export const CalendarComponent = ({ isOn, startDate, calendar, weekNumber, setSa
 
             for (let i = 0; i < 7; i++) {
 
-                data[weekNumber + "/" + startDate.getFullYear()][new Date(firstday.getTime() + i * jour).toISOString().split('T')[0]] = [{ nomMedoc: "Pas de médicament aujourd'hui", heure: -1, dosage: -1, dosageType: "4267", consumed: false, releatedTreatment: "" }]
+                data[weekNumber + "/" + startDate.getFullYear()][new Date(firstday.getTime() + i * jour).toISOString().split('T')[0]] = [{ MedicineName: "Pas de médicament aujourd'hui", hour: -1, dosage: -1, dosageType: "4267", consumed: false, releatedTreatment: "" }]
 
             }
             week = data[weekNumber + "/" + startDate.getFullYear()]
@@ -49,7 +49,7 @@ export const CalendarComponent = ({ isOn, startDate, calendar, weekNumber, setSa
                 data[weekNumber + "/" + startDate.getFullYear()] = {};
                 for (let i = 0; i < 7; i++) {
 
-                    data[weekNumber + "/" + startDate.getFullYear()][new Date(firstday.getTime() + i * jour).toISOString().split('T')[0]] = [{ nomMedoc: "Pas de médicament aujourd'hui", heure: -1, dosage: -1, dosageType: "4267", consumed: false, releatedTreatment: "" }]
+                    data[weekNumber + "/" + startDate.getFullYear()][new Date(firstday.getTime() + i * jour).toISOString().split('T')[0]] = [{ MedicineName: "Pas de médicament aujourd'hui", hour: -1, dosage: -1, dosageType: "4267", consumed: false, releatedTreatment: "" }]
 
 
                 }
@@ -60,7 +60,7 @@ export const CalendarComponent = ({ isOn, startDate, calendar, weekNumber, setSa
                 let firstday = new Date(startDate.getTime() - startDate.getDay() * jour)
                 for (let i = 0; i < 7; i++) {
                     if (!week[new Date(firstday.getTime() + i * jour).toISOString().split('T')[0]]) {
-                        week[new Date(firstday.getTime() + i * jour).toISOString().split('T')[0]] = [{ nomMedoc: "Pas de médicament aujourd'hui", heure: -1, dosage: -1, dosageType: "4267", consumed: false, releatedTreatment: "" }]
+                        week[new Date(firstday.getTime() + i * jour).toISOString().split('T')[0]] = [{ MedicineName: "Pas de médicament aujourd'hui", hour: -1, dosage: -1, dosageType: "4267", consumed: false, releatedTreatment: "" }]
                     }
                 }
             }
@@ -95,12 +95,12 @@ export const CalendarComponent = ({ isOn, startDate, calendar, weekNumber, setSa
         let week = calendar[weekNumber + "/" + startDate.getFullYear()]
 
         if (!week) {
-            data = [{ nomMedoc: "Pas de médicament aujourd'hui", heure: -1, dosage: -1, dosageType: "4267", consumed: false, releatedTreatment: "" }]
+            data = [{ MedicineName: "Pas de médicament aujourd'hui", hour: -1, dosage: -1, dosageType: "4267", consumed: false, releatedTreatment: "" }]
         } else {
             data = week[startDate.toISOString().split('T')[0]]
-            !data ? data = [{ nomMedoc: "Pas de médicament aujourd'hui", heure: -1, dosage: -1, dosageType: "4267", consumed: false, releatedTreatment: "" }] : null
+            !data ? data = [{ MedicineName: "Pas de médicament aujourd'hui", hour: -1, dosage: -1, dosageType: "4267", consumed: false, releatedTreatment: "" }] : null
         }
-        data = data.sort((a, b) => a.heure - b.heure);
+        data = data.sort((a, b) => a.hour - b.hour);
         return (
 
             <FlatList

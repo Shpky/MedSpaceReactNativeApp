@@ -1,6 +1,6 @@
 type priseInterface = {
-    nomMedoc: string,
-    heure: number,
+    MedicineName: string,
+    hour: number,
     dosage: number,
     dosageType: string,
     consumed: boolean,
