@@ -1,4 +1,4 @@
-import { generateCalendar } from "./intakecalculator";
+import { generateCalendar } from "./IntakeCalculator";
 
 const htmlReportBuilder = (week: string[], num: string) => {
 

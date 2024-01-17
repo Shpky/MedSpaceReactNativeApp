@@ -1,15 +1,12 @@
-import React, { useState, useEffect, Dispatch, SetStateAction, useRef } from 'react';
-import { Alert, Modal, StyleSheet, Text, Pressable, View, Image, Button, Linking, TouchableOpacity, FlatList, ScrollView, ImageBackground } from 'react-native';
-
+import React from 'react';
+import {  StyleSheet, Text, Pressable, View, ImageBackground } from 'react-native';
 import { RootStackParamList } from '@navigation/RootStackParamList';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-
 import useActualPatient from '@hooks/useActualPatient';
 import { htmlmailtemplate } from './Mailer'
-
-import superHtmlReportBuiler from './HtmlReportBuilder';
 import EncadreLegend from './Legend'
 import { ReportBuilder } from './ReportBuilder'
+
 type PrescriptionIndexProps = NativeStackScreenProps<RootStackParamList, 'Email'>
 export default function MailIndex({ navigation, route }: PrescriptionIndexProps) {
     const { prescription } = route.params

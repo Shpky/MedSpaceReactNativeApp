@@ -1,6 +1,6 @@
-import React, { useState, useEffect, Dispatch, SetStateAction, useRef } from 'react';
-import { Alert, Modal, StyleSheet, Text, Pressable, View, Image, Button, Linking, TouchableOpacity, FlatList, ScrollView, ImageBackground } from 'react-native';
-import { generateCalendar } from './intakecalculator'
+import React from 'react';
+import {  StyleSheet, Text,  View, FlatList } from 'react-native';
+import { generateCalendar } from './IntakeCalculator'
 
 const RenderWeek = (week: string[], num: string) => {
 

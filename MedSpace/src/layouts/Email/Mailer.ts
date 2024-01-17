@@ -1,7 +1,7 @@
 import { logo } from './Logo';
 import superHtmlReportBuiler from './HtmlReportBuilder';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
-import RNFS from 'react-native-fs';
+
 import Mailer from 'react-native-mail';
 import Permissions from 'react-native-permissions';
 export const htmlmailtemplate = async (prescription: PrescriptionInterface, patient: PatientInterface) => {
@@ -85,10 +85,7 @@ export const htmlmailtemplate = async (prescription: PrescriptionInterface, pati
     </p>
 </div>
 
-</body>
-                    
-                
-            `;
+</body>`;
 
         const options = {
             html: htmlContent,
@@ -99,7 +96,7 @@ export const htmlmailtemplate = async (prescription: PrescriptionInterface, pati
         const pdf = await RNHTMLtoPDF.convert(options);
 
         const pdfFilePath = pdf.filePath;
-        
+
 
 
         let email = prescription.doctor?.mail || "";
