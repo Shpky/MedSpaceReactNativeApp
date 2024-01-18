@@ -1,6 +1,6 @@
 import { Text, View, ImageBackground, StyleSheet, TouchableOpacity, Pressable } from "react-native";
 import { getISOWeekNumber } from "./getISOWeekNumber";
-import {jour} from "./Jour";
+import { jour } from "./Jour";
 type BuilderProps = {
     isOn: boolean,
     setStartDate: React.Dispatch<React.SetStateAction<Date>>,
@@ -38,17 +38,18 @@ export const DateSelector = ({ isOn, setStartDate, startDate, setWeekNumber }: B
             </View>
             {!isOn ?
 
-                <View style={{ justifyContent: 'center', flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <Pressable onPress={() => (setStartDate(new Date(startDate.getTime() - 1 * jour)), setWeekNumber(getISOWeekNumber(new Date(startDate.getTime() - 1 * jour))))}>
                         <Text style={styles.bold}>{'   <   '}</Text>
                     </Pressable>
+
                     <Text style={styles.Month}>  {weekday[startDate.getDay()]} </Text>
 
-                    <Pressable onPress={() => (setStartDate(new Date(startDate.getTime() + 1 * jour)), setWeekNumber(getISOWeekNumber(new Date(startDate.getTime() + 1 * jour))))} >
+                    <Pressable onPress={() => (setStartDate(new Date(startDate.getTime() + 1 * jour)), setWeekNumber(getISOWeekNumber(new Date(startDate.getTime() + 1 * jour))))}>
                         <Text style={styles.bold}>{'   >   '}</Text>
                     </Pressable>
-
                 </View>
+
 
                 : null}
         </View>
@@ -59,13 +60,20 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         color: 'black',
-        marginBottom: 10,
+        marginVertical: 10,
         alignSelf: 'center',
+        justifyContent: 'center',
+        alignContent: 'center',
+
     },
     bold: {
         fontWeight: 'bold',
         fontSize: 20,
         color: 'black',
+        alignContent: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
+
     },
 
 

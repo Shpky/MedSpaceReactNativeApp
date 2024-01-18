@@ -12,14 +12,28 @@ const ModalImgPicker = () => {
     const [image, setImage] = useState<string | null>(null);
     const [modalVisible, setModalVisible] = useState(false);
 
+    /**
+     * Process OCR result
+     * @param input
+     * @constructor
+     */
     const TextRecognitionContainer = async (input: string) => {
         enablePromise(true)
+        /**
+         * Instance of database
+         */
         const db = await getDBConnection()
-
+        /**
+         * Result from OCR
+         */
         const result = await TextRecognition.recognize(input);
-        console.log(result.text)
-
+        /**
+         * Matching medicine's names from the database
+         */
         let medNames = new Set<string>
+        /**
+         * Lines matching with a retrieved medicine
+         */
         let medLine = new Set<string>
 
         for (const block of result.blocks) {
@@ -45,6 +59,9 @@ const ModalImgPicker = () => {
                     } catch {}
                 }
 
+                /**
+                 * If a line is detected as a medicine, add it to medLine
+                 */
                 if (isMedicine) {
                     medLine.add(line.text)
                     isMedicine = false
@@ -52,13 +69,17 @@ const ModalImgPicker = () => {
             }
         }
 
+        /**
+         * Sort only relevant medicines
+         */
         const listMedicine = new Set<string>
         medLine.forEach(med => {
             listMedicine.add(stringSimilarity.findBestMatch(med, Array.from(medNames)).bestMatch.target)
         })
 
-        console.log(listMedicine)
-
+        /**
+         * Retrieve medicine's infos from database and create MedicineInterface
+         */
         let prescriptionMedicines: MedicineInterface[] = []
         for (const med of listMedicine) {
             try {
@@ -87,12 +108,18 @@ const ModalImgPicker = () => {
             }
         }
 
+        /**
+         * Filter duplicate
+         */
         prescriptionMedicines = prescriptionMedicines.filter((value, index, self) =>
                 index === self.findIndex((t) => (
                     t.name === value.name
                 ))
         )
 
+        /**
+         * Create new PrescriptionInterface
+         */
         const newPrescription : PrescriptionInterface = {
             medicines: prescriptionMedicines,
             doctor: {
@@ -104,17 +131,11 @@ const ModalImgPicker = () => {
             title: ""
         }
 
+        /**
+         * Set the new prescription
+         */
         setPrescription(newPrescription)
     }
-
-    /*
-    const DetectMedicineContainer = async (input: TextRecognitionResult) => {
-        let Medecines = DetectMedicineInSentence(input)
-    }
-
-     */
-
-
 
     const cameraHandler = () => {
         const options: CameraOptions = {
