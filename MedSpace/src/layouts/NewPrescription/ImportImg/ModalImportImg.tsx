@@ -137,15 +137,6 @@ const ModalImgPicker = () => {
         setPrescription(newPrescription)
     }
 
-    /*
-    const DetectMedicineContainer = async (input: TextRecognitionResult) => {
-        let Medecines = DetectMedicineInSentence(input)
-    }
-
-     */
-
-
-
     const cameraHandler = () => {
         const options: CameraOptions = {
             mediaType: 'photo',
