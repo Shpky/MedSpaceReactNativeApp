@@ -2,8 +2,6 @@ import Container from "@components/form/Container/ContainerIndex";
 import { Text, TextInput, View } from "react-native";
 import style from "../style";
 import DatePicker from "./SelectDate";
-import { useState, useEffect } from "react";
-import SelectDoctor from "./SelectDoctor";
 import { useNewPrescription } from "@hooks/useNewPrescription";
 
 
@@ -26,8 +24,6 @@ export default function IdNewPrescriptions() {
         >{prescription.title}</TextInput>
         <View>
             <Text style={style.textInput}>Nom et coordonnées du médecin</Text>
-            <SelectDoctor
-                onSelect={((doctor: DoctorInterface) => setPrescription((oldP) => ({ ...oldP, doctor: doctor })))} />
         </View>
         <View style={style.halfContainer}>
             <TextInput style={[style.input, style.half]}
