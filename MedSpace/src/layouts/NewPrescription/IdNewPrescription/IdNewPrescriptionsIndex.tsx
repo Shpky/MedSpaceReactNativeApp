@@ -3,8 +3,7 @@ import { Text, TextInput, View } from "react-native";
 import style from "../style";
 import DatePicker from "./SelectDate";
 import { useNewPrescription } from "@hooks/useNewPrescription";
-import AutoComplete from "./AutoComplete/AutoComplete";
-
+import OpenAutoComplete from "./OpenAutoComplete";
 /**
  * Permet de modifier les informations d'identité de l'ordonnance
  * (nom du traitement, médecin, date)
@@ -23,15 +22,20 @@ export default function IdNewPrescriptions() {
             onChangeText={(t) => setPrescription((oldP) => ({ ...oldP, title: t }))}
         >{prescription.title}</TextInput>
         <View>
-            <AutoComplete onSelectDoctor={(n: string, m: string) => setPrescription((oldP) => ({ ...oldP, doctor: { mail: m, name: n } }))} />
+            <OpenAutoComplete onChange={(n: string, m: string) => {
+                console.log("onChange", n, m)
+                setPrescription((oldP) => ({ ...oldP, doctor: { mail: m, name: n } }))
+            }} />
             <Text style={style.textInput}>Nom et coordonnées du médecin</Text>
         </View>
         <View style={style.halfContainer}>
             <TextInput style={[style.input, style.half]}
+                value={prescription.doctor?.name}
                 placeholder="Nom" placeholderTextColor={style.input.color}
                 onChangeText={(t) => setPrescription((oldP) => ({ ...oldP, doctor: { mail: oldP.doctor?.mail || "", name: t } }))}
             />
             <TextInput style={[style.input, style.half]}
+                value={prescription.doctor?.mail || ""}
                 placeholder="Mail" placeholderTextColor={style.input.color}
                 onChangeText={(t) => setPrescription((oldP) => ({ ...oldP, doctor: { name: oldP.doctor ? oldP.doctor.name : "", mail: t } }))}
 

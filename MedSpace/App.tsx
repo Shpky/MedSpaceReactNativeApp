@@ -1,6 +1,6 @@
 import StackNavigator from "./src/navigation/StackNavigator";
 import { PasswordContextProvider } from "./src/contexts/PasswordContext";
-import { DoctorContextProvider } from "src/contexts/DoctorContext";
+import { DoctorContextProvider } from "./src/contexts/DoctorContext";
 function App(): JSX.Element {
   return <PasswordContextProvider>
     <DoctorContextProvider>

@@ -7,12 +7,14 @@ import ConfirmXL from "@components/form/buttons/ConfirmXL";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "@navigation/RootStackParamList";
 import useSave from "@hooks/useSave";
+import useDoctors from "@hooks/useDoctors";
 
 const alert = (text: string) => Alert.alert("Erreur d'entrée", text);
 
 export default function Footer({ navigation }: { navigation: NativeStackNavigationProp<RootStackParamList, "NewPrescription", undefined> }) {
     const { prescription, apply } = useNewPrescription();
     const [save] = useSave();
+    const { addDoctor } = useDoctors()
     const handleResetStack = () => {
         // Si on est en modification, on retourne à la page de l'ordonnance
         navigation.reset({
@@ -78,6 +80,12 @@ export default function Footer({ navigation }: { navigation: NativeStackNavigati
             <Text style={style.textInput}>Notes de l'ordonnance</Text>
             <TextInput style={[style.input, style.full]} placeholder="Notes" placeholderTextColor={style.input.color} />
         </Container>
-        <ConfirmXL styleProp={style.confirmButton} onPress={() => checkInputs() && apply().then(handleResetStack)}>Sauvegarder</ConfirmXL>
+        <ConfirmXL styleProp={style.confirmButton} onPress={() => {
+            if (!checkInputs()) return;
+            prescription.doctor && addDoctor(prescription.doctor)
+            apply().then(handleResetStack)
+        }
+
+        }>Sauvegarder</ConfirmXL>
     </>
 }

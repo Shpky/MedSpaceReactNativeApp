@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { DoctorContext } from "src/contexts/DoctorContext";
+import { DoctorContext } from "../contexts/DoctorContext";
 
 export default function useDoctors() {
     const context = useContext(DoctorContext);

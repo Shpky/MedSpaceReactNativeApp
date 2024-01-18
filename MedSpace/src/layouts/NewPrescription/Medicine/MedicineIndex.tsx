@@ -1,4 +1,4 @@
-import OpenAutoComplete from './OpenAutoComple';
+import OpenAutoComplete from './OpenAutoComplete';
 import Container from '@components/form/Container/ContainerIndex';
 import Name from './Name';
 import Company from './Company';

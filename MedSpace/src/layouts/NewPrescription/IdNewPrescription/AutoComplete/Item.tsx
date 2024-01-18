@@ -11,6 +11,7 @@ type ItemProp = { doctor: DoctorAutoComplete, onSelectDoctor: (n: string, m: str
 export default function Item({ doctor, onSelectDoctor }: ItemProp) {
     return <Pressable style={style.modalAutoCompleteItemContainer}
         onPress={() => {
+            console.log("press", doctor)
             onSelectDoctor(doctor.name, doctor.mail || "")
         }}
     >
