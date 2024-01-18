@@ -18,7 +18,7 @@ const EncadreLegend = () => {
             <View style={styles.coleur}>
                 <View style={{ marginHorizontal: 5, height: 10, width: 10, backgroundColor: "orange", borderRadius: 5, }}></View>
                 <Text style={styles.smallfont}>Tous les médicaments n'ont pas été pris.</Text>
-            </View>
+            </View> 
             <View style={styles.coleur}>
                 <View style={{ marginHorizontal: 5, height: 10, width: 10, backgroundColor: "red", borderRadius: 5, }}></View>
                 <Text style={styles.smallfont}>Aucun des médicaments n'a été pris par le patient.</Text>

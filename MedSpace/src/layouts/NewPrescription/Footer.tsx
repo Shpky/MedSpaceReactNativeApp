@@ -44,6 +44,14 @@ export default function Footer({ navigation }: { navigation: NativeStackNavigati
             alert("Veuillez renseigner au moins un médicament");
             return false;
         }
+        if (prescription.doctor && !prescription.doctor?.name && prescription.doctor.mail) {
+            alert("Il y a un mail pour le médecin mais pas de nom")
+            return false
+        }
+        if (prescription.doctor && prescription.doctor.mail && !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(prescription.doctor.mail)) {
+            alert("Le mail du médecin n'est pas valide")
+            return false
+        }
         for (const medicine of prescription.medicines) {
             if (medicine.name.length <= 0) {
                 alert("Veuillez renseigner le nom d'un médicament");

@@ -4,13 +4,13 @@ import React from "react"
 import { Alert, StyleSheet, Text, View } from "react-native"
 import XLButton from "@components/form/buttons/ConfirmXL"
 import { RootStackParamList } from '@navigation/RootStackParamList';
+
 type BuilderProps = {
     navigation: NavigationProp<RootStackParamList>,
     isSelected: boolean,
     name: string,
-
-
 }
+
 /**
  * Renders a send button component, that check is the user has fill a username.
  * 
@@ -19,7 +19,7 @@ type BuilderProps = {
  * @param name - The name of the futur user.
  * @returns The send button component.
  */
-export const SendButton = ({navigation, isSelected,name}:BuilderProps) => {
+export const SendButton = ({navigation, isSelected, name}: BuilderProps) => {
 
     return (
         <View style={styles.fixing}><XLButton onPress={() => {

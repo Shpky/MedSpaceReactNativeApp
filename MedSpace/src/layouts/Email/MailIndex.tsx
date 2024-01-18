@@ -8,6 +8,7 @@ import EncadreLegend from './Legend'
 import { ReportBuilder } from './ReportBuilder'
 
 type PrescriptionIndexProps = NativeStackScreenProps<RootStackParamList, 'Email'>
+
 /**
  * Renders the MailIndex component.
  * 
@@ -101,12 +102,3 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
 })
-
-
-
-
-
-
-
-
-

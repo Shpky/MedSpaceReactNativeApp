@@ -32,22 +32,7 @@ export default function PrescriptionIndex({ navigation, route }: PrescriptionInd
             {"Médicament du traitement " + prescriptionName}
         </Title>
         {!(data === undefined)
-            ? <><ScrollView>
-
-                {/* <View>
-                    <Text>
-                        Activer toutes les notifications:
-                    </Text>
-                    <Toggle onToggle={() => { }}></Toggle>
-                </View> */}
-                {
-                    data.medicines.map((medicine, index) =>
-                        <Medicine key={index} medicine={medicine} onToggle={(isNotifOn) => {
-                            // todo
-                        }} />
-                    )
-                }
-            </ScrollView>
+            ? <>
                 <View style={{
                     flexDirection: 'row',
                     alignItems: 'center',
@@ -62,8 +47,6 @@ export default function PrescriptionIndex({ navigation, route }: PrescriptionInd
                         ><Text style={styles.textWB}>MODIFIER</Text>
                         </ImageBackground>
                     </Pressable>
-
-
                     <Pressable onPress={async () => {
                         if (data === undefined) {
                             return
@@ -75,8 +58,6 @@ export default function PrescriptionIndex({ navigation, route }: PrescriptionInd
                         source={require("./rouge2.png")}
                     ><Text style={styles.textWB}>SUPPRIMER</Text></ImageBackground></Pressable>
                 </View>
-
-
             </>
             : <Text>Chargement...</Text>}
     </ScrollView>
@@ -84,7 +65,6 @@ export default function PrescriptionIndex({ navigation, route }: PrescriptionInd
 const styles = StyleSheet.create({
 
     container: {
-
         padding: 10,
         paddingLeft: 20,
         resizeMode: 'cover',

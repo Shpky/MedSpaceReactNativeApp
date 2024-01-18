@@ -3,23 +3,23 @@ interface MedicineInterface {
     company: string, /* nom du labo */
     dosage: number,
     dosageType: string,
-    frequency: RoutineInterface | DailyInterface | WeeklyInterface, // Pourquoi des ou ?
-    duration: Date | null, // jusqu'a tel date ?
+    frequency: RoutineInterface | DailyInterface | WeeklyInterface,
+    duration: Date | null, // jusqu'à tel date 
     administration_route: string,
-    warning: boolean, // ?
+    warning: boolean,
     notes?: string,
     substitutable?: boolean,
     to_renew?: number,
     minimumHoursbetweenDoses?: number,
 }
 
-interface RoutineInterface { //Pouvoir définir par default un heure pour la notif ? genre morning 8h ?
+interface RoutineInterface { 
     morning: boolean,
     noon: boolean,
     evening: boolean,
 }
 
-interface DailyInterface { // On compte de xh à xh ? 
+interface DailyInterface {
     count: number,
 }
 

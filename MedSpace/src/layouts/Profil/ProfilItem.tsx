@@ -18,6 +18,6 @@ export default function ProfilItem({ onPress, patientLite }: ProfilItemProps) {
     return <Pressable style={style.item} onPress={onPress}>
         <Image style={style.itemImage}
             source={{ uri: patientLite.icone }} />
-        <Text style={style.itemText}>{patientLite.name}</Text>
+        <Text style={style.itemText}>{patientLite.name.length > 8 ? patientLite.name.substring(0, 7) + "..." : patientLite.name}</Text>
     </Pressable>
 }

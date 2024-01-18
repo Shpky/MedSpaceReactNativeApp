@@ -1,8 +1,10 @@
 
 import { View, ImageBackground, Text, TextInput, StyleSheet } from "react-native"
+
 type BuilderProps = {
     onChangeName: React.Dispatch<React.SetStateAction<string>>,
 }
+
 /**
  * Renders a form component for entering a name.
  * 
@@ -10,7 +12,7 @@ type BuilderProps = {
  * @param {Function} props.onChangeName - The callback function to handle name changes.
  * @returns {JSX.Element} The rendered form component.
  */
-export const FormName = ({ onChangeName }: BuilderProps) => {
+export const FormName = ({ onChangeName }: BuilderProps): JSX.Element => {
     return (<View style={{ alignSelf: 'center' }}>
         <ImageBackground
             source={require("./img/picker.png")}

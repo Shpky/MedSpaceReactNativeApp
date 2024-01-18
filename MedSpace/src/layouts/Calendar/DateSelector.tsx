@@ -16,8 +16,7 @@ type BuilderProps = {
  * @param {Function} props.setWeekNumber - A function to set the week number.
  * @returns {JSX.Element} The date selector component.
  */
-
-export const DateSelector = ({ isOn, setStartDate, startDate, setWeekNumber }: BuilderProps) => {
+export const DateSelector = ({ isOn, setStartDate, startDate, setWeekNumber }: BuilderProps): JSX.Element => {
     let month = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
 
     const weekday = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi']

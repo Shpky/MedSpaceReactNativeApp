@@ -13,7 +13,7 @@ export const PasswordContext = createContext<PasswordContextType | null>(null)
 
 const hashPassword = (p: string) => {
     return p
-    const saltRounds = 10
+    const saltRounds = 10 // La bibliothèque de hashage marche pas
     const salt = genSaltSync(saltRounds)
     return hashSync(p, salt)
 }

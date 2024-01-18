@@ -9,7 +9,6 @@ import { generateCalendar } from './IntakeCalculator'
  * @returns The rendered week component.
  */
 const RenderWeek = (week: string[], num: string) => {
-
     return (
         <View style={styles.centreurRow}>
             <Text style={styles.fontblack}>{num}</Text>
@@ -36,15 +35,15 @@ type ReportBuilderProps = {
     Prescription: PrescriptionInterface,
     Rowcalendar?: Wcalendar
 }
+
 /**
  * Renders the ReportBuilder component.
  * 
  * @param {ReportBuilderProps} props - The props for the ReportBuilder component.
  * @returns {JSX.Element} The rendered ReportBuilder component.
  */
-export const ReportBuilder = ({ Prescription, Rowcalendar }: ReportBuilderProps) => {
+export const ReportBuilder = ({ Prescription, Rowcalendar }: ReportBuilderProps): JSX.Element => {
     let calendar = generateCalendar(Prescription, Rowcalendar || {});
-    console.log(calendar)
     return (
         <View>
             <View style={[styles.centreurRow, { marginHorizontal: 20 }]}><Text style={[styles.fontblack]}>Semaine/Année</Text><Text style={styles.fontblack}>Jour /Statut</Text></View>
@@ -61,12 +60,12 @@ export const ReportBuilder = ({ Prescription, Rowcalendar }: ReportBuilderProps)
 
 const styles = StyleSheet.create({
     centreurRow: {
-        flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
     },
+
     fontblack: {
         color: "black"
     },
-
-
-
 })
