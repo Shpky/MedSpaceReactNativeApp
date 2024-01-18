@@ -7,7 +7,7 @@ import { generateCalendar } from "./IntakeCalculator";
  * @param num - The week number.
  * @returns A report of the taken medicine for a week.
  */
-const htmlReportBuilder = (week: string[], num: string) => {
+const htmlReportBuilder = (week: string[], num: string): string => {
 
     let dayOfWeek = ["D", "L", "M", "M", "J", "V", "S"]
     let htmlcalendar: string = ""
@@ -20,6 +20,7 @@ const htmlReportBuilder = (week: string[], num: string) => {
 
     htmlweek += `</div>`
     htmlcalendar += htmlweek
+    return htmlcalendar
 }
 /**
  * Builds the report based on the given Calendar and prescription. Generate the report for each week.
@@ -34,6 +35,7 @@ const superHtmlReportBuiler = (rowCalendar: Wcalendar, prescription: Prescriptio
     Object.keys(calendar).forEach((key) => {
         htmlcalendar += htmlReportBuilder(calendar[key], key)
     })
+    console.log(htmlcalendar)
     return htmlcalendar
 }
 
