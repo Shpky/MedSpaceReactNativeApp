@@ -39,7 +39,7 @@ export default function AutoComplete({ onSelectMedicine }: { onSelectMedicine: (
     }, [input])
 
     return <View style={style.modalAutoComplete}>
-        <Text style={style.modalAutoCompleteText}>Sélectionnez un medicament:</Text>
+        <Text style={style.modalAutoCompleteText}>Sélectionnez un médicament:</Text>
         <TextInput style={style.input} onChangeText={setInput} />
         <FlatList data={datas}
             renderItem={({ item }) => <Item medicine={item} onSelectMedicine={onSelectMedicine} />} />

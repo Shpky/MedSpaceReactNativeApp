@@ -50,7 +50,7 @@ const IndexReport = ({ navigation }: { navigation: NavigationProp<RootStackParam
                 <FlatList
                     ListHeaderComponent={() =>
                         <Title>
-                            Sélectionez un traitement
+                            Sélectionnez un traitement
                         </Title>}
                     data={actualPatient?.prescriptions}
                     renderItem={({ item }) => <RenderPrescription item={item} />}
