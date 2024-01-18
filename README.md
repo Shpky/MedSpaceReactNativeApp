@@ -1,92 +1,61 @@
-# SAE5A01
-
-
-
-## Getting started
-
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin https://gitlab.univ-nantes.fr/E217817H/sae5a01.git
-git branch -M main
-git push -uf origin main
-```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://gitlab.univ-nantes.fr/E217817H/sae5a01/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
+# Projet SAE5A01
 
 ## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+Le projet SAE5A01 vise à développer une application mobile multi-plateforme de suivi des traitements médicamenteux et de leurs possibles effets secondaires ou interactions risquées pour les patients. L'application doit permettre une gestion efficace du régime médicamenteux chez le patient, avec déclaration aux autorités en cas d’effet(s) indésirable(s).
+.
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+## Fonctionnalités clés
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+1. Enregistrement de l’ordonnance 	
+OCR et Auto-complétion:
+Lors de l'enregistrement de l'ordonnance, une interface d'auto-complétion est disponible, permettant à l'utilisateur de sélectionner le médicament en fonction des informations qu'il a préalablement remplies dans le champ dédié au nom du médicament. Un bouton intégré à l'application offre à l'utilisateur la possibilité d'utiliser une technologie OCR (Reconnaissance Optique de Caractères). Cette fonctionnalité permet d'importer une image existante ou de capturer une nouvelle image, puis automatise le remplissage des champs d'enregistrement de l'ordonnance en extrayant les informations textuelles pertinentes.
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+2. Accompagnement de la prise de médicament
+Calendrier et notification:
+Lorsque l'utilisateur a saisi un traitement composé de plusieurs médicaments, un calendrier est automatiquement généré pour lui permettre de visualiser les prochaines prises de médicaments. En se basant sur le calendrier, notre système de notification envoie des rappels à l'utilisateur aux moments prévus pour la prise de son traitement. Ces notifications dirigent ensuite l'utilisateur vers le calendrier correspondant, où il peut valider la prise de son traitement.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+3. Flexibilité et douceure
+Préférences utilisateurs et changement de profil
+Afin de faciliter l'utilisation de notre application au sein des familles, nous avons introduit un système de profils. Chaque membre de la famille peut créer et gérer son propre espace, incluant la gestion personnalisée de ses traitements, avec la possibilité de visualiser également les traitements des autres membres. Pour renforcer l'identification visuelle, nous offrons la possibilité aux utilisateurs de définir leur propre image de profil.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+Dans la section des paramètres, les utilisateurs peuvent également spécifier l'heure de leur première et dernière prise de médicament. Ceci permet d'adapter les rappels de prise de médicament à leur routine quotidienne.
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+4. Sécuritée
+Mot de passe et utilisation des données
+Toutes les données de l'application demeurent internes, sans aucune sortie, sauf pour la liste des médicaments vendus en France, qui est une donnée entrante. Pour renforcer la sécurité, l'utilisateur a la possibilité d'activer l'utilisation d'un mot de passe à chaque accès de l'application.
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+5. Génération de rapport
+Envoie de mail et génération de rapport
+Lorsque le patient valide la prise d'un médicament via le calendrier, l'application stocke cette information en mémoire. Grâce à cette collecte de données, l'application offre à l'utilisateur la possibilité de générer un rapport au format PDF sur la prise des médicaments pour un traitement spécifique. Avant l'envoi automatique au médecin de référence du patient, le rapport peut être prévisualisé pour assurer son exactitude et sa pertinence.
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
 
-## License
-For open source projects, say how it is licensed.
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+
+## Instalation
+
+Pour tester le projet merci de suivre ces instructions.
+
+1. **Suivre la documentation React Native** https://reactnative.dev/docs/environment-setup?guide=native (Windows Android)
+2. **Cloner le projet** git clone https://gitlab.univ-nantes.fr/E217817H/sae5a01.git
+3. **Se déplacer dans le dossier MedSpace** cd MedSpace
+4. **Lancer le project** npm run android et appuyer sur a
+## Technologies utilisées
+
+- React-Native -> Metro
+- TypeScript
+- GOLANG
+- Mongo
+- Sqlite
+
+
+## Équipe de projet
+
+
+- **Développeurs :**
+  - Romain Gouraud romain.gouraud@etu.univ-nantes.fr
+  - Nathan Ferry nathan.ferry@etu.univ-nantes.fr
+  - Mathys Meunier mathys.meunier@etu.univ-nantes.fr
+
+
