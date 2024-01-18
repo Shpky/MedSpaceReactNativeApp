@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ImageBackground, StyleSheet, ScrollView, FlatList, Pressable } from 'react-native';
+import { View, Text, ImageBackground, StyleSheet, FlatList, Pressable } from 'react-native';
 import useActualPatient from '@hooks/useActualPatient';
 import Title from '@components/TitleBubble'
 import { NavigationProp } from '@react-navigation/native';
