@@ -32,7 +32,15 @@ export default function PrescriptionIndex({ navigation, route }: PrescriptionInd
             {"Médicament du traitement " + prescriptionName}
         </Title>
         {!(data === undefined)
-            ? <>
+            ? <><ScrollView>
+                {
+                    data.medicines.map((medicine, index) =>
+                        <Medicine key={index} medicine={medicine} onToggle={(isNotifOn) => {
+                        }} />
+                    )
+                }
+            </ScrollView>
+
                 <View style={{
                     flexDirection: 'row',
                     alignItems: 'center',
