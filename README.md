@@ -18,9 +18,7 @@ Lorsque l'utilisateur a saisi un traitement composé de plusieurs médicaments, 
 
 3. Flexibilité et douceure
 Préférences utilisateurs et changement de profil
-Afin de faciliter l'utilisation de notre application au sein des familles, nous avons introduit un système de profils. Chaque membre de la famille peut créer et gérer son propre espace, incluant la gestion personnalisée de ses traitements, avec la possibilité de visualiser également les traitements des autres membres. Pour renforcer l'identification visuelle, nous offrons la possibilité aux utilisateurs de définir leur propre image de profil.
-
-Dans la section des paramètres, les utilisateurs peuvent également spécifier l'heure de leur première et dernière prise de médicament. Ceci permet d'adapter les rappels de prise de médicament à leur routine quotidienne.
+Afin de faciliter l'utilisation de notre application au sein des familles, nous avons introduit un système de profils. Chaque membre de la famille peut créer et gérer son propre espace, incluant la gestion personnalisée de ses traitements, avec la possibilité de visualiser également les traitements des autres membres. Pour renforcer l'identification visuelle, nous offrons la possibilité aux utilisateurs de définir leur propre image de profil. Dans la section des paramètres, les utilisateurs peuvent également spécifier l'heure de leur première et dernière prise de médicament. Ceci permet d'adapter les rappels de prise de médicament à leur routine quotidienne.
 
 4. Sécuritée
 Mot de passe et utilisation des données
