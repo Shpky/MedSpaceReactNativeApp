@@ -24,7 +24,9 @@ type passwordState = {
     isLoad: true,
     password: string | null
 }
-export function PasswordContextProvider({ children }: { children?: JSX.Element }): JSX.Element {
+
+type PasswordContextProviderProps = { children?: JSX.Element[] | JSX.Element }
+export function PasswordContextProvider({ children }: PasswordContextProviderProps): JSX.Element {
     const [password, setPassword] = useState<passwordState>({ isLoad: false });
 
     useEffect(() => {

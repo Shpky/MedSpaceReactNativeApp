@@ -1,37 +1,19 @@
 import { Text, Pressable } from 'react-native'
 import style from '../../style';
 
-type MedicineAutoComplete = {
+type DoctorAutoComplete = {
     name: string,
-    form: string,
-    company: string
+    mail: string | null,
 }
 
-export default function Item({ medicine, onSelectMedicine }: { medicine: MedicineAutoComplete, onSelectMedicine: (medicine: MedicineInterface) => void }) {
+type ItemProp = { doctor: DoctorAutoComplete, onSelectDoctor: (n: string, m: string) => void }
+
+export default function Item({ doctor, onSelectDoctor }: ItemProp) {
     return <Pressable style={style.modalAutoCompleteItemContainer}
         onPress={() => {
-
-            const newMedicine: MedicineInterface = {
-                name: medicine.name,
-                company: medicine.company,
-                dosageType: medicine.form,
-                dosage: 0,
-                frequency: {
-                    morning: false,
-                    noon: false,
-                    evening: false
-                },
-                duration: null,
-                administration_route: "",
-                warning: false,
-                notes: "",
-                substitutable: false,
-                to_renew: 0,
-                minimumHoursbetweenDoses: 0
-            }
-            onSelectMedicine(newMedicine)
+            onSelectDoctor(doctor.name, doctor.mail || "")
         }}
     >
-        <Text style={style.modalAutoCompleteItemText}>{medicine.name}</Text>
+        <Text style={style.modalAutoCompleteItemText}>{doctor.name}</Text>
     </Pressable>
 }

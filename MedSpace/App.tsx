@@ -1,9 +1,11 @@
 import StackNavigator from "./src/navigation/StackNavigator";
 import { PasswordContextProvider } from "./src/contexts/PasswordContext";
-
+import { DoctorContextProvider } from "src/contexts/DoctorContext";
 function App(): JSX.Element {
   return <PasswordContextProvider>
-    <StackNavigator />
+    <DoctorContextProvider>
+      <StackNavigator />
+    </DoctorContextProvider>
   </PasswordContextProvider>;
 }
 

@@ -4,18 +4,20 @@ import usePassword from '@hooks/usePassword';
 import { RootStackParamList } from '@navigation/RootStackParamList';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import dataManager from '@features/dataManager';
+import useDoctors from '@hooks/useDoctors';
 
 type LoadingScreenNavigationProp = NativeStackScreenProps<RootStackParamList, 'Loading'>;
 
 export default function LoadingIndex({ navigation }: LoadingScreenNavigationProp) {
     const { checkPassword, passwordContextIsLoad } = usePassword();
+    const { doctorContextIsLoad } = useDoctors();
 
-    const isLoading = useMemo(() => !passwordContextIsLoad, [passwordContextIsLoad]);
+    const isLoading = useMemo(() => !(passwordContextIsLoad && doctorContextIsLoad),
+        [passwordContextIsLoad, doctorContextIsLoad]);
 
     useEffect(() => {
         if (isLoading) return;
         dataManager.isExisting().then((isExisting) => {
-            console.log('isExisting :>> ', isExisting);
             isExisting
                 ? navigation.reset({
                     index: 0,
